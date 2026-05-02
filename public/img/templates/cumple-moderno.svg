@@ -1,0 +1,98 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 400" width="300" height="400">
+  <defs>
+    <linearGradient id="bg-cumple" x1="135%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%"   stop-color="#fafafa"/>
+      <stop offset="100%" stop-color="#f0eeff"/>
+    </linearGradient>
+    <linearGradient id="purple-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%"   stop-color="#6c63ff"/>
+      <stop offset="100%" stop-color="#a78bfa"/>
+    </linearGradient>
+    <linearGradient id="card-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%"   stop-color="#6c63ff"/>
+      <stop offset="100%" stop-color="#8b5cf6"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Fondo -->
+  <rect width="300" height="400" fill="url(#bg-cumple)"/>
+
+  <!-- Formas geométricas de fondo -->
+  <circle cx="260" cy="50"  r="70" fill="#6c63ff" opacity="0.07"/>
+  <circle cx="20"  cy="320" r="90" fill="#a78bfa" opacity="0.08"/>
+  <rect x="230" y="300" width="100" height="100" rx="30"
+        fill="#6c63ff" opacity="0.05" transform="rotate(20,280,350)"/>
+
+  <!-- Confetti decorativo -->
+  <rect x="42"  y="30"  width="7" height="7" rx="1.5" fill="#6c63ff" opacity="0.5" transform="rotate(20,45,33)"/>
+  <rect x="240" y="45"  width="6" height="6" rx="1.5" fill="#f472b6" opacity="0.5" transform="rotate(-15,243,48)"/>
+  <circle cx="70"  cy="55"  r="3.5" fill="#fbbf24" opacity="0.6"/>
+  <circle cx="220" cy="30"  r="3"   fill="#34d399" opacity="0.5"/>
+  <rect x="255" y="120" width="6" height="6" rx="1"   fill="#6c63ff" opacity="0.4" transform="rotate(30,258,123)"/>
+  <circle cx="35"  cy="150" r="4"   fill="#f472b6" opacity="0.4"/>
+  <rect x="55"  y="220" width="5"  height="5" rx="1" fill="#fbbf24" opacity="0.4" transform="rotate(10,57,222)"/>
+  <circle cx="260" cy="210" r="3"   fill="#34d399" opacity="0.5"/>
+
+  <!-- Header con gradiente -->
+  <rect x="0" y="0" width="300" height="90" rx="0" fill="url(#card-grad)"/>
+  <rect x="0" y="75" width="300" height="20" rx="0" fill="url(#bg-cumple)"/>
+  <!-- Curva inferior del header -->
+  <ellipse cx="150" cy="90" rx="160" ry="20" fill="url(#bg-cumple)"/>
+
+  <text x="150" y="35" font-family="Arial, sans-serif" font-size="9" font-weight="500"
+        fill="rgba(255,255,255,0.7)" text-anchor="middle" letter-spacing="3">ESTÁS INVITADO A</text>
+  <text x="150" y="62" font-family="Arial, sans-serif" font-size="22" font-weight="700"
+        fill="white" text-anchor="middle" letter-spacing="-0.5">¡Mi Cumple! 🎂</text>
+
+  <!-- Nombre -->
+  <text x="150" y="120" font-family="Arial, sans-serif" font-size="28" font-weight="700"
+        fill="#1a1a2e" text-anchor="middle">Rodrigo</text>
+  <text x="150" y="140" font-family="Arial, sans-serif" font-size="13" font-weight="300"
+        fill="#6c63ff" text-anchor="middle">cumple 18 años</text>
+
+  <!-- Cards de info -->
+  <!-- Fecha -->
+  <rect x="28" y="158" width="115" height="72" rx="16" fill="white"
+        stroke="#e0dcff" stroke-width="1" filter="drop-shadow(0 2px 6px rgba(108,99,255,0.08))"/>
+  <rect x="28" y="158" width="115" height="20" rx="16" fill="url(#purple-grad)" opacity="0.15"/>
+  <rect x="28" y="168" width="115" height="10" rx="0" fill="url(#purple-grad)" opacity="0.15"/>
+  <text x="85"  y="175" font-family="Arial" font-size="7.5" font-weight="600"
+        fill="#6c63ff" text-anchor="middle" letter-spacing="1">FECHA</text>
+  <text x="85"  y="200" font-family="Arial" font-size="22" font-weight="700"
+        fill="#1a1a2e" text-anchor="middle">28</text>
+  <text x="85"  y="218" font-family="Arial" font-size="9" fill="#6c63ff" text-anchor="middle">Agosto · 2026</text>
+
+  <!-- Hora -->
+  <rect x="157" y="158" width="115" height="72" rx="16" fill="white"
+        stroke="#e0dcff" stroke-width="1" filter="drop-shadow(0 2px 6px rgba(108,99,255,0.08))"/>
+  <rect x="157" y="158" width="115" height="20" rx="16" fill="url(#purple-grad)" opacity="0.15"/>
+  <rect x="157" y="168" width="115" height="10" rx="0" fill="url(#purple-grad)" opacity="0.15"/>
+  <text x="214"  y="175" font-family="Arial" font-size="7.5" font-weight="600"
+        fill="#6c63ff" text-anchor="middle" letter-spacing="1">HORA</text>
+  <text x="214"  y="200" font-family="Arial" font-size="22" font-weight="700"
+        fill="#1a1a2e" text-anchor="middle">8PM</text>
+  <text x="214"  y="218" font-family="Arial" font-size="9" fill="#6c63ff" text-anchor="middle">Hasta las 2 AM</text>
+
+  <!-- Lugar -->
+  <rect x="28" y="240" width="244" height="52" rx="16" fill="white"
+        stroke="#e0dcff" stroke-width="1"/>
+  <circle cx="55" cy="266" r="14" fill="url(#purple-grad)" opacity="0.15"/>
+  <text x="55" y="270" font-family="Arial" font-size="14" text-anchor="middle">📍</text>
+  <text x="80"  y="260" font-family="Arial" font-size="9" font-weight="600" fill="#1a1a2e">Terraza Rooftop Sky</text>
+  <text x="80"  y="274" font-family="Arial" font-size="8" fill="#9ca3af">Monterrey, NL · Piso 22</text>
+  <!-- Arrow -->
+  <text x="254" y="269" font-family="Arial" font-size="12" fill="#6c63ff" text-anchor="middle">›</text>
+
+  <!-- Dress code -->
+  <rect x="28" y="302" width="244" height="38" rx="12"
+        fill="url(#purple-grad)" opacity="0.1" stroke="#c4b5fd" stroke-width="1"/>
+  <text x="150" y="318" font-family="Arial" font-size="8" font-weight="600"
+        fill="#6c63ff" text-anchor="middle" letter-spacing="1">VESTIMENTA</text>
+  <text x="150" y="331" font-family="Arial" font-size="9.5" fill="#1a1a2e"
+        text-anchor="middle">Business Casual</text>
+
+  <!-- Botón RSVP -->
+  <rect x="75" y="352" width="150" height="34" rx="17" fill="url(#purple-grad)"/>
+  <text x="150" y="373" font-family="Arial" font-size="11" font-weight="600"
+        fill="white" text-anchor="middle">Confirmar asistencia</text>
+</svg>

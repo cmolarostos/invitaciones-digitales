@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 400" width="300" height="400">
+  <defs>
+    <linearGradient id="bg-xv" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%"   stop-color="#fff1f8"/>
+      <stop offset="50%"  stop-color="#fdf4ff"/>
+      <stop offset="100%" stop-color="#f0f4ff"/>
+    </linearGradient>
+    <linearGradient id="blob1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fce7f3" stop-opacity="0.7"/>
+      <stop offset="100%" stop-color="#f3e8ff" stop-opacity="0"/>
+    </linearGradient>
+    <clipPath id="circle-clip">
+      <circle cx="150" cy="115" r="52"/>
+    </clipPath>
+  </defs>
+
+  <!-- Fondo -->
+  <rect width="300" height="400" fill="url(#bg-xv)"/>
+
+  <!-- Blobs decorativos -->
+  <circle cx="30"  cy="50"  r="80" fill="#fce7f3" opacity="0.45"/>
+  <circle cx="270" cy="180" r="70" fill="#ede9fe" opacity="0.35"/>
+  <circle cx="80"  cy="370" r="60" fill="#fce7f3" opacity="0.3"/>
+
+  <!-- Foto circular con anillo -->
+  <circle cx="150" cy="115" r="56" fill="white" opacity="0.7"/>
+  <circle cx="150" cy="115" r="52" fill="#f9d0e4"/>
+  <!-- Silueta decorativa -->
+  <ellipse cx="150" cy="118" rx="28" ry="32" fill="#f0a0c8" opacity="0.6"/>
+  <circle cx="150" cy="96" r="14" fill="#f0a0c8" opacity="0.7"/>
+  <!-- Anillo exterior -->
+  <circle cx="150" cy="115" r="56" fill="none" stroke="#f9a8d4" stroke-width="1.5"/>
+  <circle cx="150" cy="115" r="60" fill="none" stroke="#f3e8ff" stroke-width="1"/>
+
+  <!-- Badge "Mis XV Años" -->
+  <text x="150" y="185" font-family="Georgia, serif" font-size="9" fill="#f472b6"
+        text-anchor="middle" letter-spacing="2">✦ MIS XV AÑOS ✦</text>
+
+  <!-- Nombre principal -->
+  <text x="150" y="215" font-family="Georgia, serif" font-size="26" font-weight="300"
+        fill="#1c1917" text-anchor="middle">Valentina</text>
+  <text x="150" y="238" font-family="Georgia, serif" font-size="14" font-style="italic"
+        fill="#f472b6" text-anchor="middle">una noche para recordar</text>
+
+  <!-- Línea divisoria con ornamento -->
+  <line x1="90" y1="252" x2="140" y2="252" stroke="#f9a8d4" stroke-width="0.8"/>
+  <circle cx="150" cy="252" r="2.5" fill="#f472b6"/>
+  <line x1="160" y1="252" x2="210" y2="252" stroke="#f9a8d4" stroke-width="0.8"/>
+
+  <!-- Card glassmorphism: cuenta regresiva -->
+  <rect x="30" y="263" width="240" height="52" rx="14"
+        fill="white" fill-opacity="0.65" stroke="white" stroke-width="1"/>
+  <text x="150" y="280" font-family="Arial, sans-serif" font-size="7" fill="#f472b6"
+        text-anchor="middle" letter-spacing="1.5">FALTAN</text>
+  <text x="72"  y="300" font-family="Georgia, serif" font-size="18" fill="#1c1917" text-anchor="middle">45</text>
+  <text x="116" y="300" font-family="Georgia, serif" font-size="18" fill="#1c1917" text-anchor="middle">12</text>
+  <text x="160" y="300" font-family="Georgia, serif" font-size="18" fill="#1c1917" text-anchor="middle">30</text>
+  <text x="204" y="300" font-family="Georgia, serif" font-size="18" fill="#1c1917" text-anchor="middle">08</text>
+  <text x="72"  y="309" font-family="Arial, sans-serif" font-size="6.5" fill="#a8a29e" text-anchor="middle">Días</text>
+  <text x="116" y="309" font-family="Arial, sans-serif" font-size="6.5" fill="#a8a29e" text-anchor="middle">Horas</text>
+  <text x="160" y="309" font-family="Arial, sans-serif" font-size="6.5" fill="#a8a29e" text-anchor="middle">Min</text>
+  <text x="204" y="309" font-family="Arial, sans-serif" font-size="6.5" fill="#a8a29e" text-anchor="middle">Seg</text>
+
+  <!-- Card: fecha -->
+  <rect x="30" y="323" width="240" height="46" rx="14"
+        fill="white" fill-opacity="0.65" stroke="white" stroke-width="1"/>
+  <text x="150" y="338" font-family="Arial, sans-serif" font-size="7" fill="#f472b6"
+        text-anchor="middle" letter-spacing="1.5">LA FECHA</text>
+  <text x="90"  y="358" font-family="Georgia, serif" font-size="20" fill="#1c1917" text-anchor="middle">15</text>
+  <text x="155" y="356" font-family="Georgia, serif" font-size="13" fill="#f472b6" text-anchor="middle">Marzo</text>
+  <text x="155" y="364" font-family="Georgia, serif" font-size="10" fill="#a8a29e" text-anchor="middle">2026</text>
+
+  <!-- Decoración esquinas -->
+  <text x="18"  y="28"  font-family="Arial" font-size="14" fill="#f9a8d4" opacity="0.6">✦</text>
+  <text x="272" y="28"  font-family="Arial" font-size="14" fill="#f9a8d4" opacity="0.6">✦</text>
+  <text x="18"  y="390" font-family="Arial" font-size="14" fill="#f9a8d4" opacity="0.6">✦</text>
+  <text x="272" y="390" font-family="Arial" font-size="14" fill="#f9a8d4" opacity="0.6">✦</text>
+</svg>
