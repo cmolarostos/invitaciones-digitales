@@ -16,6 +16,9 @@
         "intl"
     ],
     "build": {
+        "env": {
+            "COMPOSER_ALLOW_SUPERUSER": "1"
+        },
         "cmds": [
             "npm ci",
             "npm run build",
