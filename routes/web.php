@@ -5,6 +5,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\CatalogController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\EventPhotoController;
 use App\Http\Controllers\GuestController;
@@ -50,7 +51,7 @@ Route::prefix('rsvp')->name('rsvp.')->group(function () {
 
 Route::middleware('auth')->group(function () {
 
-    Route::get('/', fn () => redirect()->route('events.index'));
+    Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 
     // Wizard nuevo evento
     Route::get('events/select-type',                  [EventController::class, 'create'])->name('events.create');

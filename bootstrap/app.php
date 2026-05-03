@@ -13,7 +13,7 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware->trustProxies(at: '*');
         $middleware->redirectGuestsTo(fn () => route('login'));
-        $middleware->redirectUsersTo(fn () => route('events.index'));
+        $middleware->redirectUsersTo(fn () => route('dashboard'));
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //
