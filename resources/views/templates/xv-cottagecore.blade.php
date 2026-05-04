@@ -114,14 +114,14 @@
     <div class="content">
 
         {{-- Header --}}
-        <header class="mt-12">
+        <header class="mt-12 fade-up delay-1">
             <span style="color:var(--terracotta); letter-spacing:0.2em; font-size:0.75rem; font-weight:300; text-transform:uppercase;">
                 Mis Quince Años
             </span>
 
             {{-- Foto de portada circular --}}
             @if($cover = $event->coverPhoto())
-                <div style="margin: 1.5rem auto; width: 120px; height: 120px;
+                <div class="scale-in delay-2" style="margin: 1.5rem auto; width: 120px; height: 120px;
                             border-radius: 50%; overflow: hidden;
                             border: 3px solid var(--pink);
                             box-shadow: 0 4px 16px rgba(214,140,122,0.2);">
@@ -136,7 +136,7 @@
         </header>
 
         {{-- Ornamento SVG --}}
-        <div style="display:flex; justify-content:center; margin: 1.5rem 0;">
+        <div class="fade-in delay-2" style="display:flex; justify-content:center; margin: 1.5rem 0;">
             <svg width="120" height="40" viewBox="0 0 120 40" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M10 20C30 10 40 30 60 20C80 10 90 30 110 20" stroke="#f5c2c7" stroke-width="2" stroke-linecap="round"/>
                 <circle cx="60" cy="20" r="4" fill="#d68c7a"/>
@@ -145,7 +145,7 @@
         </div>
 
         {{-- Fecha --}}
-        <div style="background:rgba(245,194,199,0.15); padding: 1rem 1.5rem; border-radius:999px;
+        <div class="fade-up delay-3" style="background:rgba(245,194,199,0.15); padding: 1rem 1.5rem; border-radius:999px;
                     border: 1px solid rgba(245,194,199,0.4); color:var(--sage); font-weight:300; margin-bottom:1.5rem;">
             <p style="font-size:1.2rem;">
                 {{ $event->event_date->translatedFormat('l, d \d\e F') }}
@@ -156,7 +156,7 @@
         </div>
 
         {{-- Cuenta regresiva --}}
-        <div style="display:flex; justify-content:center; gap:1.5rem; margin-bottom:1.5rem;"
+        <div class="fade-up delay-4" style="display:flex; justify-content:center; gap:1.5rem; margin-bottom:1.5rem;"
              id="countdown">
             <div class="cd-box"><span class="cd-num" id="cd-days">--</span><span class="cd-label">Días</span></div>
             <div class="cd-box"><span class="cd-num" id="cd-hours">--</span><span class="cd-label">Horas</span></div>
@@ -165,7 +165,7 @@
         </div>
 
         {{-- Lugar --}}
-        <section style="color:var(--sage); font-weight:300; margin-bottom:1.5rem;">
+        <section class="fade-up delay-5" style="color:var(--sage); font-weight:300; margin-bottom:1.5rem;">
             @if($event->venue_name)
                 <h3 class="serif-font" style="font-size:1.5rem; color:var(--terracotta);">
                     {{ $event->venue_name }}
@@ -188,7 +188,7 @@
 
         {{-- Dress code --}}
         @if($event->dress_code)
-            <div style="margin-bottom:1.5rem; font-size:0.85rem; color:var(--sage); font-weight:300;">
+            <div class="fade-up delay-5" style="margin-bottom:1.5rem; font-size:0.85rem; color:var(--sage); font-weight:300;">
                 <span style="letter-spacing:0.15em; text-transform:uppercase; font-size:0.7rem;">Vestimenta</span>
                 <p class="serif-font" style="font-size:1.2rem; color:var(--terracotta); margin-top:0.25rem;">
                     {{ $event->dress_code }}
@@ -197,7 +197,7 @@
         @endif
 
         {{-- Ornamento separador --}}
-        <div style="display:flex; justify-content:center; transform:rotate(180deg); margin-bottom:1.5rem;">
+        <div class="fade-in delay-6" style="display:flex; justify-content:center; transform:rotate(180deg); margin-bottom:1.5rem;">
             <svg width="80" height="30" viewBox="0 0 120 40" fill="none">
                 <path d="M20 20C40 15 50 25 60 20C70 15 80 25 100 20" stroke="#f5c2c7" stroke-width="1.5"/>
             </svg>
@@ -205,7 +205,7 @@
 
         {{-- Galería --}}
         @if($event->photos->count() > 1)
-            <div class="gallery-grid" style="margin-bottom:1.5rem;">
+            <div class="gallery-grid fade-in delay-6" style="margin-bottom:1.5rem;">
                 @foreach($event->photos->skip(1)->take(6) as $photo)
                     <img src="{{ $photo->url }}" alt="">
                 @endforeach
@@ -214,17 +214,17 @@
 
         {{-- Notas / cita --}}
         @if($event->notes)
-            <p style="font-style:italic; font-size:0.8rem; color:var(--sage); opacity:0.85; margin-bottom:1.5rem; line-height:1.6;">
+            <p class="fade-up delay-7" style="font-style:italic; font-size:0.8rem; color:var(--sage); opacity:0.85; margin-bottom:1.5rem; line-height:1.6;">
                 "{{ $event->notes }}"
             </p>
         @else
-            <p style="font-style:italic; font-size:0.8rem; color:var(--sage); opacity:0.8; margin-bottom:1.5rem; line-height:1.6;">
+            <p class="fade-up delay-7" style="font-style:italic; font-size:0.8rem; color:var(--sage); opacity:0.8; margin-bottom:1.5rem; line-height:1.6;">
                 "Bajo la sombra de los árboles y el aroma de las flores,<br>celebremos juntos este inicio."
             </p>
         @endif
 
         {{-- Footer --}}
-        <footer style="padding-bottom:2rem;">
+        <footer class="fade-in delay-7" style="padding-bottom:2rem;">
             <p style="font-size:0.7rem; color:var(--sage); opacity:0.6; letter-spacing:0.15em; text-transform:uppercase;">
                 ✦ ✦ ✦
             </p>
