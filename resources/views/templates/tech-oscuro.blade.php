@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ $event->name }}</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+
+    <style>
+        body {
+            background-color: #0d1117;
+            font-family: 'Share Tech Mono', monospace;
+            color: #67e8f9;
+        }
+
+        .font-display { font-family: 'Rajdhani', sans-serif; }
+
+        .card {
+            background: rgba(30, 41, 59, 0.6);
+            border: 1px solid rgba(34, 211, 238, 0.15);
+            border-radius: 8px;
+            backdrop-filter: blur(8px);
+        }
+
+        .accent-line {
+            height: 2px;
+            width: 80px;
+            background: linear-gradient(90deg, #22d3ee, transparent);
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 0.65rem;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            color: #22d3ee;
+            opacity: 0.7;
+            margin-bottom: 0.5rem;
+        }
+
+        .grid-info {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        /* Countdown */
+        .cd-num {
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 2.2rem;
+            color: #fff;
+            line-height: 1;
+        }
+        .cd-label {
+            font-size: 0.6rem;
+            letter-spacing: 0.2em;
+            color: #22d3ee;
+            text-transform: uppercase;
+            margin-top: 4px;
+            opacity: 0.7;
+        }
+
+        /* Scanline overlay */
+        .scanlines {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+            background: repeating-linear-gradient(
+                0deg,
+                transparent,
+                transparent 2px,
+                rgba(0, 0, 0, 0.05) 2px,
+                rgba(0, 0, 0, 0.05) 4px
+            );
+        }
+
+        /* Glow border on cards */
+        .card-glow {
+            box-shadow: 0 0 0 1px rgba(34, 211, 238, 0.1),
+                        0 4px 24px rgba(34, 211, 238, 0.05);
+        }
+
+        /* Tag chip */
+        .chip {
+            display: inline-block;
+            background: rgba(34, 211, 238, 0.1);
+            border: 1px solid rgba(34, 211, 238, 0.3);
+            color: #22d3ee;
+            font-size: 0.7rem;
+            letter-spacing: 0.15em;
+            padding: 3px 12px;
+            border-radius: 999px;
+            text-transform: uppercase;
+        }
+
+        /* Gallery hover */
+        .gallery-img {
+            width: 100%;
+            aspect-ratio: 1;
+            object-fit: cover;
+            border-radius: 6px;
+            border: 1px solid rgba(34, 211, 238, 0.1);
+            transition: transform 0.4s ease, border-color 0.3s ease;
+        }
+        .gallery-img:hover {
+            transform: scale(1.04);
+            border-color: rgba(34, 211, 238, 0.5);
+        }
+
+        /* Cursor blink */
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50%       { opacity: 0; }
+        }
+        .cursor { animation: blink 1s step-end infinite; }
+
+        /* Noise background blobs */
+        .blob {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(80px);
+            pointer-events: none;
+            z-index: 0;
+        }
+    </style>
+</head>
+<body>
+
+{{-- Decoración de fondo --}}
+<div class="scanlines" aria-hidden="true"></div>
+<div class="blob" style="width:300px;height:300px;top:-80px;left:-80px;background:#0e7490;opacity:0.12;"></div>
+<div class="blob" style="width:250px;height:250px;bottom:-60px;right:-60px;background:#164e63;opacity:0.15;"></div>
+
+<div class="relative z-10 max-w-lg mx-auto px-4 py-12 space-y-6">
+
+    {{-- Header --}}
+    <header class="fade-up delay-1 text-center space-y-4">
+        <span class="chip">{{ $event->template->eventType->name ?? 'Evento' }}</span>
+
+        <div>
+            <p class="section-title mt-4">Estás invitado a</p>
+            <h1 class="font-display text-5xl font-bold text-white leading-tight mt-1">
+                {{ $event->name }}<span class="cursor text-cyan-400">_</span>
+            </h1>
+        </div>
+
+        <div class="accent-line"></div>
+
+        <p class="text-xs opacity-50">
+            {{ $event->event_date->translatedFormat('l d \d\e F \d\e Y') }}
+            @if($event->event_time) · {{ $event->event_time }} hrs @endif
+        </p>
+    </header>
+
+    {{-- Foto de portada --}}
+    @if($cover = $event->coverPhoto())
+        <div class="fade-up delay-2 overflow-hidden rounded-lg card-glow"
+             style="border: 1px solid rgba(34,211,238,0.15);">
+            <img src="{{ $cover->url }}" alt="{{ $event->name }}"
+                 class="w-full max-h-72 object-cover">
+            <div style="height:2px;background:linear-gradient(90deg,transparent,#22d3ee,transparent);"></div>
+        </div>
+    @endif
+
+    {{-- Cuenta regresiva --}}
+    <div class="fade-up delay-3 card card-glow p-5 text-center">
+        <p class="section-title">Sistema de cuenta regresiva</p>
+        <div class="flex justify-center gap-6 mt-3" id="countdown">
+            <div><p class="cd-num" id="cd-days">--</p><p class="cd-label">Días</p></div>
+            <div><p class="cd-num" id="cd-hours">--</p><p class="cd-label">Horas</p></div>
+            <div><p class="cd-num" id="cd-mins">--</p><p class="cd-label">Min</p></div>
+            <div><p class="cd-num" id="cd-secs">--</p><p class="cd-label">Seg</p></div>
+        </div>
+    </div>
+
+    {{-- Detalles --}}
+    <div class="fade-up delay-4 grid-info">
+
+        {{-- Fecha --}}
+        <div class="card card-glow p-4">
+            <p class="section-title">Fecha</p>
+            <p class="font-display text-4xl font-bold text-white leading-none">
+                {{ $event->event_date->format('d') }}
+            </p>
+            <p class="text-cyan-400 text-sm mt-1 capitalize">
+                {{ $event->event_date->translatedFormat('F') }}
+            </p>
+            <p class="text-xs opacity-50">{{ $event->event_date->format('Y') }}</p>
+        </div>
+
+        {{-- Hora --}}
+        <div class="card card-glow p-4">
+            <p class="section-title">Horario</p>
+            @if($event->event_time)
+                <p class="font-display text-4xl font-bold text-white leading-none">
+                    {{ \Carbon\Carbon::parse($event->event_time)->format('g:i') }}
+                </p>
+                <p class="text-cyan-400 text-sm mt-1">
+                    {{ \Carbon\Carbon::parse($event->event_time)->format('A') }}
+                </p>
+            @else
+                <p class="font-display text-2xl font-bold text-white">Por<br>confirmar</p>
+            @endif
+        </div>
+
+        {{-- Lugar --}}
+        @if($event->venue_name || $event->venue_address)
+            <div class="card card-glow p-4" style="grid-column: span 2;">
+                <p class="section-title">Ubicación</p>
+                @if($event->venue_name)
+                    <p class="font-display text-xl font-semibold text-white">{{ $event->venue_name }}</p>
+                @endif
+                @if($event->venue_address)
+                    <p class="text-xs opacity-60 mt-1">{{ $event->venue_address }}</p>
+                @endif
+                @if($event->venue_maps_url)
+                    <a href="{{ $event->venue_maps_url }}" target="_blank"
+                       class="inline-block mt-3 text-xs text-cyan-400 hover:text-white transition-colors">
+                        &gt; Ver en el mapa_
+                    </a>
+                @endif
+            </div>
+        @endif
+
+    </div>
+
+    {{-- Dress code --}}
+    @if($event->dress_code)
+        <div class="fade-up delay-5 card card-glow p-4 flex items-center gap-4">
+            <div style="width:36px;height:36px;background:rgba(34,211,238,0.1);border:1px solid rgba(34,211,238,0.25);
+                        border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#22d3ee" stroke-width="1.5">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                          d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0"/>
+                </svg>
+            </div>
+            <div>
+                <p class="section-title" style="margin-bottom:2px;">Código de vestimenta</p>
+                <p class="font-display text-lg font-semibold text-white">{{ $event->dress_code }}</p>
+            </div>
+        </div>
+    @endif
+
+    {{-- Notas --}}
+    @if($event->notes)
+        <div class="fade-up delay-5 card card-glow p-4">
+            <p class="section-title">Mensaje</p>
+            <p class="text-sm leading-relaxed opacity-80">"{{ $event->notes }}"</p>
+        </div>
+    @endif
+
+    {{-- Galería --}}
+    @if($event->photos->count() > 1)
+        <div class="fade-up delay-6">
+            <p class="section-title px-1 mb-3">Galería</p>
+            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;">
+                @foreach($event->photos->skip(1)->take(9) as $photo)
+                    <img src="{{ $photo->url }}" alt="" class="gallery-img">
+                @endforeach
+            </div>
+        </div>
+    @endif
+
+    {{-- Footer --}}
+    <footer class="fade-up delay-7 text-center pt-4 pb-8">
+        <div class="accent-line mb-4"></div>
+        <p class="text-xs opacity-30 tracking-widest uppercase">
+            &gt; fin de transmisión_
+        </p>
+    </footer>
+
+</div>
+
+<script>
+    const eventDate = new Date('{{ $event->event_date->format('Y-m-d') }}T{{ $event->event_time ?? '20:00' }}');
+
+    function update() {
+        const diff = eventDate - Date.now();
+
+        if (diff <= 0) {
+            document.getElementById('countdown').innerHTML =
+                '<p style="font-family:Rajdhani,sans-serif;font-size:1.3rem;font-weight:700;color:#22d3ee;letter-spacing:0.1em;">&gt; EVENTO EN CURSO_</p>';
+            return;
+        }
+
+        document.getElementById('cd-days').textContent  = String(Math.floor(diff / 86400000)).padStart(2, '0');
+        document.getElementById('cd-hours').textContent = String(Math.floor(diff % 86400000 / 3600000)).padStart(2, '0');
+        document.getElementById('cd-mins').textContent  = String(Math.floor(diff % 3600000 / 60000)).padStart(2, '0');
+        document.getElementById('cd-secs').textContent  = String(Math.floor(diff % 60000 / 1000)).padStart(2, '0');
+    }
+
+    update();
+    setInterval(update, 1000);
+</script>
+
+</body>
+</html>
