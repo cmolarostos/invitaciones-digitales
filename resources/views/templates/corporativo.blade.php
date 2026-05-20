@@ -32,19 +32,12 @@
         }
         .timeline-item:last-child::before { height: 16px; }
 
-        @keyframes fadein {
-            from { opacity: 0; transform: translateY(12px); }
-            to   { opacity: 1; transform: translateY(0); }
-        }
-        .fadein   { animation: fadein 0.6s ease both; }
-        .fadein-2 { animation: fadein 0.6s ease 0.15s both; }
-        .fadein-3 { animation: fadein 0.6s ease 0.3s both; }
     </style>
 </head>
 <body>
 
 {{-- Header navy --}}
-<div class="navy fadein">
+<div class="navy fade-up delay-1">
     <div class="max-w-lg mx-auto px-6 py-10">
         <p class="text-blue-300 text-xs font-semibold uppercase tracking-widest mb-3">
             Invitación oficial
@@ -63,7 +56,7 @@
 <div class="max-w-lg mx-auto px-4 py-6 space-y-4">
 
     {{-- Fecha y hora --}}
-    <div class="card p-5 fadein">
+    <div class="card p-5 fade-up delay-1">
         <div class="grid grid-cols-2 gap-4">
             <div class="accent-bg accent-border border rounded-xl p-4 text-center">
                 <p class="text-xs font-semibold accent uppercase tracking-wider mb-2">Fecha</p>
@@ -89,7 +82,7 @@
     </div>
 
     {{-- Cuenta regresiva --}}
-    <div class="card p-5 fadein-2">
+    <div class="card p-5 fade-up delay-3">
         <p class="text-xs font-semibold accent uppercase tracking-widest mb-4">Tiempo restante</p>
         <div class="grid grid-cols-4 gap-3 text-center" id="countdown">
             @foreach(['days' => 'Días', 'hours' => 'Horas', 'mins' => 'Min', 'secs' => 'Seg'] as $key => $label)
@@ -106,7 +99,7 @@
 
     {{-- Lugar --}}
     @if($event->venue_name || $event->venue_address)
-        <div class="card p-5 fadein-2">
+        <div class="card p-5 fade-up delay-3">
             <p class="text-xs font-semibold accent uppercase tracking-widest mb-3">Ubicación</p>
             <div class="flex items-start gap-3">
                 <div class="w-9 h-9 rounded-lg navy flex items-center justify-center flex-shrink-0">
@@ -137,7 +130,7 @@
 
     {{-- Dress code --}}
     @if($event->dress_code)
-        <div class="card p-5 fadein-3 flex items-center gap-3">
+        <div class="card p-5 fade-up delay-5 flex items-center gap-3">
             <div class="w-9 h-9 rounded-lg navy flex items-center justify-center flex-shrink-0">
                 <svg class="w-4 h-4 text-blue-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                     <path stroke-linecap="round" stroke-linejoin="round"
@@ -153,7 +146,7 @@
 
     {{-- Notas --}}
     @if($event->notes)
-        <div class="card p-5 fadein-3">
+        <div class="card p-5 fade-up delay-5">
             <p class="text-xs font-semibold accent uppercase tracking-widest mb-2">Notas importantes</p>
             <p class="text-sm text-gray-600 leading-relaxed">{{ $event->notes }}</p>
         </div>
@@ -161,7 +154,7 @@
 
     {{-- Galería --}}
     @if($event->photos->count() > 1)
-        <div class="fadein-3">
+        <div class="fade-up delay-5">
             <p class="text-xs font-semibold accent uppercase tracking-widest mb-3 px-1">Galería</p>
             <div class="grid grid-cols-3 gap-2">
                 @foreach($event->photos->skip(1)->take(6) as $photo)

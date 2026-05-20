@@ -45,14 +45,6 @@
         }
         .float { animation: float 4s ease-in-out infinite; }
 
-        @keyframes fadein {
-            from { opacity: 0; transform: translateY(20px); }
-            to   { opacity: 1; transform: translateY(0); }
-        }
-        .fadein { animation: fadein 0.9s ease both; }
-        .fadein-2 { animation: fadein 0.9s ease 0.2s both; }
-        .fadein-3 { animation: fadein 0.9s ease 0.4s both; }
-        .fadein-4 { animation: fadein 0.9s ease 0.6s both; }
     </style>
 </head>
 <body class="font-body gradient-bg text-stone-700 antialiased">
@@ -67,7 +59,7 @@
 <div class="relative max-w-lg mx-auto px-4 py-12 space-y-10">
 
     {{-- ── HERO ────────────────────────────────────────────────────────────── --}}
-    <section class="text-center fadein">
+    <section class="text-center fade-up delay-1">
 
         {{-- Foto de portada --}}
         @if($cover = $event->coverPhoto())
@@ -93,7 +85,7 @@
     </section>
 
     {{-- ── CUENTA REGRESIVA ────────────────────────────────────────────────── --}}
-    <section class="fadein-2">
+    <section class="fade-up delay-3">
         <div class="glass-card rounded-3xl p-6 text-center shadow-sm">
             <p class="text-xs uppercase tracking-widest text-pink-400 mb-4">Faltan</p>
             <div class="grid grid-cols-4 gap-3" id="countdown">
@@ -111,7 +103,7 @@
     </section>
 
     {{-- ── FECHA Y LUGAR ───────────────────────────────────────────────────── --}}
-    <section class="fadein-3 space-y-4">
+    <section class="fade-up delay-5 space-y-4">
 
         {{-- Fecha --}}
         <div class="glass-card rounded-3xl p-6 text-center shadow-sm">
@@ -179,7 +171,7 @@
 
     {{-- ── VESTIMENTA Y NOTAS ──────────────────────────────────────────────── --}}
     @if($event->dress_code || $event->notes)
-        <section class="fadein-4 space-y-4">
+        <section class="fade-up delay-7 space-y-4">
             @if($event->dress_code)
                 <div class="glass-card rounded-3xl p-5 text-center shadow-sm">
                     <p class="text-xs uppercase tracking-widest text-pink-400 mb-2">Vestimenta</p>
@@ -197,7 +189,7 @@
 
     {{-- ── GALERÍA ─────────────────────────────────────────────────────────── --}}
     @if($event->photos->count() > 1)
-        <section class="fadein-4">
+        <section class="fade-up delay-7">
             <div class="divider-line mb-5">
                 <span class="text-xs uppercase tracking-widest text-pink-400">Galería</span>
             </div>
@@ -213,7 +205,7 @@
     @endif
 
     {{-- ── CIERRE ──────────────────────────────────────────────────────────── --}}
-    <footer class="text-center py-6 fadein-4">
+    <footer class="text-center py-6 fade-up delay-7">
         <p class="font-display italic text-2xl text-pink-400">Con amor,</p>
         <p class="font-display text-3xl text-stone-700 mt-1">{{ $event->name }}</p>
         <p class="text-xs text-stone-300 mt-6 tracking-widest uppercase">✦ ✦ ✦</p>
