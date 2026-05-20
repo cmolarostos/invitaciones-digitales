@@ -49,13 +49,6 @@
             100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
         }
 
-        @keyframes fadein {
-            from { opacity: 0; transform: translateY(16px); }
-            to   { opacity: 1; transform: translateY(0); }
-        }
-        .fadein   { animation: fadein 0.7s ease both; }
-        .fadein-2 { animation: fadein 0.7s ease 0.15s both; }
-        .fadein-3 { animation: fadein 0.7s ease 0.3s both; }
     </style>
 </head>
 <body>
@@ -66,7 +59,7 @@
 <div class="max-w-lg mx-auto px-4 pb-16">
 
     {{-- Hero --}}
-    <div class="gradient-hero rounded-b-[40px] px-6 pt-14 pb-16 text-center text-white mb-6 fadein">
+    <div class="gradient-hero rounded-b-[40px] px-6 pt-14 pb-16 text-center text-white mb-6 fade-up delay-1">
 
         @if($cover = $event->coverPhoto())
             <div class="w-28 h-28 mx-auto mb-6 rounded-full overflow-hidden ring-4 ring-white/30 shadow-xl">
@@ -86,7 +79,7 @@
     </div>
 
     {{-- Cuenta regresiva --}}
-    <div class="card p-5 mb-4 fadein-2">
+    <div class="card p-5 mb-4 fade-up delay-3">
         <p class="text-xs font-semibold text-purple-400 uppercase tracking-widest text-center mb-4">
             Faltan
         </p>
@@ -103,7 +96,7 @@
     </div>
 
     {{-- Info cards --}}
-    <div class="grid grid-cols-2 gap-4 mb-4 fadein-3">
+    <div class="grid grid-cols-2 gap-4 mb-4 fade-up delay-5">
 
         {{-- Fecha --}}
         <div class="card p-4 text-center">
@@ -134,7 +127,7 @@
 
     {{-- Lugar --}}
     @if($event->venue_name || $event->venue_address)
-        <div class="card p-5 mb-4 fadein-3">
+        <div class="card p-5 mb-4 fade-up delay-5">
             <p class="text-xs font-semibold text-purple-400 uppercase tracking-widest mb-3">El lugar</p>
             <div class="flex items-start gap-3">
                 <div class="w-10 h-10 rounded-xl bg-purple-100 flex items-center justify-center flex-shrink-0">
@@ -165,7 +158,7 @@
 
     {{-- Dress code / Notas --}}
     @if($event->dress_code || $event->notes)
-        <div class="grid gap-4 mb-4 fadein-3 {{ $event->dress_code && $event->notes ? 'grid-cols-1' : '' }}">
+        <div class="grid gap-4 mb-4 fade-up delay-5 {{ $event->dress_code && $event->notes ? 'grid-cols-1' : '' }}">
             @if($event->dress_code)
                 <div class="card p-4 flex items-center gap-3">
                     <span class="text-2xl">👔</span>
@@ -186,7 +179,7 @@
 
     {{-- Galería --}}
     @if($event->photos->count() > 1)
-        <div class="fadein-3">
+        <div class="fade-up delay-5">
             <p class="text-xs font-semibold text-purple-400 uppercase tracking-widest mb-3">Galería</p>
             <div class="grid grid-cols-3 gap-2">
                 @foreach($event->photos->skip(1)->take(9) as $photo)

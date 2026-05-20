@@ -40,13 +40,6 @@
         .ornament-frame::before { top: 0; }
         .ornament-frame::after  { bottom: 0; }
 
-        @keyframes fadein {
-            from { opacity: 0; transform: translateY(18px); }
-            to   { opacity: 1; transform: translateY(0); }
-        }
-        .fadein   { animation: fadein 1s ease both; }
-        .fadein-2 { animation: fadein 1s ease 0.25s both; }
-        .fadein-3 { animation: fadein 1s ease 0.5s both; }
     </style>
 </head>
 <body>
@@ -54,12 +47,12 @@
 <div class="max-w-lg mx-auto px-6 py-14 text-center text-stone-700">
 
     {{-- Ornamento superior --}}
-    <div class="fadein mb-2">
+    <div class="fade-up delay-1 mb-2">
         <p class="font-display text-4xl gold opacity-60">❧</p>
     </div>
 
     {{-- Encabezado --}}
-    <div class="fadein mb-8">
+    <div class="fade-up delay-1 mb-8">
         <p class="font-body text-xs uppercase tracking-[0.35em] gold mb-5">
             Juntos celebramos
         </p>
@@ -91,7 +84,7 @@
     </div>
 
     {{-- Fecha --}}
-    <div class="fadein-2 border border-amber-200 rounded-sm py-8 px-6 mb-6 ornament-frame">
+    <div class="fade-up delay-3 border border-amber-200 rounded-sm py-8 px-6 mb-6 ornament-frame">
         <p class="font-body text-xs uppercase tracking-[0.3em] gold mb-4">La fecha</p>
 
         <div class="flex items-center justify-center gap-8">
@@ -119,7 +112,7 @@
     </div>
 
     {{-- Cuenta regresiva --}}
-    <div class="fadein-2 bg-white/70 border border-amber-100 rounded-sm py-6 px-4 mb-6">
+    <div class="fade-up delay-3 bg-white/70 border border-amber-100 rounded-sm py-6 px-4 mb-6">
         <p class="font-body text-xs uppercase tracking-[0.3em] gold mb-5">Faltan</p>
         <div class="grid grid-cols-4 gap-2" id="countdown">
             @foreach(['days' => 'Días', 'hours' => 'Horas', 'mins' => 'Min', 'secs' => 'Seg'] as $key => $label)
@@ -134,7 +127,7 @@
 
     {{-- Lugar --}}
     @if($event->venue_name || $event->venue_address)
-        <div class="fadein-3 mb-6">
+        <div class="fade-up delay-5 mb-6">
             <div class="flex items-center justify-center gap-3 mb-5">
                 <div class="h-px w-16 bg-gradient-to-r from-transparent to-amber-300"></div>
                 <p class="font-body text-xs uppercase tracking-[0.3em] gold">El lugar</p>
@@ -158,7 +151,7 @@
 
     {{-- Dress code / Notas --}}
     @if($event->dress_code || $event->notes)
-        <div class="fadein-3 space-y-3 mb-8">
+        <div class="fade-up delay-5 space-y-3 mb-8">
             @if($event->dress_code)
                 <div class="border border-amber-100 bg-white/50 py-3 px-4 rounded-sm">
                     <p class="font-body text-xs uppercase tracking-[0.3em] gold mb-1">Vestimenta</p>
@@ -176,7 +169,7 @@
 
     {{-- Galería --}}
     @if($event->photos->count() > 1)
-        <div class="fadein-3 mb-8">
+        <div class="fade-up delay-5 mb-8">
             <div class="flex items-center justify-center gap-3 mb-4">
                 <div class="h-px w-16 bg-gradient-to-r from-transparent to-amber-300"></div>
                 <p class="font-body text-xs uppercase tracking-[0.3em] gold">Galería</p>
@@ -194,7 +187,7 @@
     @endif
 
     {{-- Cierre --}}
-    <div class="fadein-3">
+    <div class="fade-up delay-5">
         <p class="font-display italic text-2xl gold">Con amor,</p>
         <p class="font-display text-3xl text-stone-700 mt-1">{{ $event->name }}</p>
         <p class="font-display text-3xl gold mt-4 opacity-40">· · ·</p>
