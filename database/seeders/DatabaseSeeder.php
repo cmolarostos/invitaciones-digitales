@@ -49,6 +49,18 @@ class DatabaseSeeder extends Seeder
                 'is_active' => true,
             ],
             [
+                'name'          => 'XV Años Glamour',
+                'thumbnail_url' => '/img/templates/xv-glamour.svg',
+                'blade_file'    => 'templates.xv-glamour',
+                'default_colors' => [
+                    'primary'    => '#c8a96e',
+                    'secondary'  => '#C875DC',
+                    'text'       => '#3D0F55',
+                    'background' => '#FDF6FF',
+                ],
+                'is_active' => true,
+            ],
+            [
                 'name'          => 'Cumpleaños Moderno',
                 'thumbnail_url' => '/img/templates/cumple-moderno.svg',
                 'blade_file'    => 'templates.cumple-moderno',

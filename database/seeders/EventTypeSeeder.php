@@ -16,7 +16,7 @@ class EventTypeSeeder extends Seeder
                 'slug'        => 'xv-anos',
                 'icon'        => '👑',
                 'description' => 'Celebra los 15 años más especiales con estilo',
-                'templates'   => ['XV Años Elegante'],
+                'templates'   => ['XV Años Elegante', 'XV Años Glamour'],
             ],
             [
                 'name'        => 'Boda',

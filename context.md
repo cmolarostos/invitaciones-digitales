@@ -33,6 +33,7 @@ Estoy trabajando en "Invitaciones Digitales", un SaaS de invitaciones de eventos
 - dashboard/index.blade.php       → cards de stats + barras RSVP por evento + actividad
 - templates/xv-cottagecore.blade.php  → plantilla cottagecore con animaciones en cascada
 - templates/xv-elegante.blade.php
+- templates/xv-glamour.blade.php      → plantilla glamour (púrpura/dorado, loader, galería masonry, lightbox, petals)
 - templates/boda-clasica.blade.php
 - templates/cumple-moderno.blade.php
 - templates/corporativo.blade.php
@@ -52,7 +53,10 @@ Estoy trabajando en "Invitaciones Digitales", un SaaS de invitaciones de eventos
 - Subida de fotos con Cloudflare R2 (config ya preparada en .env.example)
 - Envío de invitaciones por WhatsApp
 - Pagos con Stripe para planes premium
-- Más plantillas de diseño
+- ~~Más plantillas de diseño~~ → xv-glamour agregada ✓
+- Subida de fotos con Cloudflare R2 (config ya preparada en .env.example)
+- Envío de invitaciones por WhatsApp
+- Pagos con Stripe para planes premium
 
 ---
-*Última actualización: 2026-05-19*
+*Última actualización: 2026-05-21*
