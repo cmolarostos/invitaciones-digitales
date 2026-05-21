@@ -376,6 +376,18 @@
         footer .sub { font-size: 0.78rem; letter-spacing: 4px; text-transform: uppercase; }
         footer .hearts { font-size: 1.2rem; margin-top: 1rem; display: block; opacity: .6; }
 
+        /* ── SCROLL REVEAL ── */
+        .reveal {
+            opacity: 0;
+            transform: translateY(55px);
+            transition: opacity 0.85s cubic-bezier(0.22,1,0.36,1),
+                        transform 0.85s cubic-bezier(0.22,1,0.36,1);
+        }
+        .reveal.from-left  { transform: translateX(-55px); }
+        .reveal.from-right { transform: translateX(55px);  }
+        .reveal.scale-in   { transform: scale(0.88);       }
+        .reveal.visible    { opacity: 1; transform: none !important; }
+
         /* ── RESPONSIVE ── */
         @media (max-width: 768px) {
             .gallery-masonry { grid-template-columns: repeat(2, 1fr); grid-auto-rows: 180px; }
@@ -443,24 +455,24 @@
 
 {{-- ── COUNTDOWN ── --}}
 <div id="countdown">
-    <p class="cd-label fade-up">✨ ¡Faltan solo...</p>
-    <div class="cd-grid fade-up">
+    <p class="cd-label reveal">✨ ¡Faltan solo...</p>
+    <div class="cd-grid reveal">
         <div class="cd-item"><span class="cd-num" id="cd-days">--</span><span class="cd-unit">Días</span></div>
         <div class="cd-item"><span class="cd-num" id="cd-hours">--</span><span class="cd-unit">Horas</span></div>
         <div class="cd-item"><span class="cd-num" id="cd-mins">--</span><span class="cd-unit">Minutos</span></div>
         <div class="cd-item"><span class="cd-num" id="cd-secs">--</span><span class="cd-unit">Segundos</span></div>
     </div>
-    <p class="cd-footer fade-up">...para mi gran noche! 🌟</p>
+    <p class="cd-footer reveal">...para mi gran noche! 🌟</p>
 </div>
 
 {{-- ── MENSAJE PERSONAL ── --}}
 <section id="message">
-    <div class="section-header fade-up">
+    <div class="section-header reveal">
         <span class="section-label">Una palabra de {{ $event->name }}</span>
         <h2 class="section-heading">Con todo mi corazón</h2>
         <div class="gold-bar"></div>
     </div>
-    <div class="msg-quote fade-up">
+    <div class="msg-quote reveal">
         <p class="msg-text">
             @if($event->notes)
                 {{ $event->notes }}
@@ -479,19 +491,19 @@
 
 {{-- ── DETALLES ── --}}
 <section id="details">
-    <div class="section-header fade-up">
+    <div class="section-header reveal">
         <span class="section-label">El Gran Evento</span>
         <h2 class="section-heading">Detalles de la Celebración</h2>
         <div class="gold-bar"></div>
     </div>
     <div class="details-grid">
-        <div class="detail-card fade-up">
+        <div class="detail-card reveal">
             <span class="detail-icon">📅</span>
             <h3>Fecha</h3>
             <p class="detail-hl">{{ ucfirst($event->event_date->translatedFormat('l, d \d\e F')) }}</p>
             <p>{{ $event->event_date->format('Y') }}</p>
         </div>
-        <div class="detail-card fade-up">
+        <div class="detail-card reveal">
             <span class="detail-icon">🕖</span>
             <h3>Hora</h3>
             @if($event->event_time)
@@ -502,7 +514,7 @@
                 <p>Llegada de invitados<br>8:00 PM Ceremonia</p>
             @endif
         </div>
-        <div class="detail-card fade-up">
+        <div class="detail-card reveal">
             <span class="detail-icon">🏛️</span>
             <h3>Lugar</h3>
             @if($event->venue_name)
@@ -516,7 +528,7 @@
                 <p>Av. Principal #123<br>Centro, Ciudad</p>
             @endif
         </div>
-        <div class="detail-card fade-up">
+        <div class="detail-card reveal">
             <span class="detail-icon">👗</span>
             <h3>Dress Code</h3>
             @if($event->dress_code)
@@ -537,19 +549,19 @@
     $needed        = max(0, 9 - $galleryPhotos->count());
 @endphp
 <section id="gallery">
-    <div class="section-header fade-up">
+    <div class="section-header reveal">
         <span class="section-label">Momentos especiales</span>
         <h2 class="section-heading">Galería de Recuerdos</h2>
         <div class="gold-bar"></div>
     </div>
     <div class="gallery-masonry">
         @foreach($galleryPhotos as $photo)
-            <div class="g-item fade-up">
+            <div class="g-item reveal">
                 <img src="{{ $photo->url }}" alt="" loading="lazy">
             </div>
         @endforeach
         @for($i = 0; $i < $needed; $i++)
-            <div class="g-item fade-up">
+            <div class="g-item reveal">
                 <img src="https://picsum.photos/seed/{{ $dummySeeds[$galleryPhotos->count() + $i] }}/{{ $dummySizes[$galleryPhotos->count() + $i] }}" alt="" loading="lazy">
             </div>
         @endfor
@@ -575,13 +587,13 @@
     ];
 @endphp
 <section id="carousel-section">
-    <div class="section-header fade-up">
+    <div class="section-header reveal">
         <span class="section-label">Mi historia en fotos</span>
         <h2 class="section-heading">Recuerdos Favoritos</h2>
         <div class="gold-bar"></div>
     </div>
 
-    <div class="c-wrap fade-up" id="carouselWrap">
+    <div class="c-wrap reveal scale-in" id="carouselWrap">
         <div class="c-track" id="carouselTrack">
             @if($carouselPhotos->count() > 0)
                 @foreach($carouselPhotos as $i => $photo)
@@ -616,14 +628,14 @@
 
 {{-- ── PROGRAMA DEL EVENTO ── --}}
 <section id="timeline">
-    <div class="section-header fade-up">
+    <div class="section-header reveal">
         <span class="section-label">La noche perfecta</span>
         <h2 class="section-heading">Programa del Evento</h2>
         <div class="gold-bar"></div>
     </div>
 
     <div class="tl-wrap">
-        <div class="tl-item fade-up">
+        <div class="tl-item reveal from-right">
             <div class="tl-dot"></div>
             <div class="tl-card">
                 <p class="tl-time">{{ $event->event_time ? \Carbon\Carbon::parse($event->event_time)->format('g:i A') : '6:00 PM' }}</p>
@@ -631,7 +643,7 @@
                 <p>Bienvenida con cóctel de bienvenida y música de ambiente.</p>
             </div>
         </div>
-        <div class="tl-item fade-up">
+        <div class="tl-item reveal from-left">
             <div class="tl-dot"></div>
             <div class="tl-card">
                 <p class="tl-time">{{ $event->event_time ? \Carbon\Carbon::parse($event->event_time)->addHour()->format('g:i A') : '7:00 PM' }}</p>
@@ -639,7 +651,7 @@
                 <p>El gran momento: {{ $event->name }} hace su entrada triunfal.</p>
             </div>
         </div>
-        <div class="tl-item fade-up">
+        <div class="tl-item reveal from-right">
             <div class="tl-dot"></div>
             <div class="tl-card">
                 <p class="tl-time">{{ $event->event_time ? \Carbon\Carbon::parse($event->event_time)->addMinutes(90)->format('g:i A') : '7:30 PM' }}</p>
@@ -647,7 +659,7 @@
                 <p>Baile del vals con chambelanes. ¡El momento más esperado!</p>
             </div>
         </div>
-        <div class="tl-item fade-up">
+        <div class="tl-item reveal from-left">
             <div class="tl-dot"></div>
             <div class="tl-card">
                 <p class="tl-time">{{ $event->event_time ? \Carbon\Carbon::parse($event->event_time)->addHours(2)->format('g:i A') : '8:00 PM' }}</p>
@@ -655,7 +667,7 @@
                 <p>Palabras de los padres, brindis y corte del pastel de XV.</p>
             </div>
         </div>
-        <div class="tl-item fade-up">
+        <div class="tl-item reveal from-right">
             <div class="tl-dot"></div>
             <div class="tl-card">
                 <p class="tl-time">{{ $event->event_time ? \Carbon\Carbon::parse($event->event_time)->addMinutes(150)->format('g:i A') : '8:30 PM' }}</p>
@@ -668,13 +680,13 @@
 
 {{-- ── UBICACIÓN ── --}}
 <section id="location">
-    <div class="section-header fade-up">
+    <div class="section-header reveal">
         <span class="section-label">¿Cómo llegar?</span>
         <h2 class="section-heading">Ubicación del Evento</h2>
         <div class="gold-bar"></div>
     </div>
 
-    <div class="loc-card fade-up">
+    <div class="loc-card reveal scale-in">
         <div class="loc-map">
             <div class="loc-pin">📍</div>
             <span class="loc-map-label">
@@ -775,6 +787,29 @@ function initPetals() {
     document.getElementById('lightbox-close').addEventListener('click', closeLightbox);
     lightbox.addEventListener('click', e => { if (e.target === lightbox) closeLightbox(); });
     document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+})();
+
+// ── SCROLL REVEAL ──
+(function () {
+    const GRID_PARENTS = ['details-grid', 'gallery-masonry', 'cd-grid', 'tl-wrap'];
+
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if (!entry.isIntersecting) return;
+
+            const el        = entry.target;
+            const parent    = el.parentElement;
+            const isGrid    = GRID_PARENTS.some(cls => parent.classList.contains(cls));
+            const siblings  = isGrid ? Array.from(parent.querySelectorAll('.reveal')) : [];
+            const idx       = isGrid ? siblings.indexOf(el) : 0;
+            const delay     = isGrid ? idx * 110 : 0;
+
+            setTimeout(() => el.classList.add('visible'), delay);
+            observer.unobserve(el);
+        });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 })();
 
 // ── CAROUSEL ──
