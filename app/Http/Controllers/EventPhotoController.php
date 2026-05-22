@@ -22,17 +22,18 @@ class EventPhotoController extends Controller
             'photos.*' => ['required', 'image', 'max:5120'], // 5 MB por foto
         ]);
 
+        $disk      = config('filesystems.photo_disk', 'public');
         $nextOrder = $event->photos()->max('sort_order') + 1;
 
         foreach ($request->file('photos') as $file) {
             $key = "events/{$event->id}/" . Str::uuid() . '.' . $file->getClientOriginalExtension();
 
-            Storage::disk('r2')->put($key, $file->getContent(), 'public');
+            Storage::disk($disk)->put($key, $file->getContent(), 'public');
 
             $event->photos()->create([
                 'uploaded_by' => Auth::id(),
                 'r2_key'      => $key,
-                'url'         => Storage::disk('r2')->url($key),
+                'url'         => Storage::disk($disk)->url($key),
                 'sort_order'  => $nextOrder++,
             ]);
         }
@@ -76,7 +77,8 @@ class EventPhotoController extends Controller
 
         abort_if($photo->event_id !== $event->id, 404);
 
-        Storage::disk('r2')->delete($photo->r2_key);
+        $disk = config('filesystems.photo_disk', 'public');
+        Storage::disk($disk)->delete($photo->r2_key);
         $photo->delete();
 
         return redirect()->route('events.show', $event)
