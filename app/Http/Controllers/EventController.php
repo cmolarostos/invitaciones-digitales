@@ -51,17 +51,26 @@ class EventController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $data = $request->validate([
-            'template_id'    => ['required', 'exists:templates,id'],
-            'name'           => ['required', 'string', 'max:255'],
-            'event_date'     => ['required', 'date'],
-            'event_time'     => ['nullable', 'date_format:H:i'],
-            'venue_name'     => ['nullable', 'string', 'max:255'],
-            'venue_address'  => ['nullable', 'string', 'max:255'],
-            'venue_maps_url' => ['nullable', 'url', 'max:500'],
-            'dress_code'     => ['nullable', 'string', 'max:100'],
-            'notes'          => ['nullable', 'string', 'max:2000'],
-            'custom_colors'  => ['nullable', 'array'],
+            'template_id'           => ['required', 'exists:templates,id'],
+            'name'                  => ['required', 'string', 'max:255'],
+            'event_date'            => ['required', 'date'],
+            'event_time'            => ['nullable', 'date_format:H:i'],
+            'venue_name'            => ['nullable', 'string', 'max:255'],
+            'venue_address'         => ['nullable', 'string', 'max:255'],
+            'venue_maps_url'        => ['nullable', 'url', 'max:500'],
+            'dress_code'            => ['nullable', 'string', 'max:100'],
+            'notes'                 => ['nullable', 'string', 'max:2000'],
+            'custom_colors'         => ['nullable', 'array'],
+            'itinerary'             => ['nullable', 'array'],
+            'itinerary.*.time'      => ['nullable', 'string', 'max:10'],
+            'itinerary.*.title'     => ['required_with:itinerary.*', 'string', 'max:150'],
+            'itinerary.*.description' => ['nullable', 'string', 'max:300'],
         ]);
+
+        $data['itinerary'] = array_values(array_filter(
+            $data['itinerary'] ?? [],
+            fn ($item) => !empty($item['title'])
+        ));
 
         $event = Auth::user()->events()->create($data);
 
@@ -92,17 +101,26 @@ class EventController extends Controller
         $this->authorize('update', $event);
 
         $data = $request->validate([
-            'template_id'    => ['required', 'exists:templates,id'],
-            'name'           => ['required', 'string', 'max:255'],
-            'event_date'     => ['required', 'date'],
-            'event_time'     => ['nullable', 'date_format:H:i'],
-            'venue_name'     => ['nullable', 'string', 'max:255'],
-            'venue_address'  => ['nullable', 'string', 'max:255'],
-            'venue_maps_url' => ['nullable', 'url', 'max:500'],
-            'dress_code'     => ['nullable', 'string', 'max:100'],
-            'notes'          => ['nullable', 'string', 'max:2000'],
-            'custom_colors'  => ['nullable', 'array'],
+            'template_id'           => ['required', 'exists:templates,id'],
+            'name'                  => ['required', 'string', 'max:255'],
+            'event_date'            => ['required', 'date'],
+            'event_time'            => ['nullable', 'date_format:H:i'],
+            'venue_name'            => ['nullable', 'string', 'max:255'],
+            'venue_address'         => ['nullable', 'string', 'max:255'],
+            'venue_maps_url'        => ['nullable', 'url', 'max:500'],
+            'dress_code'            => ['nullable', 'string', 'max:100'],
+            'notes'                 => ['nullable', 'string', 'max:2000'],
+            'custom_colors'         => ['nullable', 'array'],
+            'itinerary'             => ['nullable', 'array'],
+            'itinerary.*.time'      => ['nullable', 'string', 'max:10'],
+            'itinerary.*.title'     => ['required_with:itinerary.*', 'string', 'max:150'],
+            'itinerary.*.description' => ['nullable', 'string', 'max:300'],
         ]);
+
+        $data['itinerary'] = array_values(array_filter(
+            $data['itinerary'] ?? [],
+            fn ($item) => !empty($item['title'])
+        ));
 
         $event->update($data);
 

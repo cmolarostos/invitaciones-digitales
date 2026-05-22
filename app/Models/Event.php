@@ -25,6 +25,7 @@ class Event extends Model
         'venue_maps_url',
         'dress_code',
         'notes',
+        'itinerary',
         'custom_colors',
         'status',
         'published_at',
@@ -33,9 +34,10 @@ class Event extends Model
     protected function casts(): array
     {
         return [
-            'event_date'   => 'date',
+            'event_date'    => 'date',
+            'itinerary'     => 'array',
             'custom_colors' => 'array',
-            'published_at' => 'datetime',
+            'published_at'  => 'datetime',
         ];
     }
 
