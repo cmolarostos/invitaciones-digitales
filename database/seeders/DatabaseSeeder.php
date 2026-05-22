@@ -61,6 +61,18 @@ class DatabaseSeeder extends Seeder
                 'is_active' => true,
             ],
             [
+                'name'          => 'XV Años Rústico',
+                'thumbnail_url' => '/img/templates/xv-rustico.svg',
+                'blade_file'    => 'templates.xv-rustico',
+                'default_colors' => [
+                    'primary'    => '#B25A36',
+                    'secondary'  => '#F4E8D5',
+                    'text'       => '#3A2718',
+                    'background' => '#FAF3E8',
+                ],
+                'is_active' => true,
+            ],
+            [
                 'name'          => 'Cumpleaños Moderno',
                 'thumbnail_url' => '/img/templates/cumple-moderno.svg',
                 'blade_file'    => 'templates.cumple-moderno',

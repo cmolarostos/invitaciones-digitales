@@ -34,6 +34,7 @@ Estoy trabajando en "Invitaciones Digitales", un SaaS de invitaciones de eventos
 - templates/xv-cottagecore.blade.php  → plantilla cottagecore con animaciones en cascada
 - templates/xv-elegante.blade.php
 - templates/xv-glamour.blade.php      → plantilla glamour (púrpura/dorado, loader, galería masonry, lightbox, petals)
+- templates/xv-rustico.blade.php      → plantilla rústico boho (terracota/crema, animación de sobre, galería collage, itinerario, vestimenta, regalos, RSVP)
 - templates/boda-clasica.blade.php
 - templates/cumple-moderno.blade.php
 - templates/corporativo.blade.php
