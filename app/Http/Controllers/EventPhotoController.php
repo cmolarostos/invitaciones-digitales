@@ -19,7 +19,11 @@ class EventPhotoController extends Controller
 
         $request->validate([
             'photos'   => ['required', 'array', 'max:20'],
-            'photos.*' => ['required', 'image', 'max:5120'], // 5 MB por foto
+            'photos.*' => ['required', 'image', 'max:2048'],
+        ], [
+            'photos.required'   => 'Selecciona al menos una imagen.',
+            'photos.*.image'    => 'El archivo debe ser una imagen (JPG, PNG, WEBP).',
+            'photos.*.max'      => 'Cada imagen debe pesar menos de 2 MB.',
         ]);
 
         $disk      = config('filesystems.photo_disk', 'public');
