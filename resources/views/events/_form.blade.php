@@ -47,7 +47,7 @@
         <div>
             <label class="block text-sm font-medium mb-1">Hora</label>
             <input type="time" name="event_time"
-                   value="{{ old('event_time', $event->event_time ?? '') }}"
+                   value="{{ old('event_time', isset($event) ? substr($event->event_time ?? '', 0, 5) : '') }}"
                    class="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400">
             @error('event_time') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
         </div>
