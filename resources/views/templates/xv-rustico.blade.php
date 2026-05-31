@@ -1351,17 +1351,19 @@
 
 // ── RSVP ──
 (function () {
+    const form = document.getElementById('rsvp-form');
+    if (!form) return; // sección oculta cuando requires_rsvp = false
+
     let attending = null;
     let guests = 1;
 
-    const form       = document.getElementById('rsvp-form');
-    const btn        = document.getElementById('rsvp-btn');
-    const thanks     = document.getElementById('rsvp-thanks');
-    const gField     = document.getElementById('guests-field');
-    const gMinus     = document.getElementById('g-minus');
-    const gPlus      = document.getElementById('g-plus');
-    const gCount     = document.getElementById('g-count');
-    const nameInput  = document.getElementById('rsvp-name');
+    const btn       = document.getElementById('rsvp-btn');
+    const thanks    = document.getElementById('rsvp-thanks');
+    const gField    = document.getElementById('guests-field');
+    const gMinus    = document.getElementById('g-minus');
+    const gPlus     = document.getElementById('g-plus');
+    const gCount    = document.getElementById('g-count');
+    const nameInput = document.getElementById('rsvp-name');
 
     document.querySelectorAll('.rsvp-opt').forEach(opt => {
         opt.addEventListener('click', () => {
@@ -1434,9 +1436,14 @@
 (function () {
     const btn    = document.getElementById('yt-toggle');
     const iframe = document.getElementById('yt-iframe');
+    if (!btn || !iframe) return;
+
+    let playing = false;
+
+    // El sobre puede haber arrancado la música antes de que este script corra
+    if (iframe.src) playing = true;
 
     btn.addEventListener('click', function () {
-        const playing = iframe.src !== '';
         if (playing) {
             iframe.src = '';
             btn.textContent = '▶';
@@ -1446,6 +1453,7 @@
             btn.textContent = '⏸';
             btn.title = 'Pausar música';
         }
+        playing = !playing;
     });
 })();
 </script>
