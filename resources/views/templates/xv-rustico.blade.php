@@ -1289,17 +1289,25 @@
 <script>
 // ── ENVELOPE ──
 (function () {
-    const stage = document.getElementById('envelope-stage');
-    const main  = document.getElementById('main-content');
+    const stage  = document.getElementById('envelope-stage');
+    const main   = document.getElementById('main-content');
+    const iframe = document.getElementById('yt-iframe');
+    const btn    = document.getElementById('yt-toggle');
     document.body.style.overflow = 'hidden';
 
     function open() {
         if (stage.classList.contains('open')) return;
         stage.classList.add('open');
+
+        // Arrancar música aprovechando el gesto del usuario
+        if (iframe && iframe.dataset.src) {
+            iframe.src = iframe.dataset.src;
+            if (btn) btn.textContent = '⏸';
+        }
+
         setTimeout(() => {
             document.body.style.overflow = '';
             main.classList.add('visible');
-            // Trigger reveal for elements already in viewport
             document.querySelectorAll('.reveal, .reveal-stagger').forEach(el => {
                 const r = el.getBoundingClientRect();
                 if (r.top < window.innerHeight) el.classList.add('in');
@@ -1426,19 +1434,18 @@
 (function () {
     const btn    = document.getElementById('yt-toggle');
     const iframe = document.getElementById('yt-iframe');
-    let playing  = false;
 
     btn.addEventListener('click', function () {
-        if (!playing) {
-            iframe.src = iframe.dataset.src;
-            btn.textContent = '⏸';
-            btn.title = 'Pausar música';
-        } else {
+        const playing = iframe.src !== '';
+        if (playing) {
             iframe.src = '';
             btn.textContent = '▶';
             btn.title = 'Reproducir música';
+        } else {
+            iframe.src = iframe.dataset.src;
+            btn.textContent = '⏸';
+            btn.title = 'Pausar música';
         }
-        playing = !playing;
     });
 })();
 </script>
