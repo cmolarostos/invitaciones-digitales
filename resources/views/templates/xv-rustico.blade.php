@@ -1400,5 +1400,48 @@
 })();
 </script>
 
+{{-- ── MÚSICA DE FONDO (prueba) ── --}}
+<div id="yt-player-wrap" style="position:fixed;bottom:1.5rem;right:1.5rem;z-index:200;">
+    <button id="yt-toggle"
+            style="width:48px;height:48px;border-radius:50%;
+                   background:var(--terra);color:var(--cream);
+                   border:none;cursor:pointer;font-size:1.3rem;
+                   box-shadow:0 4px 14px rgba(0,0,0,0.25);
+                   display:flex;align-items:center;justify-content:center;
+                   transition:background 0.2s;"
+            title="Reproducir música"
+            aria-label="Reproducir música de fondo">
+        ▶
+    </button>
+    <iframe id="yt-iframe"
+            src=""
+            data-src="https://www.youtube.com/embed/VPRjCeoBqrI?autoplay=1&loop=1&playlist=VPRjCeoBqrI&controls=0&enablejsapi=1"
+            allow="autoplay; encrypted-media"
+            style="display:none;width:0;height:0;border:0;"
+            title="Música de fondo">
+    </iframe>
+</div>
+
+<script>
+(function () {
+    const btn    = document.getElementById('yt-toggle');
+    const iframe = document.getElementById('yt-iframe');
+    let playing  = false;
+
+    btn.addEventListener('click', function () {
+        if (!playing) {
+            iframe.src = iframe.dataset.src;
+            btn.textContent = '⏸';
+            btn.title = 'Pausar música';
+        } else {
+            iframe.src = '';
+            btn.textContent = '▶';
+            btn.title = 'Reproducir música';
+        }
+        playing = !playing;
+    });
+})();
+</script>
+
 </body>
 </html>
