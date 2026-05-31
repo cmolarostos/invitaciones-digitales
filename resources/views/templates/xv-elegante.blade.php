@@ -187,6 +187,30 @@
         </section>
     @endif
 
+    {{-- ── ITINERARIO ──────────────────────────────────────────────────────── --}}
+    @if($event->itinerary)
+        <section class="fade-up delay-7 space-y-4">
+            <div class="divider-line mb-5">
+                <span class="text-xs uppercase tracking-widest text-pink-400">Itinerario</span>
+            </div>
+            <div class="glass-card rounded-3xl p-6 shadow-sm divide-y divide-pink-100">
+                @foreach($event->itinerary as $item)
+                    <div class="flex gap-4 {{ $loop->first ? '' : 'pt-4' }} {{ $loop->last ? '' : 'pb-4' }}">
+                        @if(!empty($item['time']))
+                            <span class="font-display text-pink-400 text-sm tabular-nums shrink-0 pt-0.5">{{ $item['time'] }}</span>
+                        @endif
+                        <div>
+                            <p class="font-display text-lg text-stone-800">{{ $item['title'] }}</p>
+                            @if(!empty($item['description']))
+                                <p class="text-sm text-stone-500 mt-0.5">{{ $item['description'] }}</p>
+                            @endif
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+        </section>
+    @endif
+
     {{-- ── GALERÍA ─────────────────────────────────────────────────────────── --}}
     @if($event->photos->count() > 1)
         <section class="fade-up delay-7">

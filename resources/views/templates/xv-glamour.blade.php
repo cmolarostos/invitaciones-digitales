@@ -627,6 +627,7 @@
 </section>
 
 {{-- ── PROGRAMA DEL EVENTO ── --}}
+@if($event->itinerary)
 <section id="timeline">
     <div class="section-header reveal">
         <span class="section-label">La noche perfecta</span>
@@ -635,48 +636,23 @@
     </div>
 
     <div class="tl-wrap">
-        <div class="tl-item reveal from-right">
+        @foreach($event->itinerary as $item)
+        <div class="tl-item reveal {{ $loop->even ? 'from-left' : 'from-right' }}">
             <div class="tl-dot"></div>
             <div class="tl-card">
-                <p class="tl-time">{{ $event->event_time ? \Carbon\Carbon::parse($event->event_time)->format('g:i A') : '6:00 PM' }}</p>
-                <h4>🌸 Recepción de Invitados</h4>
-                <p>Bienvenida con cóctel de bienvenida y música de ambiente.</p>
+                @if(!empty($item['time']))
+                    <p class="tl-time">{{ $item['time'] }}</p>
+                @endif
+                <h4>{{ $item['title'] }}</h4>
+                @if(!empty($item['description']))
+                    <p>{{ $item['description'] }}</p>
+                @endif
             </div>
         </div>
-        <div class="tl-item reveal from-left">
-            <div class="tl-dot"></div>
-            <div class="tl-card">
-                <p class="tl-time">{{ $event->event_time ? \Carbon\Carbon::parse($event->event_time)->addHour()->format('g:i A') : '7:00 PM' }}</p>
-                <h4>👑 Entrada de la Quinceañera</h4>
-                <p>El gran momento: {{ $event->name }} hace su entrada triunfal.</p>
-            </div>
-        </div>
-        <div class="tl-item reveal from-right">
-            <div class="tl-dot"></div>
-            <div class="tl-card">
-                <p class="tl-time">{{ $event->event_time ? \Carbon\Carbon::parse($event->event_time)->addMinutes(90)->format('g:i A') : '7:30 PM' }}</p>
-                <h4>💃 El Vals</h4>
-                <p>Baile del vals con chambelanes. ¡El momento más esperado!</p>
-            </div>
-        </div>
-        <div class="tl-item reveal from-left">
-            <div class="tl-dot"></div>
-            <div class="tl-card">
-                <p class="tl-time">{{ $event->event_time ? \Carbon\Carbon::parse($event->event_time)->addHours(2)->format('g:i A') : '8:00 PM' }}</p>
-                <h4>🎂 Brindis y Pastel</h4>
-                <p>Palabras de los padres, brindis y corte del pastel de XV.</p>
-            </div>
-        </div>
-        <div class="tl-item reveal from-right">
-            <div class="tl-dot"></div>
-            <div class="tl-card">
-                <p class="tl-time">{{ $event->event_time ? \Carbon\Carbon::parse($event->event_time)->addMinutes(150)->format('g:i A') : '8:30 PM' }}</p>
-                <h4>🎉 ¡A Bailar!</h4>
-                <p>Pista de baile abierta, cena y la fiesta que todos esperamos.</p>
-            </div>
-        </div>
+        @endforeach
     </div>
 </section>
+@endif
 
 {{-- ── UBICACIÓN ── --}}
 <section id="location">

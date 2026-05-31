@@ -152,6 +152,26 @@
         </div>
     @endif
 
+    {{-- Itinerario --}}
+    @if($event->itinerary)
+        <div class="card p-5 fade-up delay-5">
+            <p class="text-xs font-semibold accent uppercase tracking-widest mb-4">Agenda del evento</p>
+            <div class="space-y-3">
+                @foreach($event->itinerary as $item)
+                    <div class="timeline-item">
+                        <p class="font-semibold text-gray-900 text-sm leading-snug">{{ $item['title'] }}</p>
+                        @if(!empty($item['time']))
+                            <p class="text-xs accent mt-0.5">{{ $item['time'] }}</p>
+                        @endif
+                        @if(!empty($item['description']))
+                            <p class="text-xs text-gray-500 mt-0.5">{{ $item['description'] }}</p>
+                        @endif
+                    </div>
+                @endforeach
+            </div>
+        </div>
+    @endif
+
     {{-- Galería --}}
     @if($event->photos->count() > 1)
         <div class="fade-up delay-5">

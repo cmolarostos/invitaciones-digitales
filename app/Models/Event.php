@@ -26,6 +26,7 @@ class Event extends Model
         'dress_code',
         'notes',
         'itinerary',
+        'requires_rsvp',
         'custom_colors',
         'status',
         'published_at',
@@ -36,6 +37,7 @@ class Event extends Model
         return [
             'event_date'    => 'date',
             'itinerary'     => 'array',
+            'requires_rsvp' => 'boolean',
             'custom_colors' => 'array',
             'published_at'  => 'datetime',
         ];

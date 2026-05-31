@@ -253,6 +253,28 @@
                 </div>
             @endif
 
+            {{-- Itinerario --}}
+            @if($event->itinerary)
+                <div class="fade-up delay-6 wood-card p-5">
+                    <h4 class="font-western text-base text-amber-900 text-center mb-4">📋 Programa del evento</h4>
+                    <div class="divide-y divide-amber-200/60">
+                        @foreach($event->itinerary as $item)
+                            <div class="flex gap-3 {{ $loop->first ? '' : 'pt-3' }} {{ $loop->last ? '' : 'pb-3' }}">
+                                @if(!empty($item['time']))
+                                    <span class="font-body text-xs font-semibold text-amber-700 tabular-nums shrink-0 pt-0.5">{{ $item['time'] }}</span>
+                                @endif
+                                <div>
+                                    <p class="font-display font-bold text-amber-950 text-sm">{{ $item['title'] }}</p>
+                                    @if(!empty($item['description']))
+                                        <p class="font-body text-xs text-amber-800/70 mt-0.5">{{ $item['description'] }}</p>
+                                    @endif
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+            @endif
+
         </div>
     </section>
 

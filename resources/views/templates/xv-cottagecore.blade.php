@@ -196,6 +196,28 @@
             </div>
         @endif
 
+        {{-- Itinerario --}}
+        @if($event->itinerary)
+            <div class="fade-up delay-5" style="margin-bottom:1.5rem; text-align:left;">
+                <p style="letter-spacing:0.15em; text-transform:uppercase; font-size:0.7rem; color:var(--terracotta); text-align:center; margin-bottom:1rem;">Itinerario</p>
+                <div style="border:1px solid rgba(214,140,122,0.25); border-radius:8px; overflow:hidden;">
+                    @foreach($event->itinerary as $item)
+                        <div style="display:flex; gap:0.75rem; padding:0.75rem 1rem; {{ !$loop->last ? 'border-bottom:1px solid rgba(214,140,122,0.15);' : '' }}">
+                            @if(!empty($item['time']))
+                                <span style="font-size:0.75rem; color:var(--terracotta); white-space:nowrap; padding-top:2px;">{{ $item['time'] }}</span>
+                            @endif
+                            <div>
+                                <p class="serif-font" style="font-size:1rem; color:var(--sage);">{{ $item['title'] }}</p>
+                                @if(!empty($item['description']))
+                                    <p style="font-size:0.78rem; color:var(--sage); opacity:0.75; margin-top:2px;">{{ $item['description'] }}</p>
+                                @endif
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+        @endif
+
         {{-- Ornamento separador --}}
         <div class="fade-in delay-6" style="display:flex; justify-content:center; transform:rotate(180deg); margin-bottom:1.5rem;">
             <svg width="80" height="30" viewBox="0 0 120 40" fill="none">

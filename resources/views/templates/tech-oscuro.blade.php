@@ -255,6 +255,28 @@
         </div>
     @endif
 
+    {{-- Itinerario --}}
+    @if($event->itinerary)
+        <div class="fade-up delay-5 card card-glow p-4">
+            <p class="section-title mb-3">Agenda del evento</p>
+            <div class="space-y-3">
+                @foreach($event->itinerary as $item)
+                    <div class="flex gap-3 {{ !$loop->last ? 'pb-3 border-b border-cyan-900/40' : '' }}">
+                        @if(!empty($item['time']))
+                            <span class="text-xs text-cyan-400 tabular-nums shrink-0 pt-0.5">{{ $item['time'] }}</span>
+                        @endif
+                        <div>
+                            <p class="font-display text-base font-semibold text-white leading-snug">{{ $item['title'] }}</p>
+                            @if(!empty($item['description']))
+                                <p class="text-xs opacity-50 mt-0.5">{{ $item['description'] }}</p>
+                            @endif
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+        </div>
+    @endif
+
     {{-- Galería --}}
     @if($event->photos->count() > 1)
         <div class="fade-up delay-6">

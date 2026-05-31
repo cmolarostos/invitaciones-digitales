@@ -1057,18 +1057,7 @@
     </section>
 
     {{-- ── ITINERARY ── --}}
-    @php
-        $base = $event->event_time
-            ? \Carbon\Carbon::parse($event->event_time)
-            : \Carbon\Carbon::parse('17:00');
-        $itinerary = [
-            ['time' => $base->format('H:i'),                              'title' => 'Misa de Acción de Gracias', 'desc' => 'Parroquia de San Juan — Asistencia puntual, por favor.'],
-            ['time' => $base->copy()->addHours(2)->format('H:i'),         'title' => 'Recepción',                 'desc' => 'Cóctel de bienvenida en jardín principal.'],
-            ['time' => $base->copy()->addHours(2)->addMinutes(45)->format('H:i'), 'title' => 'Ceremonia de Vals', 'desc' => 'Presentación, brindis y vals con la corte de honor.'],
-            ['time' => $base->copy()->addHours(4)->format('H:i'),         'title' => 'Cena',                     'desc' => 'Tres tiempos servidos en mesa.'],
-            ['time' => $base->copy()->addHours(5)->addMinutes(30)->format('H:i'), 'title' => 'Baile',            'desc' => 'Hasta que el cuerpo aguante.'],
-        ];
-    @endphp
+    @if($event->itinerary)
     <section class="itinerary">
         <div class="head">
             <div class="eyebrow reveal">El día</div>
@@ -1078,18 +1067,21 @@
             </div>
         </div>
         <div class="timeline reveal-stagger">
-            @foreach($itinerary as $item)
+            @foreach($event->itinerary as $item)
             <div class="event-row">
-                <div class="event-time">{{ $item['time'] }}</div>
+                <div class="event-time">{{ $item['time'] ?? '' }}</div>
                 <div class="event-dot"></div>
                 <div>
                     <div class="event-title">{{ $item['title'] }}</div>
-                    <div class="event-desc">{{ $item['desc'] }}</div>
+                    @if(!empty($item['description']))
+                        <div class="event-desc">{{ $item['description'] }}</div>
+                    @endif
                 </div>
             </div>
             @endforeach
         </div>
     </section>
+    @endif
 
     {{-- ── GALLERY ── --}}
     @php
@@ -1229,6 +1221,7 @@
     </section>
 
     {{-- ── RSVP ── --}}
+    @if($event->requires_rsvp)
     <section class="rsvp">
         <div class="eyebrow reveal">Confirma tu asistencia</div>
         <h2 class="reveal" style="margin-top:18px">Confírmanos <em>antes del 15 de julio</em></h2>
@@ -1270,6 +1263,7 @@
             <p id="thanks-body">Tu respuesta fue registrada. Te esperamos el {{ $event->event_date->translatedFormat('d \d\e F') }}.</p>
         </div>
     </section>
+    @endif
 
     {{-- ── CLOSING ── --}}
     <section class="closing">

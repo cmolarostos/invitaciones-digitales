@@ -167,6 +167,32 @@
         </div>
     @endif
 
+    {{-- Itinerario --}}
+    @if($event->itinerary)
+        <div class="fade-up delay-5 space-y-2 mb-6">
+            <div class="flex items-center justify-center gap-3 mb-4">
+                <div class="h-px w-16 bg-gradient-to-r from-transparent to-amber-300"></div>
+                <p class="font-body text-xs uppercase tracking-[0.3em] gold">Itinerario</p>
+                <div class="h-px w-16 bg-gradient-to-l from-transparent to-amber-300"></div>
+            </div>
+            <div class="border border-amber-100 bg-white/50 rounded-sm divide-y divide-amber-100">
+                @foreach($event->itinerary as $item)
+                    <div class="flex gap-3 px-4 py-3">
+                        @if(!empty($item['time']))
+                            <span class="font-body text-xs gold tabular-nums shrink-0 pt-0.5">{{ $item['time'] }}</span>
+                        @endif
+                        <div class="text-left">
+                            <p class="font-display text-base text-stone-800">{{ $item['title'] }}</p>
+                            @if(!empty($item['description']))
+                                <p class="font-body text-xs text-stone-500 mt-0.5">{{ $item['description'] }}</p>
+                            @endif
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+        </div>
+    @endif
+
     {{-- Galería --}}
     @if($event->photos->count() > 1)
         <div class="fade-up delay-5 mb-8">

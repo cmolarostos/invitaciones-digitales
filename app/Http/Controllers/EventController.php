@@ -65,12 +65,14 @@ class EventController extends Controller
             'itinerary.*.time'      => ['nullable', 'string', 'max:10'],
             'itinerary.*.title'     => ['required_with:itinerary.*', 'string', 'max:150'],
             'itinerary.*.description' => ['nullable', 'string', 'max:300'],
+            'requires_rsvp'         => ['boolean'],
         ]);
 
         $data['itinerary'] = array_values(array_filter(
             $data['itinerary'] ?? [],
             fn ($item) => !empty($item['title'])
         ));
+        $data['requires_rsvp'] = $request->boolean('requires_rsvp');
 
         $event = Auth::user()->events()->create($data);
 
@@ -115,12 +117,14 @@ class EventController extends Controller
             'itinerary.*.time'      => ['nullable', 'string', 'max:10'],
             'itinerary.*.title'     => ['required_with:itinerary.*', 'string', 'max:150'],
             'itinerary.*.description' => ['nullable', 'string', 'max:300'],
+            'requires_rsvp'         => ['boolean'],
         ]);
 
         $data['itinerary'] = array_values(array_filter(
             $data['itinerary'] ?? [],
             fn ($item) => !empty($item['title'])
         ));
+        $data['requires_rsvp'] = $request->boolean('requires_rsvp');
 
         $event->update($data);
 

@@ -142,7 +142,7 @@
             @endforelse
         </div>
 
-        @if(count($itineraryItems) === 0)
+        @if(count($itineraryItems ?? []) === 0)
             <p id="itinerary-empty" class="text-sm text-gray-400 text-center py-4 border border-dashed border-gray-200 rounded-lg">
                 Sin pasos aún. Haz clic en "Agregar paso" para comenzar.
             </p>
@@ -151,6 +151,21 @@
                 Sin pasos aún. Haz clic en "Agregar paso" para comenzar.
             </p>
         @endif
+    </div>
+
+    {{-- Confirmación de asistencia --}}
+    <div class="border border-indigo-100 bg-indigo-50/40 rounded-lg px-4 py-3">
+        <label class="flex items-start gap-3 cursor-pointer">
+            <input type="checkbox" name="requires_rsvp" value="1"
+                   class="mt-0.5 h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-400"
+                   {{ old('requires_rsvp', $event->requires_rsvp ?? false) ? 'checked' : '' }}>
+            <div>
+                <span class="text-sm font-medium text-gray-800">Solicitar confirmación de asistencia</span>
+                <p class="text-xs text-gray-500 mt-0.5">
+                    Se mostrará una sección de RSVP en la invitación para que los invitados confirmen si asistirán.
+                </p>
+            </div>
+        </label>
     </div>
 
 </div>
