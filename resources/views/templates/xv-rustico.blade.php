@@ -1289,17 +1289,17 @@
 <script>
 // ── ENVELOPE ──
 (function () {
-    const stage  = document.getElementById('envelope-stage');
-    const main   = document.getElementById('main-content');
-    const iframe = document.getElementById('yt-iframe');
-    const btn    = document.getElementById('yt-toggle');
+    const stage = document.getElementById('envelope-stage');
+    const main  = document.getElementById('main-content');
     document.body.style.overflow = 'hidden';
 
     function open() {
         if (stage.classList.contains('open')) return;
         stage.classList.add('open');
 
-        // Arrancar música aprovechando el gesto del usuario
+        // Búsqueda lazy: el botón de música está después de este script en el DOM
+        const iframe = document.getElementById('yt-iframe');
+        const btn    = document.getElementById('yt-toggle');
         if (iframe && iframe.dataset.src) {
             iframe.src = iframe.dataset.src;
             if (btn) btn.textContent = '⏸';
