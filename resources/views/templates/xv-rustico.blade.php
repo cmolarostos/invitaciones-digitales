@@ -1150,16 +1150,14 @@
     </section>
 
     {{-- ── DRESS CODE ── --}}
+    @if($event->dress_code)
     <section class="dresscode">
         <div class="eyebrow reveal">Código de vestimenta</div>
-        @if($event->dress_code)
-            <h2 class="reveal" style="margin-top:18px">{{ $event->dress_code }}</h2>
-        @else
-            <h2 class="reveal" style="margin-top:18px">Formal <em>de etiqueta</em></h2>
-        @endif
+        <h2 class="reveal" style="margin-top:18px">{{ $event->dress_code }}</h2>
         <div class="divider reveal" aria-hidden="true">
             <svg width="14" height="14" viewBox="0 0 14 14"><circle cx="7" cy="7" r="2" fill="currentColor"/></svg>
         </div>
+        @if($event->dress_code_men || $event->dress_code_women)
         <div class="dc-grid reveal-stagger">
             <div class="dc-col">
                 <svg class="ico" viewBox="0 0 64 64" fill="none" aria-hidden="true">
@@ -1170,7 +1168,11 @@
                     <circle cx="32" cy="40" r="2" fill="currentColor"/>
                 </svg>
                 <h3>Caballeros</h3>
-                <p>Traje oscuro o esmoquin.<br>Corbata o moño.</p>
+                @if($event->dress_code_men)
+                    <p>{{ $event->dress_code_men }}</p>
+                @else
+                    <p>{{ $event->dress_code }}</p>
+                @endif
             </div>
             <div class="sep"></div>
             <div class="dc-col">
@@ -1179,19 +1181,29 @@
                     <path d="M26 8 Q32 12 38 8" stroke="currentColor" stroke-width="1" fill="none"/>
                 </svg>
                 <h3>Damas</h3>
-                <p>Vestido largo.<br>Tonos sobrios.</p>
+                @if($event->dress_code_women)
+                    <p>{{ $event->dress_code_women }}</p>
+                @else
+                    <p>{{ $event->dress_code }}</p>
+                @endif
             </div>
         </div>
+        @endif
+
+        @if($event->dress_code_colors)
         <div class="dc-palette reveal">
             <div class="label">Por favor evita estos colores</div>
             <div class="dc-swatches">
-                <div class="dc-sw x" style="background:#FFFFFF" title="Blanco"></div>
-                <div class="dc-sw x" style="background:var(--terra)" title="Terracota"></div>
-                <div class="dc-sw x" style="background:var(--terra-soft)" title="Salmón"></div>
+                @foreach($event->dress_code_colors as $color)
+                    <div class="dc-sw x" style="background:{{ $color['hex'] }}"
+                         title="{{ $color['label'] ?? '' }}"></div>
+                @endforeach
             </div>
             <div class="label" style="margin-top:18px;color:var(--terra-deep)">Reservados para la festejada</div>
         </div>
+        @endif
     </section>
+    @endif
 
     {{-- ── GIFTS ── --}}
     <section class="gifts">

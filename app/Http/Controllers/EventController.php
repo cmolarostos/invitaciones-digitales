@@ -58,19 +58,28 @@ class EventController extends Controller
             'venue_name'            => ['nullable', 'string', 'max:255'],
             'venue_address'         => ['nullable', 'string', 'max:255'],
             'venue_maps_url'        => ['nullable', 'url', 'max:500'],
-            'dress_code'            => ['nullable', 'string', 'max:100'],
-            'notes'                 => ['nullable', 'string', 'max:2000'],
-            'custom_colors'         => ['nullable', 'array'],
-            'itinerary'             => ['nullable', 'array'],
-            'itinerary.*.time'      => ['nullable', 'string', 'max:10'],
-            'itinerary.*.title'     => ['required_with:itinerary.*', 'string', 'max:150'],
-            'itinerary.*.description' => ['nullable', 'string', 'max:300'],
-            'requires_rsvp'         => ['boolean'],
+            'dress_code'                   => ['nullable', 'string', 'max:100'],
+            'dress_code_men'               => ['nullable', 'string', 'max:300'],
+            'dress_code_women'             => ['nullable', 'string', 'max:300'],
+            'dress_code_colors'            => ['nullable', 'array'],
+            'dress_code_colors.*.hex'      => ['nullable', 'string', 'max:7'],
+            'dress_code_colors.*.label'    => ['nullable', 'string', 'max:20'],
+            'notes'                        => ['nullable', 'string', 'max:2000'],
+            'custom_colors'                => ['nullable', 'array'],
+            'itinerary'                    => ['nullable', 'array'],
+            'itinerary.*.time'             => ['nullable', 'string', 'max:10'],
+            'itinerary.*.title'            => ['required_with:itinerary.*', 'string', 'max:150'],
+            'itinerary.*.description'      => ['nullable', 'string', 'max:300'],
+            'requires_rsvp'                => ['boolean'],
         ]);
 
         $data['itinerary'] = array_values(array_filter(
             $data['itinerary'] ?? [],
             fn ($item) => !empty($item['title'])
+        ));
+        $data['dress_code_colors'] = array_values(array_filter(
+            $data['dress_code_colors'] ?? [],
+            fn ($c) => !empty($c['hex'])
         ));
         $data['requires_rsvp'] = $request->boolean('requires_rsvp');
 
@@ -110,19 +119,28 @@ class EventController extends Controller
             'venue_name'            => ['nullable', 'string', 'max:255'],
             'venue_address'         => ['nullable', 'string', 'max:255'],
             'venue_maps_url'        => ['nullable', 'url', 'max:500'],
-            'dress_code'            => ['nullable', 'string', 'max:100'],
-            'notes'                 => ['nullable', 'string', 'max:2000'],
-            'custom_colors'         => ['nullable', 'array'],
-            'itinerary'             => ['nullable', 'array'],
-            'itinerary.*.time'      => ['nullable', 'string', 'max:10'],
-            'itinerary.*.title'     => ['required_with:itinerary.*', 'string', 'max:150'],
-            'itinerary.*.description' => ['nullable', 'string', 'max:300'],
-            'requires_rsvp'         => ['boolean'],
+            'dress_code'                   => ['nullable', 'string', 'max:100'],
+            'dress_code_men'               => ['nullable', 'string', 'max:300'],
+            'dress_code_women'             => ['nullable', 'string', 'max:300'],
+            'dress_code_colors'            => ['nullable', 'array'],
+            'dress_code_colors.*.hex'      => ['nullable', 'string', 'max:7'],
+            'dress_code_colors.*.label'    => ['nullable', 'string', 'max:20'],
+            'notes'                        => ['nullable', 'string', 'max:2000'],
+            'custom_colors'                => ['nullable', 'array'],
+            'itinerary'                    => ['nullable', 'array'],
+            'itinerary.*.time'             => ['nullable', 'string', 'max:10'],
+            'itinerary.*.title'            => ['required_with:itinerary.*', 'string', 'max:150'],
+            'itinerary.*.description'      => ['nullable', 'string', 'max:300'],
+            'requires_rsvp'                => ['boolean'],
         ]);
 
         $data['itinerary'] = array_values(array_filter(
             $data['itinerary'] ?? [],
             fn ($item) => !empty($item['title'])
+        ));
+        $data['dress_code_colors'] = array_values(array_filter(
+            $data['dress_code_colors'] ?? [],
+            fn ($c) => !empty($c['hex'])
         ));
         $data['requires_rsvp'] = $request->boolean('requires_rsvp');
 

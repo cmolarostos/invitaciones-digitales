@@ -24,6 +24,9 @@ class Event extends Model
         'venue_address',
         'venue_maps_url',
         'dress_code',
+        'dress_code_men',
+        'dress_code_women',
+        'dress_code_colors',
         'notes',
         'itinerary',
         'requires_rsvp',
@@ -36,7 +39,8 @@ class Event extends Model
     {
         return [
             'event_date'    => 'date',
-            'itinerary'     => 'array',
+            'itinerary'          => 'array',
+            'dress_code_colors'  => 'array',
             'requires_rsvp' => 'boolean',
             'custom_colors' => 'array',
             'published_at'  => 'datetime',

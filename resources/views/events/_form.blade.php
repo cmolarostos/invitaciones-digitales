@@ -77,12 +77,74 @@
     </div>
 
     {{-- Dress code --}}
-    <div>
-        <label class="block text-sm font-medium mb-1">Código de vestimenta</label>
-        <input type="text" name="dress_code" value="{{ old('dress_code', $event->dress_code ?? '') }}"
-               placeholder="Ej. Formal, Semi-formal…"
-               class="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400">
-        @error('dress_code') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
+    <div class="space-y-3">
+        <div>
+            <label class="block text-sm font-medium mb-1">Código de vestimenta</label>
+            <input type="text" name="dress_code" value="{{ old('dress_code', $event->dress_code ?? '') }}"
+                   placeholder="Ej. Formal, Semi-formal…"
+                   class="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400">
+            @error('dress_code') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
+        </div>
+
+        {{-- Instrucciones por género --}}
+        @php
+            $hasDcDetails = old('dress_code_men', $event->dress_code_men ?? null)
+                         || old('dress_code_women', $event->dress_code_women ?? null);
+            $hasDcColors  = count(old('dress_code_colors', $event->dress_code_colors ?? [])) > 0;
+        @endphp
+
+        <label class="flex items-center gap-2 cursor-pointer">
+            <input type="checkbox" id="dc-details-toggle"
+                   class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-400"
+                   {{ $hasDcDetails ? 'checked' : '' }}>
+            <span class="text-sm text-gray-600">Agregar instrucciones por género</span>
+        </label>
+
+        <div id="dc-details" class="{{ $hasDcDetails ? '' : 'hidden' }} grid grid-cols-1 sm:grid-cols-2 gap-3 pl-6">
+            <div>
+                <label class="block text-xs font-medium text-gray-500 mb-1">Caballeros</label>
+                <textarea name="dress_code_men" rows="2" placeholder="Ej. Traje oscuro, corbata…"
+                          class="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400">{{ old('dress_code_men', $event->dress_code_men ?? '') }}</textarea>
+            </div>
+            <div>
+                <label class="block text-xs font-medium text-gray-500 mb-1">Damas</label>
+                <textarea name="dress_code_women" rows="2" placeholder="Ej. Vestido largo, tonos sobrios…"
+                          class="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400">{{ old('dress_code_women', $event->dress_code_women ?? '') }}</textarea>
+            </div>
+        </div>
+
+        {{-- Paleta de colores a evitar --}}
+        <label class="flex items-center gap-2 cursor-pointer">
+            <input type="checkbox" id="dc-colors-toggle"
+                   class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-400"
+                   {{ $hasDcColors ? 'checked' : '' }}>
+            <span class="text-sm text-gray-600">Indicar colores a evitar</span>
+        </label>
+
+        <div id="dc-colors" class="{{ $hasDcColors ? '' : 'hidden' }} pl-6">
+            <p class="text-xs text-gray-400 mb-2">Agrega los colores que los invitados deben evitar usar.</p>
+            <div id="dc-color-list" class="flex flex-wrap gap-2 mb-2">
+                @foreach(old('dress_code_colors', $event->dress_code_colors ?? []) as $i => $color)
+                    <div class="dc-color-item flex items-center gap-1 border border-gray-200 rounded-lg px-2 py-1 bg-gray-50">
+                        <input type="color" name="dress_code_colors[{{ $i }}][hex]"
+                               value="{{ $color['hex'] }}"
+                               class="w-8 h-8 rounded cursor-pointer border-0 p-0 bg-transparent">
+                        <input type="text" name="dress_code_colors[{{ $i }}][label]"
+                               value="{{ $color['label'] ?? '' }}"
+                               placeholder="Nombre" maxlength="20"
+                               class="w-24 border border-gray-200 rounded px-2 py-1 text-xs focus:outline-none focus:ring-1 focus:ring-indigo-400">
+                        <button type="button" class="remove-dc-color text-gray-400 hover:text-red-500 transition text-sm leading-none">✕</button>
+                    </div>
+                @endforeach
+            </div>
+            <button type="button" id="add-dc-color"
+                    class="text-xs text-indigo-600 hover:text-indigo-800 font-medium flex items-center gap-1">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+                </svg>
+                Agregar color
+            </button>
+        </div>
     </div>
 
     {{-- Notas --}}
@@ -229,6 +291,57 @@
             btn.closest('.itinerary-item').remove();
             reindex();
         });
+    });
+})();
+
+// ── Dress code: instrucciones por género ──
+(function () {
+    const toggle  = document.getElementById('dc-details-toggle');
+    const details = document.getElementById('dc-details');
+    if (!toggle) return;
+    toggle.addEventListener('change', () => details.classList.toggle('hidden', !toggle.checked));
+})();
+
+// ── Dress code: paleta de colores ──
+(function () {
+    const toggle   = document.getElementById('dc-colors-toggle');
+    const section  = document.getElementById('dc-colors');
+    const addBtn   = document.getElementById('add-dc-color');
+    const list     = document.getElementById('dc-color-list');
+    if (!toggle) return;
+
+    toggle.addEventListener('change', () => section.classList.toggle('hidden', !toggle.checked));
+
+    function reindexColors() {
+        list.querySelectorAll('.dc-color-item').forEach((item, i) => {
+            item.querySelectorAll('[name]').forEach(el => {
+                el.name = el.name.replace(/dress_code_colors\[\d+\]/, `dress_code_colors[${i}]`);
+            });
+        });
+    }
+
+    function makeColorItem(index) {
+        const div = document.createElement('div');
+        div.className = 'dc-color-item flex items-center gap-1 border border-gray-200 rounded-lg px-2 py-1 bg-gray-50';
+        div.innerHTML = `
+            <input type="color" name="dress_code_colors[${index}][hex]" value="#cccccc"
+                   class="w-8 h-8 rounded cursor-pointer border-0 p-0 bg-transparent">
+            <input type="text" name="dress_code_colors[${index}][label]"
+                   placeholder="Nombre" maxlength="20"
+                   class="w-24 border border-gray-200 rounded px-2 py-1 text-xs focus:outline-none focus:ring-1 focus:ring-indigo-400">
+            <button type="button" class="remove-dc-color text-gray-400 hover:text-red-500 transition text-sm leading-none">✕</button>`;
+        div.querySelector('.remove-dc-color').addEventListener('click', () => { div.remove(); reindexColors(); });
+        return div;
+    }
+
+    addBtn.addEventListener('click', () => {
+        const item = makeColorItem(list.children.length);
+        list.appendChild(item);
+        reindexColors();
+    });
+
+    list.querySelectorAll('.remove-dc-color').forEach(btn => {
+        btn.addEventListener('click', () => { btn.closest('.dc-color-item').remove(); reindexColors(); });
     });
 })();
 </script>
