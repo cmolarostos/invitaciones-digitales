@@ -1096,9 +1096,8 @@
     @php
         $galleryPhotos = $event->photos->skip(1)->take(6)->values();
         $layouts = ['tall', 'sq', 'sq', 'wide', 'mid', 'mid'];
-        $dummySeeds = ['g11','g22','g33','g44','g55','g66'];
-        $dummySizes = ['400/533','400/400','400/400','820/461','400/500','400/500'];
     @endphp
+    @if($galleryPhotos->count() > 0)
     <section class="gallery">
         <div class="head">
             <div class="eyebrow reveal">Galería</div>
@@ -1108,18 +1107,14 @@
             </div>
         </div>
         <div class="gallery-grid reveal-stagger">
-            @for($i = 0; $i < 6; $i++)
-                @php $photo = $galleryPhotos->get($i); @endphp
+            @foreach($galleryPhotos as $i => $photo)
                 <div class="gal-photo {{ $layouts[$i] }}">
-                    @if($photo)
-                        <img src="{{ $photo->url }}" alt="" loading="lazy">
-                    @else
-                        <span>foto {{ str_pad($i + 1, 2, '0', STR_PAD_LEFT) }}</span>
-                    @endif
+                    <img src="{{ $photo->url }}" alt="" loading="lazy">
                 </div>
-            @endfor
+            @endforeach
         </div>
     </section>
+    @endif
 
     {{-- ── LOCATION ── --}}
     <section class="location">

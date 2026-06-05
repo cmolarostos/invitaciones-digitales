@@ -551,12 +551,8 @@
 </section>
 
 {{-- ── GALERÍA DE RECUERDOS ── --}}
-@php
-    $galleryPhotos = $event->photos->skip(1)->take(9);
-    $dummySeeds    = ['xv11','xv22','xv33','xv44','xv55','xv66','xv77','xv88','xv99'];
-    $dummySizes    = ['600/900','600/400','600/400','600/400','600/900','600/400','600/400','600/400','1200/400'];
-    $needed        = max(0, 9 - $galleryPhotos->count());
-@endphp
+@php $galleryPhotos = $event->photos->skip(1)->take(9); @endphp
+@if($galleryPhotos->count() > 0)
 <section id="gallery">
     <div class="section-header reveal">
         <span class="section-label">Momentos especiales</span>
@@ -569,32 +565,13 @@
                 <img src="{{ $photo->url }}" alt="" loading="lazy">
             </div>
         @endforeach
-        @for($i = 0; $i < $needed; $i++)
-            <div class="g-item reveal">
-                <img src="https://picsum.photos/seed/{{ $dummySeeds[$galleryPhotos->count() + $i] }}/{{ $dummySizes[$galleryPhotos->count() + $i] }}" alt="" loading="lazy">
-            </div>
-        @endfor
     </div>
 </section>
+@endif
 
 {{-- ── RECUERDOS FAVORITOS (carousel) ── --}}
-@php
-    $carouselPhotos = $event->photos->skip(1)->take(5)->values();
-    $carouselDummy  = [
-        ['seed' => 'xvc1', 'caption' => 'Mi infancia llena de sueños ✨'],
-        ['seed' => 'xvc2', 'caption' => 'Momentos con mi familia 💕'],
-        ['seed' => 'xvc3', 'caption' => 'Las mejores amigas del mundo 🌸'],
-        ['seed' => 'xvc4', 'caption' => 'Creciendo con amor 🌺'],
-        ['seed' => 'xvc5', 'caption' => 'Hacia una nueva etapa 🦋'],
-    ];
-    $carouselCaptions = [
-        'Mi infancia llena de sueños ✨',
-        'Momentos con mi familia 💕',
-        'Las mejores amigas del mundo 🌸',
-        'Creciendo con amor 🌺',
-        'Hacia una nueva etapa 🦋',
-    ];
-@endphp
+@php $carouselPhotos = $event->photos->skip(1)->take(5)->values(); @endphp
+@if($carouselPhotos->count() > 0)
 <section id="carousel-section">
     <div class="section-header reveal">
         <span class="section-label">Mi historia en fotos</span>
@@ -604,29 +581,11 @@
 
     <div class="c-wrap reveal scale-in" id="carouselWrap">
         <div class="c-track" id="carouselTrack">
-            @if($carouselPhotos->count() > 0)
-                @foreach($carouselPhotos as $i => $photo)
-                    <div class="c-slide">
-                        <img src="{{ $photo->url }}" alt="" loading="lazy">
-                        <div class="c-caption">
-                            <span>{{ $carouselCaptions[$i] ?? '✨' }}</span>
-                        </div>
-                    </div>
-                @endforeach
-                @for($i = $carouselPhotos->count(); $i < 5; $i++)
-                    <div class="c-slide">
-                        <img src="https://picsum.photos/seed/{{ $carouselDummy[$i]['seed'] }}/820/615" alt="" loading="lazy">
-                        <div class="c-caption"><span>{{ $carouselDummy[$i]['caption'] }}</span></div>
-                    </div>
-                @endfor
-            @else
-                @foreach($carouselDummy as $slide)
-                    <div class="c-slide">
-                        <img src="https://picsum.photos/seed/{{ $slide['seed'] }}/820/615" alt="" loading="lazy">
-                        <div class="c-caption"><span>{{ $slide['caption'] }}</span></div>
-                    </div>
-                @endforeach
-            @endif
+            @foreach($carouselPhotos as $photo)
+                <div class="c-slide">
+                    <img src="{{ $photo->url }}" alt="" loading="lazy">
+                </div>
+            @endforeach
         </div>
         <button class="c-btn prev" id="c-prev" aria-label="Anterior">&#8592;</button>
         <button class="c-btn next" id="c-next" aria-label="Siguiente">&#8594;</button>
@@ -634,6 +593,7 @@
 
     <div class="c-dots" id="c-dots"></div>
 </section>
+@endif
 
 {{-- ── PROGRAMA DEL EVENTO ── --}}
 @if($event->itinerary)
