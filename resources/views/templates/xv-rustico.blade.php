@@ -1215,31 +1215,34 @@
     @endif
 
     {{-- ── GIFTS ── --}}
+    @if($event->gifts)
     <section class="gifts">
         <div class="eyebrow reveal">Mesa de regalos</div>
-        <h2 class="reveal">Tu presencia es <em>el mejor regalo</em></h2>
-        <p class="note reveal">Si deseas obsequiar algo más, aquí encontrarás opciones para hacerlo con cariño.</p>
+        <h2 class="reveal">{{ $event->gifts_title ?? 'Tu presencia es el mejor regalo' }}</h2>
+        <p class="note reveal">{{ $event->gifts_subtitle ?? 'Si deseas obsequiar algo más, aquí encontrarás opciones para hacerlo con cariño.' }}</p>
         <div class="gift-grid reveal-stagger">
-            <div class="gift-card">
-                <div class="brand">Liverpool</div>
-                <div class="meta">Mesa de regalos</div>
-                <div class="code">N° 5102 4477</div>
-                <div class="arrow">Ver →</div>
-            </div>
-            <div class="gift-card">
-                <div class="brand">Amazon</div>
-                <div class="meta">Wishlist</div>
-                <div class="code">{{ strtolower(str_replace(' ', '-', $event->name)) }}-xv-{{ $event->event_date->format('Y') }}</div>
-                <div class="arrow">Ver →</div>
-            </div>
-            <div class="gift-card">
-                <div class="brand">Sobre</div>
-                <div class="meta">Lluvia de sobres</div>
-                <div class="code">En el evento</div>
-                <div class="arrow">Ver →</div>
-            </div>
+            @foreach($event->gifts as $gift)
+                @if(!empty($gift['url']))
+                    <a href="{{ $gift['url'] }}" target="_blank" rel="noopener" class="gift-card">
+                @else
+                    <div class="gift-card">
+                @endif
+                    <div class="brand">{{ $gift['title'] }}</div>
+                    @if(!empty($gift['description']))
+                        <div class="meta">{{ $gift['description'] }}</div>
+                    @endif
+                    @if(!empty($gift['url']))
+                        <div class="arrow">Ver →</div>
+                    @endif
+                @if(!empty($gift['url']))
+                    </a>
+                @else
+                    </div>
+                @endif
+            @endforeach
         </div>
     </section>
+    @endif
 
     {{-- ── RSVP ── --}}
     @if($event->requires_rsvp)

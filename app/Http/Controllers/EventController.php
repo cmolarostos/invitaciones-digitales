@@ -72,6 +72,12 @@ class EventController extends Controller
             'itinerary.*.description'      => ['nullable', 'string', 'max:300'],
             'requires_rsvp'                => ['boolean'],
             'youtube_url'                  => ['nullable', 'url', 'max:500'],
+            'gifts_title'                  => ['nullable', 'string', 'max:200'],
+            'gifts_subtitle'               => ['nullable', 'string', 'max:400'],
+            'gifts'                        => ['nullable', 'array'],
+            'gifts.*.title'                => ['required_with:gifts.*', 'string', 'max:100'],
+            'gifts.*.description'          => ['nullable', 'string', 'max:200'],
+            'gifts.*.url'                  => ['nullable', 'url', 'max:500'],
         ]);
 
         $data['itinerary'] = array_values(array_filter(
@@ -86,6 +92,10 @@ class EventController extends Controller
         $data['custom_colors'] = $data['custom_colors']
             ? (json_decode($data['custom_colors'], true) ?: null)
             : null;
+        $data['gifts'] = array_values(array_filter(
+            $data['gifts'] ?? [],
+            fn ($g) => !empty($g['title'])
+        )) ?: null;
 
         $event = Auth::user()->events()->create($data);
 
@@ -151,6 +161,10 @@ class EventController extends Controller
         $data['custom_colors'] = $data['custom_colors']
             ? (json_decode($data['custom_colors'], true) ?: null)
             : null;
+        $data['gifts'] = array_values(array_filter(
+            $data['gifts'] ?? [],
+            fn ($g) => !empty($g['title'])
+        )) ?: null;
 
         $event->update($data);
 

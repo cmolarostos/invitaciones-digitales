@@ -31,6 +31,9 @@ class Event extends Model
         'itinerary',
         'requires_rsvp',
         'youtube_url',
+        'gifts_title',
+        'gifts_subtitle',
+        'gifts',
         'custom_colors',
         'status',
         'published_at',
@@ -41,6 +44,7 @@ class Event extends Model
         return [
             'event_date'    => 'date',
             'itinerary'          => 'array',
+            'gifts'              => 'array',
             'dress_code_colors'  => 'array',
             'requires_rsvp' => 'boolean',
             'custom_colors' => 'array',

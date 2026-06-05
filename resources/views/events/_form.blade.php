@@ -215,6 +215,79 @@
         @endif
     </div>
 
+    {{-- Mesa de regalos --}}
+    <div>
+        <div class="flex items-center justify-between mb-2">
+            <label class="block text-sm font-medium">Mesa de regalos</label>
+            <button type="button" id="add-gift-item"
+                    class="text-xs text-indigo-600 hover:text-indigo-800 font-medium flex items-center gap-1">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+                </svg>
+                Agregar opción
+            </button>
+        </div>
+        <p class="text-xs text-gray-400 mb-3">Si no agregas ninguna opción, la sección no se mostrará en la invitación.</p>
+
+        {{-- Encabezados configurables --}}
+        <div class="grid grid-cols-1 gap-2 mb-3">
+            <div>
+                <label class="block text-xs font-medium text-gray-500 mb-1">Título de la sección</label>
+                <input type="text" name="gifts_title"
+                       value="{{ old('gifts_title', $event->gifts_title ?? '') }}"
+                       placeholder="Tu presencia es el mejor regalo"
+                       class="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400">
+            </div>
+            <div>
+                <label class="block text-xs font-medium text-gray-500 mb-1">Subtítulo</label>
+                <input type="text" name="gifts_subtitle"
+                       value="{{ old('gifts_subtitle', $event->gifts_subtitle ?? '') }}"
+                       placeholder="Si deseas obsequiar algo más, aquí encontrarás opciones para hacerlo con cariño."
+                       class="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400">
+            </div>
+        </div>
+
+        {{-- Lista de opciones --}}
+        <div id="gifts-list" class="space-y-2">
+            @php $giftsItems = old('gifts', $event->gifts ?? []); @endphp
+            @forelse($giftsItems as $i => $gift)
+                <div class="gift-item flex items-start gap-2 bg-gray-50 border border-gray-200 rounded-lg p-3">
+                    <div class="flex-1 grid grid-cols-1 sm:grid-cols-3 gap-2">
+                        <input type="text" name="gifts[{{ $i }}][title]"
+                               value="{{ $gift['title'] ?? '' }}"
+                               placeholder="Nombre (ej. Liverpool) *"
+                               class="border border-gray-300 rounded px-2 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400">
+                        <input type="text" name="gifts[{{ $i }}][description]"
+                               value="{{ $gift['description'] ?? '' }}"
+                               placeholder="Descripción (ej. Mesa de regalos)"
+                               class="border border-gray-300 rounded px-2 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400">
+                        <input type="url" name="gifts[{{ $i }}][url]"
+                               value="{{ $gift['url'] ?? '' }}"
+                               placeholder="Link (opcional)"
+                               class="border border-gray-300 rounded px-2 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400">
+                    </div>
+                    <button type="button" class="remove-gift-item mt-0.5 text-gray-400 hover:text-red-500 transition">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                        </svg>
+                    </button>
+                </div>
+            @empty
+                {{-- vacío, JS lo maneja --}}
+            @endforelse
+        </div>
+
+        @if(count($giftsItems) === 0)
+            <p id="gifts-empty" class="text-sm text-gray-400 text-center py-4 border border-dashed border-gray-200 rounded-lg">
+                Sin opciones aún. La sección de mesa de regalos estará oculta.
+            </p>
+        @else
+            <p id="gifts-empty" class="text-sm text-gray-400 text-center py-4 border border-dashed border-gray-200 rounded-lg hidden">
+                Sin opciones aún. La sección de mesa de regalos estará oculta.
+            </p>
+        @endif
+    </div>
+
     {{-- Paleta de colores --}}
     @php
         $paletteTemplate = $event->template ?? $template ?? null;
@@ -355,6 +428,55 @@
             btn.closest('.itinerary-item').remove();
             reindex();
         });
+    });
+})();
+
+// ── Mesa de regalos ──
+(function () {
+    const list   = document.getElementById('gifts-list');
+    const addBtn = document.getElementById('add-gift-item');
+    const empty  = document.getElementById('gifts-empty');
+    if (!list || !addBtn) return;
+
+    function reindex() {
+        list.querySelectorAll('.gift-item').forEach((row, i) => {
+            row.querySelectorAll('[name]').forEach(el => {
+                el.name = el.name.replace(/gifts\[\d+\]/, `gifts[${i}]`);
+            });
+        });
+        empty.classList.toggle('hidden', list.children.length > 0);
+    }
+
+    function makeRow(index) {
+        const div = document.createElement('div');
+        div.className = 'gift-item flex items-start gap-2 bg-gray-50 border border-gray-200 rounded-lg p-3';
+        div.innerHTML = `
+            <div class="flex-1 grid grid-cols-1 sm:grid-cols-3 gap-2">
+                <input type="text" name="gifts[${index}][title]" placeholder="Nombre (ej. Liverpool) *"
+                       class="border border-gray-300 rounded px-2 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400">
+                <input type="text" name="gifts[${index}][description]" placeholder="Descripción (ej. Mesa de regalos)"
+                       class="border border-gray-300 rounded px-2 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400">
+                <input type="url" name="gifts[${index}][url]" placeholder="Link (opcional)"
+                       class="border border-gray-300 rounded px-2 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400">
+            </div>
+            <button type="button" class="remove-gift-item mt-0.5 text-gray-400 hover:text-red-500 transition">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                </svg>
+            </button>`;
+        div.querySelector('.remove-gift-item').addEventListener('click', () => { div.remove(); reindex(); });
+        return div;
+    }
+
+    addBtn.addEventListener('click', () => {
+        const row = makeRow(list.children.length);
+        list.appendChild(row);
+        row.querySelector('input').focus();
+        reindex();
+    });
+
+    list.querySelectorAll('.remove-gift-item').forEach(btn => {
+        btn.addEventListener('click', () => { btn.closest('.gift-item').remove(); reindex(); });
     });
 })();
 
