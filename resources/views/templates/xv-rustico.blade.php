@@ -999,7 +999,7 @@
                     <span>{{ $event->event_date->format('Y') }}</span>
                 </div>
                 <div>
-                    <div class="num">{{ $event->event_time ? \Carbon\Carbon::parse($event->event_time)->format('H:i') : '18:00' }}</div>
+                    <div class="num">{{ $event->event_time ? \Carbon\Carbon::parse($event->event_time)->format('g:i A') : '6:00 PM' }}</div>
                 </div>
             </div>
 

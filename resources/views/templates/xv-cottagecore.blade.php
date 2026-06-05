@@ -175,7 +175,7 @@
                 <p style="font-size:0.875rem; margin-top:0.25rem;">{{ $event->venue_address }}</p>
             @endif
             @if($event->event_time)
-                <p style="font-size:1.1rem; margin-top:0.5rem;">{{ $event->event_time }} hrs</p>
+                <p style="font-size:1.1rem; margin-top:0.5rem;">{{ \Carbon\Carbon::parse($event->event_time)->format('g:i A') }}</p>
             @endif
             @if($event->venue_maps_url)
                 <a href="{{ $event->venue_maps_url }}" target="_blank"

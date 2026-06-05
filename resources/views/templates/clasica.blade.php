@@ -19,7 +19,7 @@
             {{ $event->event_date->translatedFormat('l d \d\e F \d\e Y') }}
         </p>
         @if($event->event_time)
-            <p>{{ $event->event_time }} hrs</p>
+            <p>{{ \Carbon\Carbon::parse($event->event_time)->format('g:i A') }}</p>
         @endif
         @if($event->venue_name)
             <p class="font-medium">{{ $event->venue_name }}</p>

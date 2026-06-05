@@ -27,7 +27,7 @@
                 <p class="font-semibold text-gray-800">{{ $guest->event->name }}</p>
                 <p class="mt-1">📅 {{ $guest->event->event_date->translatedFormat('d \d\e F \d\e Y') }}</p>
                 @if($guest->event->event_time)
-                    <p class="mt-0.5">🕐 {{ $guest->event->event_time }} hrs</p>
+                    <p class="mt-0.5">🕐 {{ \Carbon\Carbon::parse($guest->event->event_time)->format('g:i A') }}</p>
                 @endif
                 @if($guest->event->venue_name)
                     <p class="mt-0.5">📍 {{ $guest->event->venue_name }}</p>

@@ -154,7 +154,7 @@
 
         <p class="text-xs opacity-50">
             {{ $event->event_date->translatedFormat('l d \d\e F \d\e Y') }}
-            @if($event->event_time) · {{ $event->event_time }} hrs @endif
+            @if($event->event_time) · {{ \Carbon\Carbon::parse($event->event_time)->format('g:i A') }} @endif
         </p>
     </header>
 

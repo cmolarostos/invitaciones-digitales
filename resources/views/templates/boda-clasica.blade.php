@@ -101,7 +101,7 @@
                     {{ $event->event_date->format('Y') }}
                 </p>
                 @if($event->event_time)
-                    <p class="font-body text-sm text-stone-400 mt-1">{{ $event->event_time }} hrs</p>
+                    <p class="font-body text-sm text-stone-400 mt-1">{{ \Carbon\Carbon::parse($event->event_time)->format('g:i A') }}</p>
                 @endif
             </div>
         </div>

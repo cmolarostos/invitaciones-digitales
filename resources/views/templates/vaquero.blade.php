@@ -218,7 +218,7 @@
                         {{ $event->event_date->translatedFormat('l d \d\e F \d\e Y') }}
                     </p>
                     @if($event->event_time)
-                        <p class="text-sm text-amber-800 mt-1">A partir de las {{ $event->event_time }} hrs</p>
+                        <p class="text-sm text-amber-800 mt-1">A partir de las {{ \Carbon\Carbon::parse($event->event_time)->format('g:i A') }}</p>
                     @endif
                 </div>
 

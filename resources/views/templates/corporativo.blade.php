@@ -48,7 +48,7 @@
         <div class="h-0.5 w-16 bg-blue-400 mt-4 rounded"></div>
         <p class="text-blue-200 text-sm mt-3">
             {{ $event->event_date->translatedFormat('l d \d\e F \d\e Y') }}
-            @if($event->event_time) · {{ $event->event_time }} hrs @endif
+            @if($event->event_time) · {{ \Carbon\Carbon::parse($event->event_time)->format('g:i A') }} @endif
         </p>
     </div>
 </div>

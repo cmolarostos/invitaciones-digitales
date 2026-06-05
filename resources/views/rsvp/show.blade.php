@@ -12,7 +12,7 @@
         <p class="text-center text-gray-500 text-sm mt-1">
             {{ $guest->event->event_date->translatedFormat('d \d\e F \d\e Y') }}
             @if($guest->event->event_time)
-                · {{ $guest->event->event_time }}
+                · {{ \Carbon\Carbon::parse($guest->event->event_time)->format('g:i A') }}
             @endif
         </p>
 
