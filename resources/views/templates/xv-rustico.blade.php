@@ -1422,7 +1422,9 @@
 })();
 </script>
 
-{{-- ── MÚSICA DE FONDO (prueba) ── --}}
+{{-- ── MÚSICA DE FONDO ── --}}
+@if($event->youtubeVideoId())
+@php $ytId = $event->youtubeVideoId(); @endphp
 <div id="yt-player-wrap" style="position:fixed;bottom:1.5rem;right:1.5rem;z-index:200;">
     <button id="yt-toggle"
             style="width:48px;height:48px;border-radius:50%;
@@ -1437,13 +1439,13 @@
     </button>
     <iframe id="yt-iframe"
             src=""
-            data-src="https://www.youtube.com/embed/IFtjM98ssjQ?autoplay=1&loop=1&playlist=VPRjCeoBqrI&controls=0&enablejsapi=1"
-                      
+            data-src="https://www.youtube.com/embed/{{ $ytId }}?autoplay=1&loop=1&playlist={{ $ytId }}&controls=0&enablejsapi=1"
             allow="autoplay; encrypted-media"
             style="display:none;width:0;height:0;border:0;"
             title="Música de fondo">
     </iframe>
 </div>
+@endif
 
 <script>
 (function () {

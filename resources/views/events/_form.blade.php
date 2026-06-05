@@ -215,6 +215,16 @@
         @endif
     </div>
 
+    {{-- Música de fondo --}}
+    <div>
+        <label class="block text-sm font-medium mb-1">Música de fondo</label>
+        <input type="url" name="youtube_url" value="{{ old('youtube_url', $event->youtube_url ?? '') }}"
+               placeholder="https://www.youtube.com/watch?v=..."
+               class="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400">
+        <p class="text-xs text-gray-400 mt-1">Pega un link de YouTube. Sonará cuando el invitado abra la invitación.</p>
+        @error('youtube_url') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
+    </div>
+
     {{-- Confirmación de asistencia --}}
     <div class="border border-indigo-100 bg-indigo-50/40 rounded-lg px-4 py-3">
         <label class="flex items-start gap-3 cursor-pointer">

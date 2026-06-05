@@ -71,6 +71,7 @@ class EventController extends Controller
             'itinerary.*.title'            => ['required_with:itinerary.*', 'string', 'max:150'],
             'itinerary.*.description'      => ['nullable', 'string', 'max:300'],
             'requires_rsvp'                => ['boolean'],
+            'youtube_url'                  => ['nullable', 'url', 'max:500'],
         ]);
 
         $data['itinerary'] = array_values(array_filter(

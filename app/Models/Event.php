@@ -30,6 +30,7 @@ class Event extends Model
         'notes',
         'itinerary',
         'requires_rsvp',
+        'youtube_url',
         'custom_colors',
         'status',
         'published_at',
@@ -111,6 +112,23 @@ class Event extends Model
     public function publicUrl(): string
     {
         return route('invitation.show', $this->slug);
+    }
+
+    public function youtubeVideoId(): ?string
+    {
+        if (!$this->youtube_url) return null;
+
+        // youtu.be/VIDEO_ID
+        if (preg_match('/youtu\.be\/([a-zA-Z0-9_-]{11})/', $this->youtube_url, $m)) {
+            return $m[1];
+        }
+
+        // youtube.com/watch?v=VIDEO_ID  o  /embed/VIDEO_ID
+        if (preg_match('/(?:v=|\/embed\/)([a-zA-Z0-9_-]{11})/', $this->youtube_url, $m)) {
+            return $m[1];
+        }
+
+        return null;
     }
 
     public function isPaid(): bool
