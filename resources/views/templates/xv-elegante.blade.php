@@ -197,7 +197,7 @@
                 @foreach($event->itinerary as $item)
                     <div class="flex gap-4 {{ $loop->first ? '' : 'pt-4' }} {{ $loop->last ? '' : 'pb-4' }}">
                         @if(!empty($item['time']))
-                            <span class="font-display text-pink-400 text-sm tabular-nums shrink-0 pt-0.5">{{ $item['time'] }}</span>
+                            <span class="font-display text-pink-400 text-sm tabular-nums shrink-0 pt-0.5">{{ \Carbon\Carbon::parse($item['time'])->format('g:i A') }}</span>
                         @endif
                         <div>
                             <p class="font-display text-lg text-stone-800">{{ $item['title'] }}</p>

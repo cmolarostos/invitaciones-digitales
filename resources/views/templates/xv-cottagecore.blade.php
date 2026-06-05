@@ -204,7 +204,7 @@
                     @foreach($event->itinerary as $item)
                         <div style="display:flex; gap:0.75rem; padding:0.75rem 1rem; {{ !$loop->last ? 'border-bottom:1px solid rgba(214,140,122,0.15);' : '' }}">
                             @if(!empty($item['time']))
-                                <span style="font-size:0.75rem; color:var(--terracotta); white-space:nowrap; padding-top:2px;">{{ $item['time'] }}</span>
+                                <span style="font-size:0.75rem; color:var(--terracotta); white-space:nowrap; padding-top:2px;">{{ \Carbon\Carbon::parse($item['time'])->format('g:i A') }}</span>
                             @endif
                             <div>
                                 <p class="serif-font" style="font-size:1rem; color:var(--sage);">{{ $item['title'] }}</p>

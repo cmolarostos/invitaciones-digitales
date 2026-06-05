@@ -1078,7 +1078,7 @@
         <div class="timeline reveal-stagger">
             @foreach($event->itinerary as $item)
             <div class="event-row">
-                <div class="event-time">{{ $item['time'] ?? '' }}</div>
+                <div class="event-time">{{ !empty($item['time']) ? \Carbon\Carbon::parse($item['time'])->format('g:i A') : '' }}</div>
                 <div class="event-dot"></div>
                 <div>
                     <div class="event-title">{{ $item['title'] }}</div>

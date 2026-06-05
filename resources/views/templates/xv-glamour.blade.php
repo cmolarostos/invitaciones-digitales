@@ -650,7 +650,7 @@
             <div class="tl-dot"></div>
             <div class="tl-card">
                 @if(!empty($item['time']))
-                    <p class="tl-time">{{ $item['time'] }}</p>
+                    <p class="tl-time">{{ \Carbon\Carbon::parse($item['time'])->format('g:i A') }}</p>
                 @endif
                 <h4>{{ $item['title'] }}</h4>
                 @if(!empty($item['description']))

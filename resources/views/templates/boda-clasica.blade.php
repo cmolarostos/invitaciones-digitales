@@ -179,7 +179,7 @@
                 @foreach($event->itinerary as $item)
                     <div class="flex gap-3 px-4 py-3">
                         @if(!empty($item['time']))
-                            <span class="font-body text-xs gold tabular-nums shrink-0 pt-0.5">{{ $item['time'] }}</span>
+                            <span class="font-body text-xs gold tabular-nums shrink-0 pt-0.5">{{ \Carbon\Carbon::parse($item['time'])->format('g:i A') }}</span>
                         @endif
                         <div class="text-left">
                             <p class="font-display text-base text-stone-800">{{ $item['title'] }}</p>

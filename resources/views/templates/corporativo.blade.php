@@ -161,7 +161,7 @@
                     <div class="timeline-item">
                         <p class="font-semibold text-gray-900 text-sm leading-snug">{{ $item['title'] }}</p>
                         @if(!empty($item['time']))
-                            <p class="text-xs accent mt-0.5">{{ $item['time'] }}</p>
+                            <p class="text-xs accent mt-0.5">{{ \Carbon\Carbon::parse($item['time'])->format('g:i A') }}</p>
                         @endif
                         @if(!empty($item['description']))
                             <p class="text-xs text-gray-500 mt-0.5">{{ $item['description'] }}</p>
