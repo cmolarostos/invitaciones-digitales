@@ -31,6 +31,14 @@
             --mono:    "JetBrains Mono", ui-monospace, monospace;
         }
 
+        @if($event->custom_colors)
+        :root {
+            @foreach($event->custom_colors as $var => $value)
+            --{{ $var }}: {{ $value }};
+            @endforeach
+        }
+        @endif
+
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
         html, body {
             background: var(--cream);

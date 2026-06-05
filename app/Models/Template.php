@@ -14,13 +14,15 @@ class Template extends Model
         'thumbnail_url',
         'blade_file',
         'default_colors',
+        'color_palettes',
         'is_active',
     ];
 
     protected function casts(): array
     {
         return [
-            'default_colors' => 'array',
+            'default_colors'  => 'array',
+            'color_palettes'  => 'array',
             'is_active'      => 'boolean',
         ];
     }

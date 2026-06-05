@@ -25,6 +25,14 @@
             --purple-mid: #A85BC8;
         }
 
+        @if($event->custom_colors)
+        :root {
+            @foreach($event->custom_colors as $var => $value)
+            --{{ $var }}: {{ $value }};
+            @endforeach
+        }
+        @endif
+
         html { scroll-behavior: smooth; }
         body { background: var(--cream); font-family: 'Lato', sans-serif; overflow-x: hidden; color: var(--dark); }
 

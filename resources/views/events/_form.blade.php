@@ -215,6 +215,60 @@
         @endif
     </div>
 
+    {{-- Paleta de colores --}}
+    @php
+        $paletteTemplate = $event->template ?? $template ?? null;
+        $palettes = $paletteTemplate?->color_palettes ?? [];
+        $savedColors = $event->custom_colors ?? null;
+        $savedColorsJson = $savedColors ? json_encode($savedColors) : '';
+    @endphp
+    @if(count($palettes) > 0)
+    <div>
+        <label class="block text-sm font-medium mb-3">Colores</label>
+        <div class="flex flex-wrap gap-3" id="palette-list">
+            @foreach($palettes as $i => $palette)
+                @php
+                    $isSelected = $savedColorsJson && json_encode($palette['vars']) === json_encode($savedColors);
+                @endphp
+                <button type="button"
+                        class="palette-card relative rounded-2xl overflow-hidden cursor-pointer transition-all border-2
+                               {{ $isSelected ? 'border-gray-800 shadow-md' : 'border-transparent hover:border-gray-300' }}"
+                        style="width:68px;height:68px;"
+                        data-vars="{{ json_encode($palette['vars']) }}"
+                        data-name="{{ $palette['name'] }}"
+                        title="{{ $palette['name'] }}">
+                    {{-- Mini preview 2x2 --}}
+                    <div class="grid grid-cols-2 w-full h-full">
+                        <div style="background:{{ $palette['preview'][0] }}"></div>
+                        <div style="background:{{ $palette['preview'][1] }}"></div>
+                        <div style="background:{{ $palette['preview'][2] }}"></div>
+                        <div style="background:{{ $palette['preview'][3] }}"></div>
+                    </div>
+                    {{-- Checkmark si está seleccionado --}}
+                    <div class="palette-check absolute inset-0 flex items-center justify-center bg-black/20
+                                {{ $isSelected ? '' : 'hidden' }}">
+                        <svg class="w-6 h-6 text-white drop-shadow" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
+                        </svg>
+                    </div>
+                </button>
+            @endforeach
+        </div>
+        @php
+            $selectedName = '';
+            foreach ($palettes as $p) {
+                if ($savedColors && json_encode($p['vars']) === json_encode($savedColors)) {
+                    $selectedName = $p['name'];
+                    break;
+                }
+            }
+        @endphp
+        <p id="palette-name" class="text-sm text-gray-500 mt-2">{{ $selectedName }}</p>
+        <input type="hidden" name="custom_colors" id="custom-colors-input"
+               value="{{ $savedColorsJson }}">
+    </div>
+    @endif
+
     {{-- Música de fondo --}}
     <div>
         <label class="block text-sm font-medium mb-1">Música de fondo</label>
@@ -300,6 +354,29 @@
         btn.addEventListener('click', function () {
             btn.closest('.itinerary-item').remove();
             reindex();
+        });
+    });
+})();
+
+// ── Paleta de colores ──
+(function () {
+    const cards  = document.querySelectorAll('.palette-card');
+    const input  = document.getElementById('custom-colors-input');
+    const label  = document.getElementById('palette-name');
+    if (!cards.length) return;
+
+    cards.forEach(card => {
+        card.addEventListener('click', function () {
+            cards.forEach(c => {
+                c.classList.replace('border-gray-800', 'border-transparent');
+                c.classList.remove('shadow-md');
+                c.querySelector('.palette-check').classList.add('hidden');
+            });
+            card.classList.replace('border-transparent', 'border-gray-800');
+            card.classList.add('shadow-md');
+            card.querySelector('.palette-check').classList.remove('hidden');
+            input.value = card.dataset.vars;
+            if (label) label.textContent = card.dataset.name;
         });
     });
 })();

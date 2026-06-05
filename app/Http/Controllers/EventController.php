@@ -65,7 +65,7 @@ class EventController extends Controller
             'dress_code_colors.*.hex'      => ['nullable', 'string', 'max:7'],
             'dress_code_colors.*.label'    => ['nullable', 'string', 'max:20'],
             'notes'                        => ['nullable', 'string', 'max:2000'],
-            'custom_colors'                => ['nullable', 'array'],
+            'custom_colors'                => ['nullable', 'string'],
             'itinerary'                    => ['nullable', 'array'],
             'itinerary.*.time'             => ['nullable', 'string', 'max:10'],
             'itinerary.*.title'            => ['required_with:itinerary.*', 'string', 'max:150'],
@@ -83,6 +83,9 @@ class EventController extends Controller
             fn ($c) => !empty($c['hex'])
         ));
         $data['requires_rsvp'] = $request->boolean('requires_rsvp');
+        $data['custom_colors'] = $data['custom_colors']
+            ? (json_decode($data['custom_colors'], true) ?: null)
+            : null;
 
         $event = Auth::user()->events()->create($data);
 
@@ -103,6 +106,7 @@ class EventController extends Controller
     {
         $this->authorize('update', $event);
 
+        $event->load('template');
         $eventTypes = EventType::active()->with(['templates' => fn ($q) => $q->active()])->get();
 
         return view('events.edit', compact('event', 'eventTypes'));
@@ -127,7 +131,7 @@ class EventController extends Controller
             'dress_code_colors.*.hex'      => ['nullable', 'string', 'max:7'],
             'dress_code_colors.*.label'    => ['nullable', 'string', 'max:20'],
             'notes'                        => ['nullable', 'string', 'max:2000'],
-            'custom_colors'                => ['nullable', 'array'],
+            'custom_colors'                => ['nullable', 'string'],
             'itinerary'                    => ['nullable', 'array'],
             'itinerary.*.time'             => ['nullable', 'string', 'max:10'],
             'itinerary.*.title'            => ['required_with:itinerary.*', 'string', 'max:150'],
