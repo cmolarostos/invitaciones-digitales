@@ -148,6 +148,9 @@ class EventController extends Controller
             fn ($c) => !empty($c['hex'])
         ));
         $data['requires_rsvp'] = $request->boolean('requires_rsvp');
+        $data['custom_colors'] = $data['custom_colors']
+            ? (json_decode($data['custom_colors'], true) ?: null)
+            : null;
 
         $event->update($data);
 

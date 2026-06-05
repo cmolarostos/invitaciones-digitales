@@ -31,9 +31,10 @@
             --mono:    "JetBrains Mono", ui-monospace, monospace;
         }
 
-        @if($event->custom_colors)
+        @php $customColors = is_array($event->custom_colors) ? $event->custom_colors : (is_string($event->custom_colors) ? json_decode($event->custom_colors, true) : null); @endphp
+        @if($customColors)
         :root {
-            @foreach($event->custom_colors as $var => $value)
+            @foreach($customColors as $var => $value)
             --{{ $var }}: {{ $value }};
             @endforeach
         }
