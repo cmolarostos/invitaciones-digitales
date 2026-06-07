@@ -204,6 +204,57 @@
         </div>
     @endif
 
+    {{-- ── RSVP ── --}}
+    @if($event->requires_rsvp)
+    <style>
+        .rsvp-opt.selected { border-color:#1d4ed8 !important; color:#1d4ed8 !important; font-weight:600; }
+        #rsvp-btn:not([disabled]) { opacity:1 !important; }
+    </style>
+    <div class="card p-5 fade-up delay-6" style="text-align:center;margin-bottom:1rem;">
+        <p class="text-xs font-semibold accent uppercase tracking-wider mb-1">Confirma tu asistencia</p>
+        <p class="font-semibold text-gray-800 mb-4">¿Podrás asistir al evento?</p>
+        <form id="rsvp-form" novalidate>
+            <div style="margin-bottom:10px;">
+                <input id="rsvp-name" type="text" placeholder="Nombre completo" autocomplete="name"
+                       class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm outline-none" style="font-family:inherit;">
+            </div>
+            <div style="display:flex;gap:8px;justify-content:center;margin-bottom:10px;">
+                <button type="button" class="rsvp-opt" data-val="yes"
+                        style="flex:1;padding:8px;border:1px solid #dbeafe;border-radius:8px;font-size:0.8rem;background:transparent;cursor:pointer;color:#1e40af;font-family:inherit;transition:all 0.2s;">
+                    ✓ Sí, confirmo
+                </button>
+                <button type="button" class="rsvp-opt" data-val="no"
+                        style="flex:1;padding:8px;border:1px solid #dbeafe;border-radius:8px;font-size:0.8rem;background:transparent;cursor:pointer;color:#6b7280;font-family:inherit;transition:all 0.2s;">
+                    No podré
+                </button>
+            </div>
+            <div id="guests-field" style="display:none;align-items:center;justify-content:center;gap:12px;margin-bottom:10px;">
+                <span class="text-xs text-gray-400 font-semibold uppercase tracking-wider">Asistentes:</span>
+                <button type="button" id="g-minus" disabled style="width:28px;height:28px;border:1px solid #dbeafe;border-radius:50%;background:transparent;cursor:pointer;font-size:1rem;color:#1e40af;">−</button>
+                <span id="g-count" class="font-semibold text-gray-800" style="font-size:1rem;min-width:20px;text-align:center;">1</span>
+                <button type="button" id="g-plus" style="width:28px;height:28px;border:1px solid #1d4ed8;border-radius:50%;background:transparent;cursor:pointer;font-size:1rem;color:#1e40af;">+</button>
+            </div>
+            <button type="submit" id="rsvp-btn" disabled
+                    class="w-full py-2 rounded-lg text-sm font-semibold text-white"
+                    style="background:#1d4ed8;border:none;cursor:pointer;opacity:0.45;transition:opacity 0.2s;font-family:inherit;">
+                Confirmar asistencia
+            </button>
+        </form>
+        <div id="rsvp-thanks" style="display:none;padding:16px 0;">
+            <p style="font-size:1.5rem;color:#1d4ed8;">✓</p>
+            <h3 id="thanks-title" class="font-semibold text-gray-800 mt-1" style="font-size:1.1rem;"></h3>
+            <p id="thanks-body" class="text-sm text-gray-500 mt-2"></p>
+        </div>
+    </div>
+    @endif
+
+    {{-- Cierre --}}
+    <div class="fade-up delay-7 text-center py-6">
+        <div class="accent-line mb-4" style="max-width:60px;margin-left:auto;margin-right:auto;"></div>
+        <p class="text-xs font-semibold accent uppercase tracking-widest">{{ $event->name }}</p>
+        <p class="text-xs text-gray-400 mt-1">{{ ucfirst($event->event_date->translatedFormat('d \d\e F Y')) }}</p>
+    </div>
+
 </div>
 
 <script>
@@ -222,6 +273,39 @@
     }
     update();
     setInterval(update, 1000);
+
+    // ── RSVP ──
+    (function () {
+        const form = document.getElementById('rsvp-form');
+        if (!form) return;
+        let attending = null, guests = 1;
+        const btn = document.getElementById('rsvp-btn'), thanks = document.getElementById('rsvp-thanks');
+        const gField = document.getElementById('guests-field'), gMinus = document.getElementById('g-minus');
+        const gPlus = document.getElementById('g-plus'), gCount = document.getElementById('g-count');
+        const nameInput = document.getElementById('rsvp-name');
+        document.querySelectorAll('.rsvp-opt').forEach(opt => {
+            opt.addEventListener('click', () => {
+                attending = opt.dataset.val;
+                document.querySelectorAll('.rsvp-opt').forEach(o => o.classList.remove('selected'));
+                opt.classList.add('selected');
+                gField.style.display = attending === 'yes' ? 'flex' : 'none';
+                updateBtn();
+            });
+        });
+        nameInput.addEventListener('input', updateBtn);
+        function updateBtn() { const ok = nameInput.value.trim().length > 1 && attending !== null; btn.disabled = !ok; btn.style.opacity = ok ? '1' : '0.45'; }
+        gMinus.addEventListener('click', () => { guests = Math.max(1,guests-1); gCount.textContent=guests; gMinus.disabled=guests<=1; gPlus.disabled=guests>=8; });
+        gPlus.addEventListener('click',  () => { guests = Math.min(8,guests+1); gCount.textContent=guests; gMinus.disabled=guests<=1; gPlus.disabled=guests>=8; });
+        form.addEventListener('submit', e => {
+            e.preventDefault(); if (btn.disabled) return;
+            const name = nameInput.value.trim();
+            form.style.display = 'none'; thanks.style.display = 'block';
+            document.getElementById('thanks-title').textContent = attending === 'yes' ? `¡Gracias, ${name}!` : `Hasta pronto, ${name}`;
+            document.getElementById('thanks-body').textContent  = attending === 'yes'
+                ? `Te esperamos junto a ${guests > 1 ? `tus ${guests-1} acompañante${guests-1>1?'s':''}` : 'nosotros'} el {{ $event->event_date->translatedFormat('d \d\e F') }}. ¡Nos vemos pronto!`
+                : 'Lamentamos no poder contar contigo en esta ocasión. Gracias por avisarnos.';
+        });
+    })();
 </script>
 
 </body>

@@ -229,6 +229,51 @@
         </div>
     @endif
 
+    {{-- ── RSVP ── --}}
+    @if($event->requires_rsvp)
+    <style>
+        .rsvp-opt.selected { background:#c9a96e22 !important; border-color:#c9a96e !important; font-weight:600; }
+        #rsvp-btn:not([disabled]) { opacity:1 !important; cursor:pointer; }
+    </style>
+    <div class="fade-up delay-5 mb-8">
+        <div class="border border-amber-100 bg-white/50 py-5 px-5 rounded-sm text-center">
+            <p class="font-body text-xs uppercase tracking-[0.3em] gold mb-1">Confirma tu asistencia</p>
+            <p class="font-display text-2xl text-stone-700 mb-4">¿Nos acompañarás?</p>
+            <form id="rsvp-form" novalidate>
+                <div style="margin-bottom:10px;">
+                    <input id="rsvp-name" type="text" placeholder="Tu nombre completo" autocomplete="name"
+                           style="width:100%;border:1px solid #e7d9c4;border-radius:4px;padding:8px 12px;font-size:0.875rem;outline:none;font-family:inherit;">
+                </div>
+                <div style="display:flex;gap:8px;justify-content:center;margin-bottom:10px;">
+                    <button type="button" class="rsvp-opt" data-val="yes"
+                            style="flex:1;padding:8px;border:1px solid #e7d9c4;border-radius:4px;font-size:0.8rem;background:transparent;cursor:pointer;color:#92400e;font-family:inherit;transition:all 0.2s;">
+                        Sí, ahí estaré
+                    </button>
+                    <button type="button" class="rsvp-opt" data-val="no"
+                            style="flex:1;padding:8px;border:1px solid #e7d9c4;border-radius:4px;font-size:0.8rem;background:transparent;cursor:pointer;color:#78716c;font-family:inherit;transition:all 0.2s;">
+                        No podré
+                    </button>
+                </div>
+                <div id="guests-field" style="display:none;align-items:center;justify-content:center;gap:12px;margin-bottom:10px;">
+                    <span style="font-size:0.8rem;color:#78716c;">Invitados:</span>
+                    <button type="button" id="g-minus" disabled style="width:28px;height:28px;border:1px solid #e7d9c4;border-radius:50%;background:transparent;cursor:pointer;font-size:1rem;color:#92400e;">−</button>
+                    <span id="g-count" style="font-size:1rem;color:#44403c;min-width:20px;text-align:center;">1</span>
+                    <button type="button" id="g-plus" style="width:28px;height:28px;border:1px solid #c9a96e;border-radius:50%;background:transparent;cursor:pointer;font-size:1rem;color:#92400e;">+</button>
+                </div>
+                <button type="submit" id="rsvp-btn" disabled
+                        style="width:100%;padding:10px;background:#c9a96e;color:white;border:none;border-radius:4px;font-size:0.875rem;cursor:pointer;opacity:0.45;transition:opacity 0.2s;font-family:inherit;">
+                    Enviar confirmación
+                </button>
+            </form>
+            <div id="rsvp-thanks" style="display:none;padding:16px 0;">
+                <p style="font-size:1.5rem;color:#c9a96e;">✓</p>
+                <h3 id="thanks-title" class="font-display text-xl text-stone-700 mt-1"></h3>
+                <p id="thanks-body" class="font-body text-sm text-stone-500 mt-2"></p>
+            </div>
+        </div>
+    </div>
+    @endif
+
     {{-- Cierre --}}
     <div class="fade-up delay-5">
         <p class="font-display italic text-2xl gold">Con amor,</p>
@@ -254,6 +299,39 @@
     }
     update();
     setInterval(update, 1000);
+
+    // ── RSVP ──
+    (function () {
+        const form = document.getElementById('rsvp-form');
+        if (!form) return;
+        let attending = null, guests = 1;
+        const btn = document.getElementById('rsvp-btn'), thanks = document.getElementById('rsvp-thanks');
+        const gField = document.getElementById('guests-field'), gMinus = document.getElementById('g-minus');
+        const gPlus = document.getElementById('g-plus'), gCount = document.getElementById('g-count');
+        const nameInput = document.getElementById('rsvp-name');
+        document.querySelectorAll('.rsvp-opt').forEach(opt => {
+            opt.addEventListener('click', () => {
+                attending = opt.dataset.val;
+                document.querySelectorAll('.rsvp-opt').forEach(o => o.classList.remove('selected'));
+                opt.classList.add('selected');
+                gField.style.display = attending === 'yes' ? 'flex' : 'none';
+                updateBtn();
+            });
+        });
+        nameInput.addEventListener('input', updateBtn);
+        function updateBtn() { const ok = nameInput.value.trim().length > 1 && attending !== null; btn.disabled = !ok; btn.style.opacity = ok ? '1' : '0.45'; }
+        gMinus.addEventListener('click', () => { guests = Math.max(1,guests-1); gCount.textContent=guests; gMinus.disabled=guests<=1; gPlus.disabled=guests>=8; });
+        gPlus.addEventListener('click',  () => { guests = Math.min(8,guests+1); gCount.textContent=guests; gMinus.disabled=guests<=1; gPlus.disabled=guests>=8; });
+        form.addEventListener('submit', e => {
+            e.preventDefault(); if (btn.disabled) return;
+            const name = nameInput.value.trim();
+            form.style.display = 'none'; thanks.style.display = 'block';
+            document.getElementById('thanks-title').textContent = attending === 'yes' ? `¡Gracias, ${name}!` : `Hasta pronto, ${name}`;
+            document.getElementById('thanks-body').textContent  = attending === 'yes'
+                ? `Te esperamos junto a ${guests > 1 ? `tus ${guests-1} acompañante${guests-1>1?'s':''}` : 'nosotros'} el {{ $event->event_date->translatedFormat('d \d\e F') }}. ¡Nos vemos pronto!`
+                : 'Lamentamos no poder contar contigo en esta ocasión. Gracias por avisarnos.';
+        });
+    })();
 </script>
 
 </body>

@@ -262,6 +262,49 @@
             </p>
         @endif
 
+        {{-- ── RSVP ── --}}
+        @if($event->requires_rsvp)
+        <style>
+            .rsvp-opt.selected { border-color:var(--terracotta) !important; color:var(--terracotta) !important; font-weight:600; }
+            #rsvp-btn:not([disabled]) { opacity:1 !important; }
+        </style>
+        <div class="fade-up delay-6" style="margin-bottom:1.5rem; text-align:center;">
+            <span style="letter-spacing:0.15em; text-transform:uppercase; font-size:0.7rem; color:var(--terracotta);">Confirma tu asistencia</span>
+            <p class="serif-font" style="font-size:1.1rem; color:var(--sage); margin-top:0.25rem; margin-bottom:1rem;">¿Nos acompañas?</p>
+            <form id="rsvp-form" novalidate>
+                <div style="margin-bottom:10px;">
+                    <input id="rsvp-name" type="text" placeholder="Tu nombre" autocomplete="name"
+                           style="width:100%;border:1px solid rgba(214,140,122,0.4);border-radius:8px;padding:8px 12px;font-size:0.875rem;background:rgba(255,255,255,0.7);outline:none;font-family:inherit;color:var(--sage);">
+                </div>
+                <div style="display:flex;gap:8px;justify-content:center;margin-bottom:10px;">
+                    <button type="button" class="rsvp-opt" data-val="yes"
+                            style="flex:1;padding:8px;border:1px solid rgba(214,140,122,0.4);border-radius:8px;font-size:0.8rem;background:transparent;cursor:pointer;color:var(--sage);font-family:inherit;transition:all 0.2s;">
+                        Sí, ahí estaré 🌸
+                    </button>
+                    <button type="button" class="rsvp-opt" data-val="no"
+                            style="flex:1;padding:8px;border:1px solid rgba(214,140,122,0.4);border-radius:8px;font-size:0.8rem;background:transparent;cursor:pointer;color:var(--sage);font-family:inherit;transition:all 0.2s;">
+                        No podré
+                    </button>
+                </div>
+                <div id="guests-field" style="display:none;align-items:center;justify-content:center;gap:12px;margin-bottom:10px;">
+                    <span style="font-size:0.8rem;color:var(--sage);">Invitados:</span>
+                    <button type="button" id="g-minus" disabled style="width:28px;height:28px;border:1px solid rgba(214,140,122,0.4);border-radius:50%;background:transparent;cursor:pointer;font-size:1rem;color:var(--terracotta);">−</button>
+                    <span id="g-count" style="font-size:1rem;color:var(--sage);min-width:20px;text-align:center;">1</span>
+                    <button type="button" id="g-plus" style="width:28px;height:28px;border:1px solid var(--terracotta);border-radius:50%;background:transparent;cursor:pointer;font-size:1rem;color:var(--terracotta);">+</button>
+                </div>
+                <button type="submit" id="rsvp-btn" disabled
+                        style="width:100%;padding:10px;background:var(--terracotta);color:white;border:none;border-radius:8px;font-size:0.875rem;cursor:pointer;opacity:0.45;transition:opacity 0.2s;font-family:inherit;">
+                    Confirmar asistencia
+                </button>
+            </form>
+            <div id="rsvp-thanks" style="display:none;padding:16px 0;">
+                <p style="font-size:1.5rem;">🌸</p>
+                <h3 id="thanks-title" class="serif-font" style="font-size:1.3rem;color:var(--terracotta);margin-top:4px;"></h3>
+                <p id="thanks-body" style="font-size:0.8rem;color:var(--sage);margin-top:8px;"></p>
+            </div>
+        </div>
+        @endif
+
         {{-- Footer --}}
         <footer class="fade-in delay-7" style="padding-bottom:2rem;">
             <p style="font-size:0.7rem; color:var(--sage); opacity:0.6; letter-spacing:0.15em; text-transform:uppercase;">
@@ -298,6 +341,39 @@
 
     update();
     setInterval(update, 1000);
+
+    // ── RSVP ──
+    (function () {
+        const form = document.getElementById('rsvp-form');
+        if (!form) return;
+        let attending = null, guests = 1;
+        const btn = document.getElementById('rsvp-btn'), thanks = document.getElementById('rsvp-thanks');
+        const gField = document.getElementById('guests-field'), gMinus = document.getElementById('g-minus');
+        const gPlus = document.getElementById('g-plus'), gCount = document.getElementById('g-count');
+        const nameInput = document.getElementById('rsvp-name');
+        document.querySelectorAll('.rsvp-opt').forEach(opt => {
+            opt.addEventListener('click', () => {
+                attending = opt.dataset.val;
+                document.querySelectorAll('.rsvp-opt').forEach(o => o.classList.remove('selected'));
+                opt.classList.add('selected');
+                gField.style.display = attending === 'yes' ? 'flex' : 'none';
+                updateBtn();
+            });
+        });
+        nameInput.addEventListener('input', updateBtn);
+        function updateBtn() { const ok = nameInput.value.trim().length > 1 && attending !== null; btn.disabled = !ok; btn.style.opacity = ok ? '1' : '0.45'; }
+        gMinus.addEventListener('click', () => { guests = Math.max(1,guests-1); gCount.textContent=guests; gMinus.disabled=guests<=1; gPlus.disabled=guests>=8; });
+        gPlus.addEventListener('click',  () => { guests = Math.min(8,guests+1); gCount.textContent=guests; gMinus.disabled=guests<=1; gPlus.disabled=guests>=8; });
+        form.addEventListener('submit', e => {
+            e.preventDefault(); if (btn.disabled) return;
+            const name = nameInput.value.trim();
+            form.style.display = 'none'; thanks.style.display = 'block';
+            document.getElementById('thanks-title').textContent = attending === 'yes' ? `¡Gracias, ${name}!` : `Hasta pronto, ${name}`;
+            document.getElementById('thanks-body').textContent  = attending === 'yes'
+                ? `Te esperamos junto a ${guests > 1 ? `tus ${guests-1} acompañante${guests-1>1?'s':''}` : 'nosotros'} el {{ $event->event_date->translatedFormat('d \d\e F') }}. ¡Nos vemos pronto!`
+                : 'Lamentamos no poder contar contigo en esta ocasión. Gracias por avisarnos.';
+        });
+    })();
 </script>
 
 </body>
