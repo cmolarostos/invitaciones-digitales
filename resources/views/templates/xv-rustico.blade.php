@@ -180,21 +180,39 @@
         }
         .env-instructions {
             position: absolute;
-            bottom: 8vh; left: 0; right: 0;
+            bottom: 7vh; left: 0; right: 0;
             text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            animation: envPulse 2s ease-in-out infinite;
+        }
+        .env-instructions .tap-label {
             font-family: var(--sans);
-            letter-spacing: 0.4em;
-            font-size: 11px;
+            letter-spacing: 0.35em;
+            font-size: 13px;
             color: var(--terra-deep);
             text-transform: uppercase;
-            opacity: 0.75;
-            animation: envPulse 2.4s ease-in-out infinite;
+            background: rgba(255,255,255,0.45);
+            backdrop-filter: blur(4px);
+            padding: 7px 20px;
+            border-radius: 999px;
+            border: 1px solid rgba(255,255,255,0.6);
+        }
+        .env-instructions .tap-arrow {
+            color: var(--terra);
+            animation: tapBounce 1.4s ease-in-out infinite;
         }
         @keyframes envPulse {
-            0%, 100% { opacity: 0.4; transform: translateY(0); }
-            50%       { opacity: 0.85; transform: translateY(-2px); }
+            0%, 100% { opacity: 0.65; }
+            50%       { opacity: 1; }
         }
-        #envelope-stage.open .env-instructions { opacity: 0; }
+        @keyframes tapBounce {
+            0%, 100% { transform: translateY(0); }
+            50%       { transform: translateY(6px); }
+        }
+        #envelope-stage.open .env-instructions { opacity: 0; transition: opacity 0.3s; }
 
         /* ── Main content (fades in after envelope) ── */
         #main-content {
@@ -935,7 +953,12 @@
         <div class="env-flap"></div>
         <div class="env-seal">{{ strtoupper(substr($event->name, 0, 1)) }}</div>
     </div>
-    <div class="env-instructions">Toca para abrir</div>
+    <div class="env-instructions">
+        <span class="tap-label">✦ Toca para abrir ✦</span>
+        <svg class="tap-arrow" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 5v14M5 12l7 7 7-7"/>
+        </svg>
+    </div>
 </div>
 
 {{-- ── MAIN CONTENT ── --}}
