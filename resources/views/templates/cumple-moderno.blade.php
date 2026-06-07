@@ -160,12 +160,31 @@
     @if($event->dress_code || $event->notes)
         <div class="grid gap-4 mb-4 fade-up delay-5 {{ $event->dress_code && $event->notes ? 'grid-cols-1' : '' }}">
             @if($event->dress_code)
-                <div class="card p-4 flex items-center gap-3">
-                    <span class="text-2xl">👔</span>
-                    <div>
-                        <p class="text-xs font-semibold text-purple-400 uppercase tracking-widest">Vestimenta</p>
-                        <p class="font-bold text-gray-900 text-sm">{{ $event->dress_code }}</p>
+                <div class="card p-4">
+                    <div class="flex items-center gap-3">
+                        <span class="text-2xl">👔</span>
+                        <div>
+                            <p class="text-xs font-semibold text-purple-400 uppercase tracking-widest">Vestimenta</p>
+                            <p class="font-bold text-gray-900 text-sm">{{ $event->dress_code }}</p>
+                        </div>
                     </div>
+                    @if($event->dress_code_colors)
+                        <div style="margin-top:14px; text-align:center;">
+                            <p class="text-xs font-semibold text-purple-400 uppercase tracking-widest mb-2">Por favor evita estos colores</p>
+                            <div style="display:flex; justify-content:center; gap:10px; flex-wrap:wrap;">
+                                @foreach($event->dress_code_colors as $color)
+                                    <div title="{{ $color['label'] ?? '' }}"
+                                         style="width:28px;height:28px;border-radius:50%;background:{{ $color['hex'] }};box-shadow:0 0 0 1px rgba(0,0,0,.1);position:relative;">
+                                        <span style="position:absolute;inset:-2px;border-radius:50%;border:1px solid #9333ea;background:linear-gradient(45deg,transparent calc(50% - 0.5px),#9333ea 50%,transparent calc(50% + 0.5px));display:block;"></span>
+                                    </div>
+                                @endforeach
+                            </div>
+                            <p class="text-xs font-semibold text-purple-400 mt-2">Reservados para la festejada</p>
+                            @if($event->dress_code_colors_note)
+                                <p class="text-xs text-gray-400 mt-1 italic">{{ $event->dress_code_colors_note }}</p>
+                            @endif
+                        </div>
+                    @endif
                 </div>
             @endif
             @if($event->notes)

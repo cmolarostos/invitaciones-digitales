@@ -37,9 +37,26 @@
     @endif
 
     @if($event->dress_code)
-        <p class="fade-up delay-5 text-sm text-stone-500 mb-6">
-            Vestimenta: <strong>{{ $event->dress_code }}</strong>
-        </p>
+        <div class="fade-up delay-5 text-sm text-stone-500 mb-6">
+            <p>Vestimenta: <strong>{{ $event->dress_code }}</strong></p>
+            @if($event->dress_code_colors)
+                <div style="margin-top:12px; text-align:center;">
+                    <p style="font-size:0.7rem; letter-spacing:0.15em; text-transform:uppercase; color:#a8a29e; margin-bottom:8px;">Por favor evita estos colores</p>
+                    <div style="display:flex; justify-content:center; gap:10px; flex-wrap:wrap;">
+                        @foreach($event->dress_code_colors as $color)
+                            <div title="{{ $color['label'] ?? '' }}"
+                                 style="width:26px;height:26px;border-radius:50%;background:{{ $color['hex'] }};box-shadow:0 0 0 1px rgba(0,0,0,.08);position:relative;">
+                                <span style="position:absolute;inset:-2px;border-radius:50%;border:1px solid #78716c;background:linear-gradient(45deg,transparent calc(50% - 0.5px),#78716c 50%,transparent calc(50% + 0.5px));display:block;"></span>
+                            </div>
+                        @endforeach
+                    </div>
+                    <p style="font-size:0.7rem; color:#78716c; margin-top:8px;">Reservados para la festejada</p>
+                    @if($event->dress_code_colors_note)
+                        <p style="font-size:0.72rem; color:#a8a29e; margin-top:4px; font-style:italic;">{{ $event->dress_code_colors_note }}</p>
+                    @endif
+                </div>
+            @endif
+        </div>
     @endif
 
     @if($event->notes)

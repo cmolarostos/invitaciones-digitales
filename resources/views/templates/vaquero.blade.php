@@ -250,6 +250,23 @@
                     <div class="flex justify-center gap-3 text-amber-800 text-3xl mb-2">🤠 👢</div>
                     <h4 class="font-western text-lg text-amber-900">Código de Vestimenta</h4>
                     <p class="font-bold text-amber-950 uppercase tracking-wider mt-1">{{ $event->dress_code }}</p>
+                    @if($event->dress_code_colors)
+                        <div style="margin-top:14px;">
+                            <p style="font-size:0.68rem; letter-spacing:0.15em; text-transform:uppercase; color:#92400e; margin-bottom:8px;">Por favor evita estos colores</p>
+                            <div style="display:flex; justify-content:center; gap:10px; flex-wrap:wrap;">
+                                @foreach($event->dress_code_colors as $color)
+                                    <div title="{{ $color['label'] ?? '' }}"
+                                         style="width:28px;height:28px;border-radius:50%;background:{{ $color['hex'] }};box-shadow:0 0 0 1px rgba(0,0,0,.1);position:relative;">
+                                        <span style="position:absolute;inset:-2px;border-radius:50%;border:1px solid #92400e;background:linear-gradient(45deg,transparent calc(50% - 0.5px),#92400e 50%,transparent calc(50% + 0.5px));display:block;"></span>
+                                    </div>
+                                @endforeach
+                            </div>
+                            <p style="font-size:0.68rem; color:#92400e; margin-top:8px; letter-spacing:0.08em;">Reservados para la festejada</p>
+                            @if($event->dress_code_colors_note)
+                                <p style="font-size:0.72rem; color:#78716c; margin-top:4px; font-style:italic;">{{ $event->dress_code_colors_note }}</p>
+                            @endif
+                        </div>
+                    @endif
                 </div>
             @endif
 

@@ -245,6 +245,23 @@
                 <p class="font-display text-lg font-semibold text-white">{{ $event->dress_code }}</p>
             </div>
         </div>
+        @if($event->dress_code_colors)
+            <div class="fade-up delay-5 card card-glow p-4" style="text-align:center;">
+                <p class="section-title mb-2">Por favor evita estos colores</p>
+                <div style="display:flex; justify-content:center; gap:10px; flex-wrap:wrap;">
+                    @foreach($event->dress_code_colors as $color)
+                        <div title="{{ $color['label'] ?? '' }}"
+                             style="width:28px;height:28px;border-radius:50%;background:{{ $color['hex'] }};box-shadow:0 0 0 1px rgba(34,211,238,.2);position:relative;">
+                            <span style="position:absolute;inset:-2px;border-radius:50%;border:1px solid #22d3ee;background:linear-gradient(45deg,transparent calc(50% - 0.5px),#22d3ee 50%,transparent calc(50% + 0.5px));display:block;"></span>
+                        </div>
+                    @endforeach
+                </div>
+                <p class="section-title mt-2">Reservados para la festejada</p>
+                @if($event->dress_code_colors_note)
+                    <p style="font-size:0.75rem; color:rgba(255,255,255,.45); margin-top:4px; font-style:italic;">{{ $event->dress_code_colors_note }}</p>
+                @endif
+            </div>
+        @endif
     @endif
 
     {{-- Notas --}}
