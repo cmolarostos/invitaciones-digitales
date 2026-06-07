@@ -58,7 +58,7 @@
             z-index: 100;
             display: grid;
             place-items: center;
-            background: radial-gradient(ellipse at 50% 30%, #efe0c5 0%, #d6bf9b 70%, #b89970 100%);
+            background: radial-gradient(ellipse at 50% 30%, var(--cream) 0%, var(--cream-2) 70%, var(--terra-soft) 100%);
             perspective: 1800px;
             cursor: pointer;
             transition: opacity 0.8s ease 1.2s, visibility 0.8s ease 1.2s;
@@ -84,7 +84,7 @@
         .env-body {
             position: absolute;
             inset: 0;
-            background: linear-gradient(180deg, #e7d3b1, #d4b88c);
+            background: linear-gradient(180deg, var(--cream-2), var(--terra-soft));
             border-radius: 4px;
             box-shadow:
                 0 30px 60px -20px rgba(70,38,18,.45),
@@ -147,7 +147,7 @@
             position: absolute;
             left: 0; right: 0; top: 0;
             height: 60%;
-            background: linear-gradient(180deg, #cba679, #b08a5c);
+            background: linear-gradient(180deg, var(--terra-soft), var(--terra));
             clip-path: polygon(0 0, 100% 0, 50% 100%);
             transform-origin: top center;
             transform: rotateX(0deg);
@@ -162,13 +162,13 @@
             left: 50%; top: 56%;
             width: 56px; height: 56px;
             transform: translate(-50%,-50%);
-            background: radial-gradient(circle at 35% 35%, #c4724c, var(--terra-deep) 70%);
+            background: radial-gradient(circle at 35% 35%, var(--terra-soft), var(--terra-deep) 70%);
             border-radius: 50%;
             box-shadow: 0 4px 10px rgba(0,0,0,.25), inset 0 -3px 6px rgba(0,0,0,.25);
             z-index: 4;
             display: grid;
             place-items: center;
-            color: #f4e8d5;
+            color: var(--cream);
             font-family: var(--display);
             font-size: 22px;
             letter-spacing: 0.06em;
