@@ -229,6 +229,38 @@
         </div>
     @endif
 
+    {{-- ── GIFTS ── --}}
+    @if($event->gifts)
+    <div class="fade-up delay-5 mb-8 w-full">
+        <div class="border border-amber-100 bg-white/50 py-5 px-5 rounded-sm text-center">
+            <p class="font-body text-xs uppercase tracking-[0.3em] gold mb-1">Mesa de regalos</p>
+            <p class="font-display text-2xl text-stone-700 mb-1">{{ $event->gifts_title ?? 'Tu presencia es el mejor regalo' }}</p>
+            @if($event->gifts_subtitle)
+                <p class="font-body text-sm text-stone-500 mb-4">{{ $event->gifts_subtitle }}</p>
+            @endif
+            @php $giftCols = count($event->gifts) === 1 ? 'minmax(0,320px)' : 'repeat(auto-fit,minmax(200px,1fr))'; @endphp
+            <div style="display:grid;grid-template-columns:{{ $giftCols }};gap:12px;max-width:800px;margin:16px auto 0;">
+                @foreach($event->gifts as $gift)
+                    @if(!empty($gift['url']))
+                        <a href="{{ $gift['url'] }}" target="_blank" rel="noopener"
+                           style="display:block;border:1px solid #e7d9c4;border-radius:4px;padding:16px;text-decoration:none;transition:background 0.2s;background:white;">
+                    @else
+                        <div style="border:1px solid #e7d9c4;border-radius:4px;padding:16px;background:white;">
+                    @endif
+                        <p class="font-display text-lg" style="color:#c9a96e;">{{ $gift['title'] }}</p>
+                        @if(!empty($gift['description']))
+                            <p class="font-body text-xs text-stone-400 mt-1" style="letter-spacing:0.1em;">{{ $gift['description'] }}</p>
+                        @endif
+                        @if(!empty($gift['url']))
+                            <p class="font-body text-xs mt-2" style="color:#c9a96e;letter-spacing:0.2em;">VER →</p>
+                        @endif
+                    @if(!empty($gift['url']))</a>@else</div>@endif
+                @endforeach
+            </div>
+        </div>
+    </div>
+    @endif
+
     {{-- ── RSVP ── --}}
     @if($event->requires_rsvp)
     <style>

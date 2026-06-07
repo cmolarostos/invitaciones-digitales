@@ -295,6 +295,36 @@
         </div>
     </section>
 
+    {{-- ── GIFTS ── --}}
+    @if($event->gifts)
+    <div class="fade-up delay-5 border-2 border-dashed border-amber-700/40 rounded-2xl p-5 text-center bg-yellow-50/60 mb-6">
+        <div class="flex justify-center gap-2 text-amber-800 text-2xl mb-1">🎁</div>
+        <h4 class="font-western text-lg text-amber-900">{{ $event->gifts_title ?? 'Mesa de Regalos' }}</h4>
+        @if($event->gifts_subtitle)
+            <p class="font-body text-xs text-amber-700/70 mt-1 mb-3">{{ $event->gifts_subtitle }}</p>
+        @endif
+        @php $giftCols = count($event->gifts) === 1 ? 'minmax(0,300px)' : 'repeat(auto-fit,minmax(180px,1fr))'; @endphp
+        <div style="display:grid;grid-template-columns:{{ $giftCols }};gap:10px;max-width:780px;margin:14px auto 0;">
+            @foreach($event->gifts as $gift)
+                @if(!empty($gift['url']))
+                    <a href="{{ $gift['url'] }}" target="_blank" rel="noopener"
+                       style="display:block;border:1px solid #d97706;border-radius:12px;padding:14px;text-decoration:none;background:white;transition:background 0.2s;">
+                @else
+                    <div style="border:1px solid #d97706;border-radius:12px;padding:14px;background:white;">
+                @endif
+                    <p class="font-western text-base text-amber-900">{{ $gift['title'] }}</p>
+                    @if(!empty($gift['description']))
+                        <p class="font-body text-xs text-amber-700/70 mt-1">{{ $gift['description'] }}</p>
+                    @endif
+                    @if(!empty($gift['url']))
+                        <p style="font-size:0.72rem;color:#92400e;margin-top:8px;letter-spacing:0.1em;">Ver →</p>
+                    @endif
+                @if(!empty($gift['url']))</a>@else</div>@endif
+            @endforeach
+        </div>
+    </div>
+    @endif
+
     {{-- ── RSVP ── --}}
     @if($event->requires_rsvp)
     <style>

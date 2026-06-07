@@ -657,6 +657,39 @@
 </section>
 @endif
 
+{{-- ── GIFTS ── --}}
+@if($event->gifts)
+<section style="padding:5.5rem 1.5rem; text-align:center;">
+    <div class="section-header reveal">
+        <span class="section-label">Mesa de regalos</span>
+        <h2 class="section-heading">{{ $event->gifts_title ?? 'Tu presencia es el mejor regalo' }}</h2>
+        <div class="gold-bar"></div>
+    </div>
+    @if($event->gifts_subtitle)
+        <p style="font-size:0.85rem;color:rgba(255,255,255,0.5);margin-top:-1rem;margin-bottom:2rem;">{{ $event->gifts_subtitle }}</p>
+    @endif
+    @php $giftCols = count($event->gifts) === 1 ? 'minmax(0,320px)' : 'repeat(auto-fit,minmax(200px,1fr))'; @endphp
+    <div style="display:grid;grid-template-columns:{{ $giftCols }};gap:14px;max-width:860px;margin:0 auto;">
+        @foreach($event->gifts as $gift)
+            @if(!empty($gift['url']))
+                <a href="{{ $gift['url'] }}" target="_blank" rel="noopener"
+                   style="display:block;border:1px solid rgba(200,169,110,0.3);border-radius:10px;padding:20px;text-decoration:none;background:rgba(255,255,255,0.05);transition:background 0.2s;">
+            @else
+                <div style="border:1px solid rgba(200,169,110,0.3);border-radius:10px;padding:20px;background:rgba(255,255,255,0.05);">
+            @endif
+                <p style="font-family:'Dancing Script',cursive;font-size:1.3rem;color:var(--gold);">{{ $gift['title'] }}</p>
+                @if(!empty($gift['description']))
+                    <p style="font-size:0.78rem;color:rgba(255,255,255,0.5);margin-top:6px;letter-spacing:0.08em;">{{ $gift['description'] }}</p>
+                @endif
+                @if(!empty($gift['url']))
+                    <p style="font-size:0.75rem;color:var(--gold);margin-top:10px;letter-spacing:0.15em;">VER →</p>
+                @endif
+            @if(!empty($gift['url']))</a>@else</div>@endif
+        @endforeach
+    </div>
+</section>
+@endif
+
 {{-- ── RSVP ── --}}
 @if($event->requires_rsvp)
 <style>

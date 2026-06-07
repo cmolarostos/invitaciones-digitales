@@ -245,6 +245,38 @@
         </section>
     @endif
 
+    {{-- ── GIFTS ── --}}
+    @if($event->gifts)
+    <section class="fade-up delay-5 space-y-4">
+        <div class="glass-card rounded-3xl p-5 text-center shadow-sm">
+            <p class="text-xs uppercase tracking-widest text-pink-400 mb-1">Mesa de regalos</p>
+            <p class="font-display text-2xl text-stone-800 mb-1">{{ $event->gifts_title ?? 'Tu presencia es el mejor regalo' }}</p>
+            @if($event->gifts_subtitle)
+                <p class="text-xs text-stone-400 mb-3">{{ $event->gifts_subtitle }}</p>
+            @endif
+            @php $giftCols = count($event->gifts) === 1 ? 'minmax(0,300px)' : 'repeat(auto-fit,minmax(170px,1fr))'; @endphp
+            <div style="display:grid;grid-template-columns:{{ $giftCols }};gap:10px;max-width:700px;margin:14px auto 0;">
+                @foreach($event->gifts as $gift)
+                    @if(!empty($gift['url']))
+                        <a href="{{ $gift['url'] }}" target="_blank" rel="noopener"
+                           style="display:block;border:1px solid #fce7f3;border-radius:16px;padding:14px;text-decoration:none;background:white;transition:background 0.2s;">
+                    @else
+                        <div style="border:1px solid #fce7f3;border-radius:16px;padding:14px;background:white;">
+                    @endif
+                        <p class="font-display text-lg text-stone-700">{{ $gift['title'] }}</p>
+                        @if(!empty($gift['description']))
+                            <p class="text-xs text-stone-400 mt-1">{{ $gift['description'] }}</p>
+                        @endif
+                        @if(!empty($gift['url']))
+                            <p class="text-xs text-pink-400 mt-2">Ver →</p>
+                        @endif
+                    @if(!empty($gift['url']))</a>@else</div>@endif
+                @endforeach
+            </div>
+        </div>
+    </section>
+    @endif
+
     {{-- ── RSVP ── --}}
     @if($event->requires_rsvp)
     <style>

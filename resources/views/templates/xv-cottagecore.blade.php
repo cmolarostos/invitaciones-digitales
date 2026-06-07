@@ -262,6 +262,36 @@
             </p>
         @endif
 
+        {{-- ── GIFTS ── --}}
+        @if($event->gifts)
+        <div class="fade-up delay-5" style="margin-bottom:1.5rem; text-align:center;">
+            <span style="letter-spacing:0.15em; text-transform:uppercase; font-size:0.7rem; color:var(--terracotta);">Mesa de regalos</span>
+            <p class="serif-font" style="font-size:1.1rem; color:var(--sage); margin-top:0.25rem;">{{ $event->gifts_title ?? 'Tu presencia es el mejor regalo' }}</p>
+            @if($event->gifts_subtitle)
+                <p style="font-size:0.78rem; color:var(--sage); opacity:0.75; margin-top:4px;">{{ $event->gifts_subtitle }}</p>
+            @endif
+            @php $giftCols = count($event->gifts) === 1 ? 'minmax(0,300px)' : 'repeat(auto-fit,minmax(170px,1fr))'; @endphp
+            <div style="display:grid;grid-template-columns:{{ $giftCols }};gap:10px;max-width:700px;margin:14px auto 0;">
+                @foreach($event->gifts as $gift)
+                    @if(!empty($gift['url']))
+                        <a href="{{ $gift['url'] }}" target="_blank" rel="noopener"
+                           style="display:block;border:1px solid rgba(214,140,122,0.35);border-radius:10px;padding:14px;text-decoration:none;background:rgba(255,255,255,0.6);transition:background 0.2s;">
+                    @else
+                        <div style="border:1px solid rgba(214,140,122,0.35);border-radius:10px;padding:14px;background:rgba(255,255,255,0.6);">
+                    @endif
+                        <p class="serif-font" style="font-size:1rem; color:var(--terracotta);">{{ $gift['title'] }}</p>
+                        @if(!empty($gift['description']))
+                            <p style="font-size:0.72rem; color:var(--sage); margin-top:4px; opacity:0.8;">{{ $gift['description'] }}</p>
+                        @endif
+                        @if(!empty($gift['url']))
+                            <p style="font-size:0.68rem; color:var(--terracotta); margin-top:8px; letter-spacing:0.1em;">Ver →</p>
+                        @endif
+                    @if(!empty($gift['url']))</a>@else</div>@endif
+                @endforeach
+            </div>
+        </div>
+        @endif
+
         {{-- ── RSVP ── --}}
         @if($event->requires_rsvp)
         <style>
