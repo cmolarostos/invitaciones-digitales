@@ -498,6 +498,34 @@
     </div>
 </section>
 
+{{-- ── PROGRAMA DEL EVENTO ── --}}
+@if($event->itinerary)
+<section id="timeline">
+    <div class="section-header reveal">
+        <span class="section-label">La noche perfecta</span>
+        <h2 class="section-heading">Programa del Evento</h2>
+        <div class="gold-bar"></div>
+    </div>
+
+    <div class="tl-wrap">
+        @foreach($event->itinerary as $item)
+        <div class="tl-item reveal {{ $loop->even ? 'from-left' : 'from-right' }}">
+            <div class="tl-dot"></div>
+            <div class="tl-card">
+                @if(!empty($item['time']))
+                    <p class="tl-time">{{ \Carbon\Carbon::parse($item['time'])->format('g:i A') }}</p>
+                @endif
+                <h4>{{ $item['title'] }}</h4>
+                @if(!empty($item['description']))
+                    <p>{{ $item['description'] }}</p>
+                @endif
+            </div>
+        </div>
+        @endforeach
+    </div>
+</section>
+@endif
+
 {{-- ── DETALLES ── --}}
 <section id="details">
     <div class="section-header reveal">
@@ -550,6 +578,37 @@
     </div>
 </section>
 
+{{-- ── UBICACIÓN ── --}}
+<section id="location">
+    <div class="section-header reveal">
+        <span class="section-label">¿Cómo llegar?</span>
+        <h2 class="section-heading">Ubicación del Evento</h2>
+        <div class="gold-bar"></div>
+    </div>
+
+    <div class="loc-card reveal scale-in">
+        <div class="loc-map">
+            <div class="loc-pin">📍</div>
+            <span class="loc-map-label">
+                {{ $event->venue_name ?? 'Salón de Eventos' }}
+            </span>
+        </div>
+        <div class="loc-body">
+            <h3>{{ $event->venue_name ?? 'Salón de Eventos' }}</h3>
+            <p>{{ $event->venue_address ?? 'Av. Principal #123, Col. Centro' }}</p>
+            <div class="loc-chips">
+                <span class="loc-chip">🚗 Estacionamiento gratuito</span>
+                <span class="loc-chip">♿ Acceso universal</span>
+            </div>
+            @if($event->venue_maps_url)
+                <a href="{{ $event->venue_maps_url }}" target="_blank" rel="noopener" class="map-btn">
+                    📍 Ver en Google Maps
+                </a>
+            @endif
+        </div>
+    </div>
+</section>
+
 {{-- ── GALERÍA DE RECUERDOS ── --}}
 @php $galleryPhotos = $event->photos->skip(1)->take(9); @endphp
 @if($galleryPhotos->count() > 0)
@@ -594,65 +653,6 @@
     <div class="c-dots" id="c-dots"></div>
 </section>
 @endif
-
-{{-- ── PROGRAMA DEL EVENTO ── --}}
-@if($event->itinerary)
-<section id="timeline">
-    <div class="section-header reveal">
-        <span class="section-label">La noche perfecta</span>
-        <h2 class="section-heading">Programa del Evento</h2>
-        <div class="gold-bar"></div>
-    </div>
-
-    <div class="tl-wrap">
-        @foreach($event->itinerary as $item)
-        <div class="tl-item reveal {{ $loop->even ? 'from-left' : 'from-right' }}">
-            <div class="tl-dot"></div>
-            <div class="tl-card">
-                @if(!empty($item['time']))
-                    <p class="tl-time">{{ \Carbon\Carbon::parse($item['time'])->format('g:i A') }}</p>
-                @endif
-                <h4>{{ $item['title'] }}</h4>
-                @if(!empty($item['description']))
-                    <p>{{ $item['description'] }}</p>
-                @endif
-            </div>
-        </div>
-        @endforeach
-    </div>
-</section>
-@endif
-
-{{-- ── UBICACIÓN ── --}}
-<section id="location">
-    <div class="section-header reveal">
-        <span class="section-label">¿Cómo llegar?</span>
-        <h2 class="section-heading">Ubicación del Evento</h2>
-        <div class="gold-bar"></div>
-    </div>
-
-    <div class="loc-card reveal scale-in">
-        <div class="loc-map">
-            <div class="loc-pin">📍</div>
-            <span class="loc-map-label">
-                {{ $event->venue_name ?? 'Salón de Eventos' }}
-            </span>
-        </div>
-        <div class="loc-body">
-            <h3>{{ $event->venue_name ?? 'Salón de Eventos' }}</h3>
-            <p>{{ $event->venue_address ?? 'Av. Principal #123, Col. Centro' }}</p>
-            <div class="loc-chips">
-                <span class="loc-chip">🚗 Estacionamiento gratuito</span>
-                <span class="loc-chip">♿ Acceso universal</span>
-            </div>
-            @if($event->venue_maps_url)
-                <a href="{{ $event->venue_maps_url }}" target="_blank" rel="noopener" class="map-btn">
-                    📍 Ver en Google Maps
-                </a>
-            @endif
-        </div>
-    </div>
-</section>
 
 {{-- ── FOOTER ── --}}
 <footer>

@@ -1063,16 +1063,6 @@
         <div class="scroll-hint">Desliza</div>
     </section>
 
-    {{-- ── VERSE ── --}}
-    <section class="verse">
-        <svg class="branch tl" width="120" height="66" viewBox="0 0 200 110" fill="none" aria-hidden="true"><path d="M10 90 Q60 70 110 70 T 190 50" stroke="currentColor" stroke-width="1.1" fill="none" stroke-linecap="round"/><ellipse cx="50" cy="76" rx="9" ry="3" fill="currentColor" transform="rotate(-20 50 76)"/><ellipse cx="72" cy="68" rx="8" ry="3" fill="currentColor" transform="rotate(-12 72 68)"/><ellipse cx="95" cy="64" rx="9" ry="3" fill="currentColor" transform="rotate(-6 95 64)"/><circle cx="170" cy="48" r="2.4" fill="currentColor"/></svg>
-        <svg class="branch tr" width="120" height="66" viewBox="0 0 200 110" fill="none" aria-hidden="true"><path d="M10 90 Q60 70 110 70 T 190 50" stroke="currentColor" stroke-width="1.1" fill="none" stroke-linecap="round"/><ellipse cx="50" cy="76" rx="9" ry="3" fill="currentColor" transform="rotate(-20 50 76)"/><ellipse cx="72" cy="68" rx="8" ry="3" fill="currentColor" transform="rotate(-12 72 68)"/><ellipse cx="95" cy="64" rx="9" ry="3" fill="currentColor" transform="rotate(-6 95 64)"/><circle cx="170" cy="48" r="2.4" fill="currentColor"/></svg>
-        <blockquote class="reveal">
-            "@if($event->notes){{ $event->notes }}@else Aquella niña que un día soñó con un cuento de hadas, hoy se convierte en mujer y celebra una nueva historia. @endif"
-        </blockquote>
-        <cite class="reveal">— Mis quince años</cite>
-    </section>
-
     {{-- ── COUNTDOWN ── --}}
     <section class="countdown">
         <div class="eyebrow reveal">Cuenta regresiva</div>
@@ -1086,6 +1076,16 @@
             <div class="cd-cell"><div class="cd-num" id="cd-m">--</div><div class="cd-label">Minutos</div></div>
             <div class="cd-cell"><div class="cd-num" id="cd-s">--</div><div class="cd-label">Segundos</div></div>
         </div>
+    </section>
+
+    {{-- ── VERSE ── --}}
+    <section class="verse">
+        <svg class="branch tl" width="120" height="66" viewBox="0 0 200 110" fill="none" aria-hidden="true"><path d="M10 90 Q60 70 110 70 T 190 50" stroke="currentColor" stroke-width="1.1" fill="none" stroke-linecap="round"/><ellipse cx="50" cy="76" rx="9" ry="3" fill="currentColor" transform="rotate(-20 50 76)"/><ellipse cx="72" cy="68" rx="8" ry="3" fill="currentColor" transform="rotate(-12 72 68)"/><ellipse cx="95" cy="64" rx="9" ry="3" fill="currentColor" transform="rotate(-6 95 64)"/><circle cx="170" cy="48" r="2.4" fill="currentColor"/></svg>
+        <svg class="branch tr" width="120" height="66" viewBox="0 0 200 110" fill="none" aria-hidden="true"><path d="M10 90 Q60 70 110 70 T 190 50" stroke="currentColor" stroke-width="1.1" fill="none" stroke-linecap="round"/><ellipse cx="50" cy="76" rx="9" ry="3" fill="currentColor" transform="rotate(-20 50 76)"/><ellipse cx="72" cy="68" rx="8" ry="3" fill="currentColor" transform="rotate(-12 72 68)"/><ellipse cx="95" cy="64" rx="9" ry="3" fill="currentColor" transform="rotate(-6 95 64)"/><circle cx="170" cy="48" r="2.4" fill="currentColor"/></svg>
+        <blockquote class="reveal">
+            "@if($event->notes){{ $event->notes }}@else Aquella niña que un día soñó con un cuento de hadas, hoy se convierte en mujer y celebra una nueva historia. @endif"
+        </blockquote>
+        <cite class="reveal">— Mis quince años</cite>
     </section>
 
     {{-- ── ITINERARY ── --}}
@@ -1114,67 +1114,6 @@
         </div>
     </section>
     @endif
-
-    {{-- ── GALLERY ── --}}
-    @php
-        $galleryPhotos = $event->photos->skip(1)->take(6)->values();
-        $layouts = ['tall', 'sq', 'sq', 'wide', 'mid', 'mid'];
-    @endphp
-    @if($galleryPhotos->count() > 0)
-    <section class="gallery">
-        <div class="head">
-            <div class="eyebrow reveal">Galería</div>
-            <h2 class="reveal" style="margin-top:18px">Recuerdos <em>en imágenes</em></h2>
-            <div class="divider reveal" aria-hidden="true">
-                <svg width="14" height="14" viewBox="0 0 14 14"><circle cx="7" cy="7" r="2" fill="currentColor"/></svg>
-            </div>
-        </div>
-        <div class="gallery-grid reveal-stagger">
-            @foreach($galleryPhotos as $i => $photo)
-                <div class="gal-photo {{ $layouts[$i] }}">
-                    <img src="{{ $photo->url }}" alt="" loading="lazy">
-                </div>
-            @endforeach
-        </div>
-    </section>
-    @endif
-
-    {{-- ── LOCATION ── --}}
-    <section class="location">
-        <div class="eyebrow reveal">Ubicación</div>
-        @if($event->venue_name)
-            @php $parts = explode(' ', $event->venue_name, 2); @endphp
-            <h2 class="reveal" style="margin-top:14px">
-                {{ $parts[0] }}
-                @if(isset($parts[1]))<em>{{ $parts[1] }}</em>@endif
-            </h2>
-        @else
-            <h2 class="reveal" style="margin-top:14px">Rancho <em>la Herradura</em></h2>
-        @endif
-        <p class="address reveal">{{ $event->venue_address ?? 'Dallas, Texas' }}</p>
-        <div class="map-card reveal">
-            <div class="map-stylized">
-                <svg viewBox="0 0 600 360" preserveAspectRatio="none">
-                    <path d="M0 200 Q150 180 300 220 T 600 240" stroke="rgba(178,90,54,.45)" stroke-width="2" fill="none" stroke-dasharray="5 6"/>
-                    <path d="M120 0 Q140 120 200 200 T 280 360" stroke="rgba(110,122,85,.4)" stroke-width="1.5" fill="none"/>
-                    <path d="M450 0 Q420 150 380 240 T 360 360" stroke="rgba(110,122,85,.4)" stroke-width="1.5" fill="none"/>
-                    <path d="M0 80 Q200 100 320 60 T 600 100" stroke="rgba(110,122,85,.35)" stroke-width="6" fill="none" stroke-linecap="round"/>
-                    <circle cx="100" cy="290" r="40" fill="rgba(110,122,85,.15)"/>
-                    <circle cx="510" cy="80"  r="56" fill="rgba(178,90,54,.12)"/>
-                    <circle cx="510" cy="80"  r="34" fill="rgba(178,90,54,.16)"/>
-                </svg>
-                <div class="map-pin">
-                    <div class="dot"></div>
-                    <div>{{ $event->venue_name ?? 'Rancho la Herradura' }}</div>
-                </div>
-            </div>
-        </div>
-        <a class="btn-link reveal"
-           href="{{ $event->venue_maps_url ?? 'https://maps.google.com/?q=' . urlencode(($event->venue_name ?? 'Rancho la Herradura') . ' ' . ($event->venue_address ?? 'Dallas Texas')) }}"
-           target="_blank" rel="noopener">
-            Cómo llegar →
-        </a>
-    </section>
 
     {{-- ── DRESS CODE ── --}}
     @if($event->dress_code)
@@ -1232,6 +1171,43 @@
     </section>
     @endif
 
+    {{-- ── LOCATION ── --}}
+    <section class="location">
+        <div class="eyebrow reveal">Ubicación</div>
+        @if($event->venue_name)
+            @php $parts = explode(' ', $event->venue_name, 2); @endphp
+            <h2 class="reveal" style="margin-top:14px">
+                {{ $parts[0] }}
+                @if(isset($parts[1]))<em>{{ $parts[1] }}</em>@endif
+            </h2>
+        @else
+            <h2 class="reveal" style="margin-top:14px">Rancho <em>la Herradura</em></h2>
+        @endif
+        <p class="address reveal">{{ $event->venue_address ?? 'Dallas, Texas' }}</p>
+        <div class="map-card reveal">
+            <div class="map-stylized">
+                <svg viewBox="0 0 600 360" preserveAspectRatio="none">
+                    <path d="M0 200 Q150 180 300 220 T 600 240" stroke="rgba(178,90,54,.45)" stroke-width="2" fill="none" stroke-dasharray="5 6"/>
+                    <path d="M120 0 Q140 120 200 200 T 280 360" stroke="rgba(110,122,85,.4)" stroke-width="1.5" fill="none"/>
+                    <path d="M450 0 Q420 150 380 240 T 360 360" stroke="rgba(110,122,85,.4)" stroke-width="1.5" fill="none"/>
+                    <path d="M0 80 Q200 100 320 60 T 600 100" stroke="rgba(110,122,85,.35)" stroke-width="6" fill="none" stroke-linecap="round"/>
+                    <circle cx="100" cy="290" r="40" fill="rgba(110,122,85,.15)"/>
+                    <circle cx="510" cy="80"  r="56" fill="rgba(178,90,54,.12)"/>
+                    <circle cx="510" cy="80"  r="34" fill="rgba(178,90,54,.16)"/>
+                </svg>
+                <div class="map-pin">
+                    <div class="dot"></div>
+                    <div>{{ $event->venue_name ?? 'Rancho la Herradura' }}</div>
+                </div>
+            </div>
+        </div>
+        <a class="btn-link reveal"
+           href="{{ $event->venue_maps_url ?? 'https://maps.google.com/?q=' . urlencode(($event->venue_name ?? 'Rancho la Herradura') . ' ' . ($event->venue_address ?? 'Dallas Texas')) }}"
+           target="_blank" rel="noopener">
+            Cómo llegar →
+        </a>
+    </section>
+
     {{-- ── GIFTS ── --}}
     @if($event->gifts)
     <section class="gifts">
@@ -1257,6 +1233,30 @@
                 @else
                     </div>
                 @endif
+            @endforeach
+        </div>
+    </section>
+    @endif
+
+    {{-- ── GALLERY ── --}}
+    @php
+        $galleryPhotos = $event->photos->skip(1)->take(6)->values();
+        $layouts = ['tall', 'sq', 'sq', 'wide', 'mid', 'mid'];
+    @endphp
+    @if($galleryPhotos->count() > 0)
+    <section class="gallery">
+        <div class="head">
+            <div class="eyebrow reveal">Galería</div>
+            <h2 class="reveal" style="margin-top:18px">Recuerdos <em>en imágenes</em></h2>
+            <div class="divider reveal" aria-hidden="true">
+                <svg width="14" height="14" viewBox="0 0 14 14"><circle cx="7" cy="7" r="2" fill="currentColor"/></svg>
+            </div>
+        </div>
+        <div class="gallery-grid reveal-stagger">
+            @foreach($galleryPhotos as $i => $photo)
+                <div class="gal-photo {{ $layouts[$i] }}">
+                    <img src="{{ $photo->url }}" alt="" loading="lazy">
+                </div>
             @endforeach
         </div>
     </section>
