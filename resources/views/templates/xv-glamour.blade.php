@@ -574,6 +574,9 @@
                 <p>Formal Elegante</p>
                 <div class="dc-pill">Evitar rosa y blanco</div>
             @endif
+            @if($event->dress_code_colors_note)
+                <p style="font-size:0.78rem;color:rgba(255,255,255,.6);margin-top:8px;font-style:italic;">{{ $event->dress_code_colors_note }}</p>
+            @endif
         </div>
     </div>
 </section>

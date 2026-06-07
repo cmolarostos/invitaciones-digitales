@@ -27,6 +27,7 @@ class Event extends Model
         'dress_code_men',
         'dress_code_women',
         'dress_code_colors',
+        'dress_code_colors_note',
         'notes',
         'itinerary',
         'requires_rsvp',

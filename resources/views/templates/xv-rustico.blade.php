@@ -715,6 +715,7 @@
             line-height: 1.5;
         }
         .dc-palette { margin-top: 56px; display: flex; flex-direction: column; align-items: center; gap: 16px; }
+        .dc-note { font-family: var(--sans); font-size: 13px; color: var(--ink-soft); text-align: center; margin-top: 4px; font-style: italic; }
         .dc-palette .label {
             font-family: var(--sans);
             font-size: 10px;
@@ -1166,6 +1167,9 @@
                 @endforeach
             </div>
             <div class="label" style="margin-top:18px;color:var(--terra-deep)">Reservados para la festejada</div>
+            @if($event->dress_code_colors_note)
+                <p class="dc-note reveal">{{ $event->dress_code_colors_note }}</p>
+            @endif
         </div>
         @endif
     </section>

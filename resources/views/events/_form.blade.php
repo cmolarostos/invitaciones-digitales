@@ -144,6 +144,14 @@
                 </svg>
                 Agregar color
             </button>
+            <div class="mt-3">
+                <label class="block text-xs font-medium text-gray-500 mb-1">Comentario adicional (opcional)</label>
+                <input type="text" name="dress_code_colors_note"
+                       value="{{ old('dress_code_colors_note', $event->dress_code_colors_note ?? '') }}"
+                       placeholder="Ej. Estos colores son exclusivos para la festejada"
+                       maxlength="300"
+                       class="w-full border border-gray-200 rounded px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-indigo-400">
+            </div>
         </div>
     </div>
 
