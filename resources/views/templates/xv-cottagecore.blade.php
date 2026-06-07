@@ -193,6 +193,23 @@
                 <p class="serif-font" style="font-size:1.2rem; color:var(--terracotta); margin-top:0.25rem;">
                     {{ $event->dress_code }}
                 </p>
+                @if($event->dress_code_colors)
+                    <div style="margin-top:14px; text-align:center;">
+                        <p style="letter-spacing:0.12em; text-transform:uppercase; font-size:0.65rem; color:var(--sage); margin-bottom:8px;">Por favor evita estos colores</p>
+                        <div style="display:flex; justify-content:center; gap:10px; flex-wrap:wrap;">
+                            @foreach($event->dress_code_colors as $color)
+                                <div title="{{ $color['label'] ?? '' }}"
+                                     style="width:28px;height:28px;border-radius:50%;background:{{ $color['hex'] }};box-shadow:0 0 0 1px rgba(0,0,0,.1);position:relative;">
+                                    <span style="position:absolute;inset:-2px;border-radius:50%;border:1px solid var(--terracotta);background:linear-gradient(45deg,transparent calc(50% - 0.5px),var(--terracotta) 50%,transparent calc(50% + 0.5px));display:block;"></span>
+                                </div>
+                            @endforeach
+                        </div>
+                        <p style="font-size:0.68rem; color:var(--terracotta); margin-top:8px; letter-spacing:0.08em;">Reservados para la festejada</p>
+                        @if($event->dress_code_colors_note)
+                            <p style="font-size:0.72rem; color:var(--sage); margin-top:4px; font-style:italic;">{{ $event->dress_code_colors_note }}</p>
+                        @endif
+                    </div>
+                @endif
             </div>
         @endif
 

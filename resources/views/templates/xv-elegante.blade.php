@@ -176,6 +176,23 @@
                 <div class="glass-card rounded-3xl p-5 text-center shadow-sm">
                     <p class="text-xs uppercase tracking-widest text-pink-400 mb-2">Vestimenta</p>
                     <p class="font-display text-2xl text-stone-800">{{ $event->dress_code }}</p>
+                    @if($event->dress_code_colors)
+                        <div style="margin-top:16px;">
+                            <p class="text-xs uppercase tracking-widest text-stone-400 mb-2">Por favor evita estos colores</p>
+                            <div style="display:flex;justify-content:center;gap:10px;flex-wrap:wrap;">
+                                @foreach($event->dress_code_colors as $color)
+                                    <div title="{{ $color['label'] ?? '' }}"
+                                         style="width:28px;height:28px;border-radius:50%;background:{{ $color['hex'] }};box-shadow:0 0 0 1px rgba(0,0,0,.1);position:relative;">
+                                        <span style="position:absolute;inset:-2px;border-radius:50%;border:1px solid #e88;background:linear-gradient(45deg,transparent calc(50% - 0.5px),#e88 50%,transparent calc(50% + 0.5px));display:block;"></span>
+                                    </div>
+                                @endforeach
+                            </div>
+                            <p class="text-xs text-pink-400 mt-2">Reservados para la festejada</p>
+                            @if($event->dress_code_colors_note)
+                                <p class="text-xs text-stone-400 mt-1 italic">{{ $event->dress_code_colors_note }}</p>
+                            @endif
+                        </div>
+                    @endif
                 </div>
             @endif
             @if($event->notes)
