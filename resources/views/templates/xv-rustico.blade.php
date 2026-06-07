@@ -794,6 +794,7 @@
         .gift-card .meta { font-family: var(--sans); font-size: 10px; letter-spacing: 0.4em; text-transform: uppercase; color: var(--ink-soft); }
         .gift-card .code { margin-top: 8px; font-family: var(--mono); font-size: 12px; color: var(--terra-deep); padding: 6px 12px; border: 1px dashed var(--hair); border-radius: 3px; background: var(--paper); }
         .gift-card .arrow { margin-top: 6px; font-family: var(--sans); font-size: 11px; letter-spacing: 0.4em; text-transform: uppercase; color: var(--terra-deep); }
+        .gift-grid--single { grid-template-columns: minmax(0, 340px); }
         @media (max-width: 720px) { .gift-grid { grid-template-columns: 1fr; max-width: 360px; } }
 
         /* ── RSVP ── */
@@ -1218,7 +1219,7 @@
         <div class="eyebrow reveal">Mesa de regalos</div>
         <h2 class="reveal">{{ $event->gifts_title ?? 'Tu presencia es el mejor regalo' }}</h2>
         <p class="note reveal">{{ $event->gifts_subtitle ?? 'Si deseas obsequiar algo más, aquí encontrarás opciones para hacerlo con cariño.' }}</p>
-        <div class="gift-grid reveal-stagger">
+        <div class="gift-grid reveal-stagger {{ count($event->gifts) === 1 ? 'gift-grid--single' : '' }}">
             @foreach($event->gifts as $gift)
                 @if(!empty($gift['url']))
                     <a href="{{ $gift['url'] }}" target="_blank" rel="noopener" class="gift-card">
