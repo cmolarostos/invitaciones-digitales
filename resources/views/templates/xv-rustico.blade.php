@@ -794,7 +794,7 @@
         .gift-card .meta { font-family: var(--sans); font-size: 10px; letter-spacing: 0.4em; text-transform: uppercase; color: var(--ink-soft); }
         .gift-card .code { margin-top: 8px; font-family: var(--mono); font-size: 12px; color: var(--terra-deep); padding: 6px 12px; border: 1px dashed var(--hair); border-radius: 3px; background: var(--paper); }
         .gift-card .arrow { margin-top: 6px; font-family: var(--sans); font-size: 11px; letter-spacing: 0.4em; text-transform: uppercase; color: var(--terra-deep); }
-        .gift-grid--single { grid-template-columns: minmax(0, 340px); }
+        .gift-grid--single { grid-template-columns: minmax(0, 340px); justify-content: center; }
         @media (max-width: 720px) { .gift-grid { grid-template-columns: 1fr; max-width: 360px; } }
 
         /* ── RSVP ── */
