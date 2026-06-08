@@ -1392,10 +1392,9 @@
         if (stage.classList.contains('open')) return;
         stage.classList.add('open');
 
-        // iOS Safari bloquea autoplay fuera de gesto directo; en desktop sí funciona
-        if (!/iPad|iPhone|iPod/.test(navigator.userAgent) && typeof window.ytAutoplay === 'function') {
-            window.ytAutoplay();
-        }
+        // Llamar aquí (dentro del handler, no en setTimeout) para que iOS Safari
+        // reconozca el gesto del usuario y permita reproducir audio
+        if (typeof window.ytAutoplay === 'function') window.ytAutoplay();
 
         setTimeout(() => {
             document.body.style.overflow = '';
@@ -1589,7 +1588,9 @@ function fxSpawnPetals(container, count) {
         });
     };
 
-    // Llamado desde el sobre en desktop (no-iOS); si el player aún no está listo guarda el pending
+    // Llamado desde open() dentro del handler del gesto (requerido para iOS Safari).
+    // Si el player aún no está listo, pending lo activa en onReady (funciona en desktop;
+    // en iOS el onReady ya no es un gesto, así que el botón queda disponible para tocar).
     window.ytAutoplay = function () {
         if (player) { player.playVideo(); } else { pending = true; }
     };
