@@ -1539,7 +1539,9 @@ function fxSpawnPetals(container, count) {
             aria-label="Reproducir música de fondo">
         ▶
     </button>
-    <div id="yt-iframe" style="display:none;width:0;height:0;position:absolute;"></div>
+    {{-- El iframe de YT NO puede ser display:none en móvil: el browser no inicializa media oculta.
+         Se posiciona fuera de pantalla pero renderizado (1×1 px, opacidad 0). --}}
+    <div id="yt-iframe" style="position:absolute;width:1px;height:1px;top:0;left:0;opacity:0;pointer-events:none;overflow:hidden;"></div>
 </div>
 @endif
 
@@ -1551,26 +1553,36 @@ function fxSpawnPetals(container, count) {
     const ytId = '{{ $ytId ?? '' }}';
     if (!ytId) return;
 
-    let player   = null;
-    let playing  = false;
-    let pending  = false; // autoplay solicitado antes de que el player estuviera listo
+    let player  = null;
+    let playing = false;
+    let pending = false;
 
-    // Carga la YT IFrame API de forma diferida
+    function tryPlay() {
+        if (player) {
+            player.playVideo();
+        } else {
+            pending = true; // onReady lo activará (funciona en desktop; en iOS requiere gesto directo)
+        }
+    }
+
+    // Cargar YT IFrame API
     const tag = document.createElement('script');
-    tag.src   = 'https://www.youtube.com/iframe_api';
+    tag.src = 'https://www.youtube.com/iframe_api';
     document.head.appendChild(tag);
 
     window.onYouTubeIframeAPIReady = function () {
         player = new YT.Player('yt-iframe', {
             videoId: ytId,
             playerVars: {
-                autoplay:   0,
-                loop:       1,
-                playlist:   ytId,
-                controls:   0,
-                playsinline: 1,   // imprescindible en iOS Safari
+                autoplay:    0,
+                loop:        1,
+                playlist:    ytId,
+                controls:    0,
+                playsinline: 1,  // requerido en iOS para reproducir inline sin pantalla completa
                 enablejsapi: 1,
-                origin:     window.location.origin,
+                rel:         0,
+                fs:          0,
+                modestbranding: 1,
             },
             events: {
                 onReady: function () {
@@ -1580,23 +1592,28 @@ function fxSpawnPetals(container, count) {
                     const s = YT.PlayerState;
                     if (e.data === s.PLAYING) {
                         playing = true;  btn.textContent = '⏸'; btn.title = 'Pausar música';
-                    } else if (e.data === s.PAUSED || e.data === s.ENDED) {
+                    } else if (e.data === s.PAUSED || e.data === s.ENDED || e.data === s.CUED) {
                         playing = false; btn.textContent = '▶'; btn.title = 'Reproducir música';
                     }
+                },
+                onError: function () {
+                    // Error del player (video no disponible, restricción de región, etc.)
+                    btn.style.display = 'none';
                 }
             }
         });
     };
 
-    // Llamado desde open() dentro del handler del gesto (requerido para iOS Safari).
-    // Si el player aún no está listo, pending lo activa en onReady (funciona en desktop;
-    // en iOS el onReady ya no es un gesto, así que el botón queda disponible para tocar).
-    window.ytAutoplay = function () {
-        if (player) { player.playVideo(); } else { pending = true; }
-    };
+    // Llamado desde open() sincrónico con el gesto del usuario
+    window.ytAutoplay = function () { tryPlay(); };
 
     btn.addEventListener('click', function () {
-        if (!player) return;
+        if (!player) {
+            // Player todavía cargando: marcar como pendiente y dar feedback visual
+            pending = true;
+            btn.textContent = '⏸';
+            return;
+        }
         playing ? player.pauseVideo() : player.playVideo();
     });
 })();
