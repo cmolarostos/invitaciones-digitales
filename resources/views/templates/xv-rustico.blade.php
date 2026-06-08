@@ -934,6 +934,50 @@
         .reveal-stagger.in > *:nth-child(4) { transition-delay: 0.35s; }
         .reveal-stagger.in > *:nth-child(5) { transition-delay: 0.45s; }
         .reveal-stagger.in > *:nth-child(6) { transition-delay: 0.55s; }
+
+        /* ── FX Scene: entrada escalonada + glow + pétalos ── */
+        .fx-scene { --fx-gap:.15s; --fx-dur:1s; --fx-rise:22px; position:relative; }
+        .fx-step  { opacity:0; transform:translateY(var(--fx-rise)); }
+        .fx-scene.is-in .fx-step  { animation:fxStep var(--fx-dur) cubic-bezier(.2,.7,.25,1) both; animation-delay:calc(var(--fx-i,0)*var(--fx-gap)); }
+        .fx-scene.is-in .fx-title { animation:fxTitle calc(var(--fx-dur)*1.3) cubic-bezier(.2,.7,.25,1) both; animation-delay:calc(var(--fx-i,0)*var(--fx-gap)); }
+        .fx-scene.is-in .fx-photo { animation:fxPhoto calc(var(--fx-dur)*1.2) cubic-bezier(.2,.7,.25,1) both; animation-delay:calc(var(--fx-i,0)*var(--fx-gap)); }
+        @keyframes fxStep  { from{opacity:0;transform:translateY(var(--fx-rise))} to{opacity:1;transform:none} }
+        @keyframes fxTitle { 0%{opacity:0;transform:translateY(26px) scale(.965);filter:blur(8px)} 60%{filter:blur(0)} 100%{opacity:1;transform:none;filter:blur(0)} }
+        @keyframes fxPhoto { 0%{opacity:0;transform:translateY(24px) scale(.94)} 100%{opacity:1;transform:none} }
+        .fx-glow {
+            position:absolute; left:50%; top:46%;
+            width:min(680px,90vw); aspect-ratio:1;
+            transform:translate(-50%,-50%) scale(0.6); border-radius:50%;
+            background:radial-gradient(circle, var(--terra-soft) 0%, transparent 62%);
+            opacity:0; pointer-events:none; z-index:0;
+        }
+        .fx-scene.is-in .fx-glow { animation:fxGlow 3.6s cubic-bezier(.25,.6,.3,1) 0.2s both; }
+        @keyframes fxGlow {
+            0%  { opacity:0;    transform:translate(-50%,-50%) scale(.55); }
+            45% { opacity:.35;  transform:translate(-50%,-50%) scale(1); }
+            100%{ opacity:.14;  transform:translate(-50%,-50%) scale(1.12); }
+        }
+        .fx-scene > *:not(.fx-glow):not(.fx-ambient) { position:relative; z-index:2; }
+        .fx-ambient { position:absolute; inset:0; overflow:hidden; pointer-events:none; z-index:1; }
+        .fx-petal {
+            position:absolute; top:-6%; width:12px; height:15px;
+            background:radial-gradient(ellipse at 30% 30%, var(--terra-soft), var(--terra) 75%);
+            border-radius:60% 40% 60% 40% / 70% 30% 70% 30%;
+            opacity:0; animation-name:fxDrift; animation-timing-function:linear;
+            animation-iteration-count:infinite; will-change:transform,opacity;
+        }
+        @keyframes fxDrift {
+            0%  { transform:translate(0,0) rotate(0deg); opacity:0; }
+            12% { opacity:.5; }
+            88% { opacity:.5; }
+            100%{ transform:translate(var(--sway,24px),112vh) rotate(360deg); opacity:0; }
+        }
+        @media (prefers-reduced-motion:reduce) {
+            .fx-scene.is-in .fx-step,
+            .fx-scene.is-in .fx-title,
+            .fx-scene.is-in .fx-photo { animation:none; opacity:1; transform:none; filter:none; }
+            .fx-glow, .fx-ambient { display:none; }
+        }
     </style>
 </head>
 <body>
@@ -973,7 +1017,9 @@
             ? explode(' ', $event->venue_name, 2)
             : ['Rancho', 'la Herradura'];
     @endphp
-    <section class="hero">
+    <section class="hero fx-scene">
+        <div class="fx-glow"></div>
+        <div class="fx-ambient"></div>
         {{-- Branch ornaments --}}
         <svg class="branch tl" width="160" height="88" viewBox="0 0 200 110" fill="none" aria-hidden="true">
             <path d="M10 90 Q60 70 110 70 T 190 50" stroke="currentColor" stroke-width="1.1" fill="none" stroke-linecap="round"/>
@@ -999,12 +1045,12 @@
         </svg>
 
         <div class="hero-inner">
-            <div class="eyebrow reveal">Mis XV Años</div>
-            <div class="divider reveal" style="margin:20px auto 28px">
+            <div class="eyebrow fx-step" style="--fx-i:0">Mis XV Años</div>
+            <div class="divider fx-step" style="--fx-i:1; margin:20px auto 28px">
                 <svg width="14" height="14" viewBox="0 0 14 14"><circle cx="7" cy="7" r="2" fill="currentColor"/></svg>
             </div>
 
-            <div class="hero-photo reveal">
+            <div class="hero-photo fx-step fx-photo" style="--fx-i:2">
                 @if($cover)
                     <img src="{{ $cover->url }}" alt="{{ $event->name }}">
                 @else
@@ -1012,9 +1058,9 @@
                 @endif
             </div>
 
-            <h1 class="reveal">{{ $event->name }}</h1>
+            <h1 class="fx-step fx-title" style="--fx-i:3">{{ $event->name }}</h1>
 
-            <div class="date-row reveal">
+            <div class="date-row fx-step" style="--fx-i:4">
                 <div>
                     <div class="num">{{ $event->event_date->format('d') }}</div>
                 </div>
@@ -1029,13 +1075,13 @@
             </div>
 
             @if($event->venue_name || $event->venue_address)
-                <p class="subtitle reveal">
+                <p class="subtitle fx-step" style="--fx-i:5">
                     Una celebración inolvidable
                     {{ $event->venue_name ? 'en ' . $event->venue_name : '' }}
                     {{ $event->venue_address ? '· ' . $event->venue_address : '' }}.
                 </p>
             @else
-                <p class="subtitle reveal">Una celebración inolvidable bajo el cielo de Dallas.</p>
+                <p class="subtitle fx-step" style="--fx-i:5">Una celebración inolvidable bajo el cielo de Dallas.</p>
             @endif
         </div>
 
@@ -1355,6 +1401,14 @@
         setTimeout(() => {
             document.body.style.overflow = '';
             main.classList.add('visible');
+
+            // Disparar entrada del hero + pétalos
+            const hero = document.querySelector('.hero.fx-scene');
+            if (hero) {
+                hero.classList.add('is-in');
+                fxSpawnPetals(hero.querySelector('.fx-ambient'), 10);
+            }
+
             document.querySelectorAll('.reveal, .reveal-stagger').forEach(el => {
                 const r = el.getBoundingClientRect();
                 if (r.top < window.innerHeight) el.classList.add('in');
@@ -1365,6 +1419,21 @@
     stage.addEventListener('click', open);
     stage.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') open(); });
 })();
+
+// ── FX PETALS ──
+function fxSpawnPetals(container, count) {
+    if (!container) return;
+    for (var i = 0; i < (count || 9); i++) {
+        var p = document.createElement('span');
+        p.className = 'fx-petal';
+        p.style.left = (Math.random() * 100) + '%';
+        p.style.animationDelay = (0.4 + Math.random() * 6) + 's';
+        p.style.animationDuration = (11 + Math.random() * 8) + 's';
+        p.style.setProperty('--sway', (18 + Math.random() * 34) + 'px');
+        p.style.transform = 'scale(' + (0.45 + Math.random() * 0.6) + ')';
+        container.appendChild(p);
+    }
+}
 
 // ── SCROLL REVEAL ──
 (function () {
