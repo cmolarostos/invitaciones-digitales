@@ -1392,12 +1392,9 @@
         if (stage.classList.contains('open')) return;
         stage.classList.add('open');
 
-        // Búsqueda lazy: el botón de música está después de este script en el DOM
-        const iframe = document.getElementById('yt-iframe');
-        const btn    = document.getElementById('yt-toggle');
-        if (iframe && iframe.dataset.src) {
-            iframe.src = iframe.dataset.src;
-            if (btn) btn.textContent = '⏸';
+        // iOS Safari bloquea autoplay fuera de gesto directo; en desktop sí funciona
+        if (!/iPad|iPhone|iPod/.test(navigator.userAgent) && typeof window.ytAutoplay === 'function') {
+            window.ytAutoplay();
         }
 
         setTimeout(() => {
@@ -1543,38 +1540,63 @@ function fxSpawnPetals(container, count) {
             aria-label="Reproducir música de fondo">
         ▶
     </button>
-    <iframe id="yt-iframe"
-            src=""
-            data-src="https://www.youtube.com/embed/{{ $ytId }}?autoplay=1&loop=1&playlist={{ $ytId }}&controls=0&enablejsapi=1"
-            allow="autoplay; encrypted-media"
-            style="display:none;width:0;height:0;border:0;"
-            title="Música de fondo">
-    </iframe>
+    <div id="yt-iframe" style="display:none;width:0;height:0;position:absolute;"></div>
 </div>
 @endif
 
 <script>
 (function () {
-    const btn    = document.getElementById('yt-toggle');
-    const iframe = document.getElementById('yt-iframe');
-    if (!btn || !iframe) return;
+    const btn = document.getElementById('yt-toggle');
+    if (!btn) return;
 
-    let playing = false;
+    const ytId = '{{ $ytId ?? '' }}';
+    if (!ytId) return;
 
-    // El sobre puede haber arrancado la música antes de que este script corra
-    if (iframe.src) playing = true;
+    let player   = null;
+    let playing  = false;
+    let pending  = false; // autoplay solicitado antes de que el player estuviera listo
+
+    // Carga la YT IFrame API de forma diferida
+    const tag = document.createElement('script');
+    tag.src   = 'https://www.youtube.com/iframe_api';
+    document.head.appendChild(tag);
+
+    window.onYouTubeIframeAPIReady = function () {
+        player = new YT.Player('yt-iframe', {
+            videoId: ytId,
+            playerVars: {
+                autoplay:   0,
+                loop:       1,
+                playlist:   ytId,
+                controls:   0,
+                playsinline: 1,   // imprescindible en iOS Safari
+                enablejsapi: 1,
+                origin:     window.location.origin,
+            },
+            events: {
+                onReady: function () {
+                    if (pending) { player.playVideo(); pending = false; }
+                },
+                onStateChange: function (e) {
+                    const s = YT.PlayerState;
+                    if (e.data === s.PLAYING) {
+                        playing = true;  btn.textContent = '⏸'; btn.title = 'Pausar música';
+                    } else if (e.data === s.PAUSED || e.data === s.ENDED) {
+                        playing = false; btn.textContent = '▶'; btn.title = 'Reproducir música';
+                    }
+                }
+            }
+        });
+    };
+
+    // Llamado desde el sobre en desktop (no-iOS); si el player aún no está listo guarda el pending
+    window.ytAutoplay = function () {
+        if (player) { player.playVideo(); } else { pending = true; }
+    };
 
     btn.addEventListener('click', function () {
-        if (playing) {
-            iframe.src = '';
-            btn.textContent = '▶';
-            btn.title = 'Reproducir música';
-        } else {
-            iframe.src = iframe.dataset.src;
-            btn.textContent = '⏸';
-            btn.title = 'Pausar música';
-        }
-        playing = !playing;
+        if (!player) return;
+        playing ? player.pauseVideo() : player.playVideo();
     });
 })();
 </script>
