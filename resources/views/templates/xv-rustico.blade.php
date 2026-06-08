@@ -1291,7 +1291,9 @@
 
     {{-- ── GALLERY ── --}}
     @php
-        $galleryPhotos = $event->photos->skip(1)->take(6)->values();
+        $galleryPhotos = $event->photos
+            ->when($cover, fn($c) => $c->where('id', '!=', $cover->id))
+            ->take(6)->values();
         $layouts = ['tall', 'sq', 'sq', 'wide', 'mid', 'mid'];
     @endphp
     @if($galleryPhotos->count() > 0)

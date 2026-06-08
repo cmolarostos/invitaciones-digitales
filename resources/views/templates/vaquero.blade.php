@@ -179,7 +179,7 @@
                     </h3>
                     <div class="relative max-w-xs mx-auto h-80 flex items-center justify-center">
                         <div id="carousel-track" class="w-full h-full relative flex justify-center items-center">
-                            @foreach($event->photos->skip(1)->take(6) as $i => $photo)
+                            @foreach($event->photos->reject(fn($p) => $cover && $p->id === $cover->id)->take(6) as $i => $photo)
                                 @php
                                     $rotations = ['rotate-2', '-rotate-3', 'rotate-1', '-rotate-2', 'rotate-3', '-rotate-1'];
                                     $rot = $rotations[$i % count($rotations)];

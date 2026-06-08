@@ -299,7 +299,7 @@
         <div class="fade-up delay-6">
             <p class="section-title px-1 mb-3">Galería</p>
             <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;">
-                @foreach($event->photos->skip(1)->take(9) as $photo)
+                @foreach($event->photos->reject(fn($p) => $cover && $p->id === $cover->id)->take(9) as $photo)
                     <img src="{{ $photo->url }}" alt="" class="gallery-img">
                 @endforeach
             </div>

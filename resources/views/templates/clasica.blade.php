@@ -66,7 +66,7 @@
     {{-- Galería --}}
     @if($event->photos->count() > 1)
         <div class="fade-up delay-6 grid grid-cols-3 gap-2 max-w-lg w-full mb-10">
-            @foreach($event->photos->skip(1)->take(6) as $photo)
+            @foreach($event->photos->reject(fn($p) => $cover && $p->id === $cover->id)->take(6) as $photo)
                 <img src="{{ $photo->url }}" alt=""
                      class="w-full aspect-square object-cover rounded-lg">
             @endforeach

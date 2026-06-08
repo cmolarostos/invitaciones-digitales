@@ -613,7 +613,7 @@
 </section>
 
 {{-- ── GALERÍA DE RECUERDOS ── --}}
-@php $galleryPhotos = $event->photos->skip(1)->take(9); @endphp
+@php $cover = $cover ?? $event->coverPhoto(); $galleryPhotos = $event->photos->reject(fn($p) => $cover && $p->id === $cover->id)->take(9); @endphp
 @if($galleryPhotos->count() > 0)
 <section id="gallery">
     <div class="section-header reveal">
@@ -632,7 +632,7 @@
 @endif
 
 {{-- ── RECUERDOS FAVORITOS (carousel) ── --}}
-@php $carouselPhotos = $event->photos->skip(1)->take(5)->values(); @endphp
+@php $carouselPhotos = $event->photos->reject(fn($p) => $cover && $p->id === $cover->id)->take(5)->values(); @endphp
 @if($carouselPhotos->count() > 0)
 <section id="carousel-section">
     <div class="section-header reveal">

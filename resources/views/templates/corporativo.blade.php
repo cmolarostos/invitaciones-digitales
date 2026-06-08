@@ -193,8 +193,9 @@
     @if($event->photos->count() > 1)
         <div class="fade-up delay-5">
             <p class="text-xs font-semibold accent uppercase tracking-widest mb-3 px-1">Galería</p>
+            @php $cover = $event->coverPhoto(); @endphp
             <div class="grid grid-cols-3 gap-2">
-                @foreach($event->photos->skip(1)->take(6) as $photo)
+                @foreach($event->photos->reject(fn($p) => $cover && $p->id === $cover->id)->take(6) as $photo)
                     <div class="aspect-square overflow-hidden rounded-xl">
                         <img src="{{ $photo->url }}" alt=""
                              class="w-full h-full object-cover hover:scale-105 transition duration-500">

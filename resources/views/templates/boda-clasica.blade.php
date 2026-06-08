@@ -219,7 +219,7 @@
                 <div class="h-px w-16 bg-gradient-to-l from-transparent to-amber-300"></div>
             </div>
             <div class="grid grid-cols-3 gap-2">
-                @foreach($event->photos->skip(1)->take(9) as $photo)
+                @foreach($event->photos->reject(fn($p) => $cover && $p->id === $cover->id)->take(9) as $photo)
                     <div class="aspect-square overflow-hidden rounded-sm">
                         <img src="{{ $photo->url }}" alt=""
                              class="w-full h-full object-cover hover:scale-105 transition duration-500">

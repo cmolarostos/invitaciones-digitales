@@ -223,7 +223,7 @@
         <div class="fade-up delay-5">
             <p class="text-xs font-semibold text-purple-400 uppercase tracking-widest mb-3">Galería</p>
             <div class="grid grid-cols-3 gap-2">
-                @foreach($event->photos->skip(1)->take(9) as $photo)
+                @foreach($event->photos->reject(fn($p) => $cover && $p->id === $cover->id)->take(9) as $photo)
                     <div class="aspect-square overflow-hidden rounded-2xl">
                         <img src="{{ $photo->url }}" alt=""
                              class="w-full h-full object-cover hover:scale-105 transition duration-500">
