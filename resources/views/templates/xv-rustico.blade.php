@@ -169,9 +169,6 @@
             display: grid;
             place-items: center;
             color: var(--cream);
-            font-family: var(--display);
-            font-size: 22px;
-            letter-spacing: 0.06em;
             transition: transform 0.6s ease, opacity 0.4s ease;
         }
         #envelope-stage.open .env-seal {
@@ -997,7 +994,14 @@
             </div>
         </div>
         <div class="env-flap"></div>
-        <div class="env-seal">{{ strtoupper(substr($event->name, 0, 1)) }}</div>
+        <div class="env-seal">
+            <svg width="26" height="22" viewBox="0 0 26 22" fill="currentColor" aria-hidden="true">
+                <path d="M1 22 L1 14 L7 18 L13 5 L19 18 L25 14 L25 22 Z"/>
+                <circle cx="1"  cy="12.5" r="2.5"/>
+                <circle cx="13" cy="3.5"  r="2.5"/>
+                <circle cx="25" cy="12.5" r="2.5"/>
+            </svg>
+        </div>
     </div>
     <div class="env-instructions">
         <span class="tap-label">✦ Toca para abrir ✦</span>
