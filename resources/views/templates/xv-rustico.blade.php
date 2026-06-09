@@ -407,28 +407,31 @@
             display: flex;
             justify-content: center;
             align-items: flex-start;
-            gap: clamp(32px, 8vw, 96px);
-            margin-top: clamp(40px, 7vw, 72px);
+            gap: clamp(40px, 10vw, 120px);
+            margin-top: clamp(48px, 8vw, 80px);
             flex-wrap: wrap;
         }
         .verse-family-col {
             text-align: center;
-            min-width: 140px;
+            min-width: 160px;
         }
         .verse-family-col .col-label {
             font-family: var(--sans);
             font-size: 10px;
-            letter-spacing: 0.35em;
+            letter-spacing: 0.45em;
             text-transform: uppercase;
             color: var(--terra-deep);
-            margin-bottom: 10px;
+            margin-bottom: 14px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--terra-deep);
+            opacity: 0.7;
         }
         .verse-family-col .col-name {
             font-family: var(--serif);
             font-style: italic;
-            font-size: clamp(14px, 1.6vw, 18px);
+            font-size: clamp(16px, 1.9vw, 22px);
             color: var(--ink);
-            line-height: 1.7;
+            line-height: 1.8;
         }
 
         /* ── Countdown ── */
@@ -1167,21 +1170,21 @@
         <cite class="reveal">— Mis quince años</cite>
         @if($event->godfather_name || $event->godmother_name || $event->father_name || $event->mother_name)
         <div class="verse-family reveal">
-            @if($event->godfather_name || $event->godmother_name)
-            <div class="verse-family-col">
-                <div class="col-label">Padrinos</div>
-                <div class="col-name">
-                    @if($event->godfather_name){{ $event->godfather_name }}<br>@endif
-                    @if($event->godmother_name){{ $event->godmother_name }}@endif
-                </div>
-            </div>
-            @endif
             @if($event->father_name || $event->mother_name)
             <div class="verse-family-col">
                 <div class="col-label">Padres</div>
                 <div class="col-name">
                     @if($event->father_name){{ $event->father_name }}<br>@endif
                     @if($event->mother_name){{ $event->mother_name }}@endif
+                </div>
+            </div>
+            @endif
+            @if($event->godfather_name || $event->godmother_name)
+            <div class="verse-family-col">
+                <div class="col-label">Padrinos</div>
+                <div class="col-name">
+                    @if($event->godfather_name){{ $event->godfather_name }}<br>@endif
+                    @if($event->godmother_name){{ $event->godmother_name }}@endif
                 </div>
             </div>
             @endif
