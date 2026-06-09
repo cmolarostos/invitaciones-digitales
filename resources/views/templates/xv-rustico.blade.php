@@ -403,6 +403,33 @@
             text-transform: uppercase;
             color: var(--terra-deep);
         }
+        .verse-family {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            gap: clamp(32px, 8vw, 96px);
+            margin-top: clamp(40px, 7vw, 72px);
+            flex-wrap: wrap;
+        }
+        .verse-family-col {
+            text-align: center;
+            min-width: 140px;
+        }
+        .verse-family-col .col-label {
+            font-family: var(--sans);
+            font-size: 10px;
+            letter-spacing: 0.35em;
+            text-transform: uppercase;
+            color: var(--terra-deep);
+            margin-bottom: 10px;
+        }
+        .verse-family-col .col-name {
+            font-family: var(--serif);
+            font-style: italic;
+            font-size: clamp(14px, 1.6vw, 18px);
+            color: var(--ink);
+            line-height: 1.7;
+        }
 
         /* ── Countdown ── */
         .countdown { text-align: center; background: var(--cream); }
@@ -1138,6 +1165,28 @@
             "@if($event->notes){{ $event->notes }}@else Aquella niña que un día soñó con un cuento de hadas, hoy se convierte en mujer y celebra una nueva historia. @endif"
         </blockquote>
         <cite class="reveal">— Mis quince años</cite>
+        @if($event->godfather_name || $event->godmother_name || $event->father_name || $event->mother_name)
+        <div class="verse-family reveal">
+            @if($event->godfather_name || $event->godmother_name)
+            <div class="verse-family-col">
+                <div class="col-label">Padrinos</div>
+                <div class="col-name">
+                    @if($event->godfather_name){{ $event->godfather_name }}<br>@endif
+                    @if($event->godmother_name){{ $event->godmother_name }}@endif
+                </div>
+            </div>
+            @endif
+            @if($event->father_name || $event->mother_name)
+            <div class="verse-family-col">
+                <div class="col-label">Padres</div>
+                <div class="col-name">
+                    @if($event->father_name){{ $event->father_name }}<br>@endif
+                    @if($event->mother_name){{ $event->mother_name }}@endif
+                </div>
+            </div>
+            @endif
+        </div>
+        @endif
     </section>
 
     {{-- ── ITINERARY ── --}}

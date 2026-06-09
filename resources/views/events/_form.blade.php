@@ -163,6 +163,30 @@
         @error('notes') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
     </div>
 
+    {{-- Padres y Padrinos --}}
+    <div class="grid grid-cols-2 gap-4">
+        <div>
+            <label class="block text-sm font-medium mb-1">Padres</label>
+            <p class="text-xs text-gray-400 mb-2">Nombres que aparecerán en la invitación.</p>
+            <input type="text" name="father_name" placeholder="Nombre del padre"
+                   value="{{ old('father_name', $event->father_name ?? '') }}"
+                   class="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400 mb-2">
+            <input type="text" name="mother_name" placeholder="Nombre de la madre"
+                   value="{{ old('mother_name', $event->mother_name ?? '') }}"
+                   class="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400">
+        </div>
+        <div>
+            <label class="block text-sm font-medium mb-1">Padrinos</label>
+            <p class="text-xs text-gray-400 mb-2">Nombres que aparecerán en la invitación.</p>
+            <input type="text" name="godfather_name" placeholder="Nombre del padrino"
+                   value="{{ old('godfather_name', $event->godfather_name ?? '') }}"
+                   class="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400 mb-2">
+            <input type="text" name="godmother_name" placeholder="Nombre de la madrina"
+                   value="{{ old('godmother_name', $event->godmother_name ?? '') }}"
+                   class="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400">
+        </div>
+    </div>
+
     {{-- Itinerario --}}
     <div>
         <div class="flex items-center justify-between mb-2">
