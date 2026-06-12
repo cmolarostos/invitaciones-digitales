@@ -233,6 +233,17 @@
             font-weight: 400;
         }
 
+        .eyebrow .family-name {
+            display: block;
+            margin-top: 12px;
+            font-family: var(--serif);
+            font-style: italic;
+            font-size: 24px;
+            letter-spacing: 0.08em;
+            text-transform: none;
+            color: var(--terra);
+        }
+
         .divider {
             display: flex;
             align-items: center;
@@ -1421,7 +1432,7 @@
         <svg class="branch tl" width="120" height="66" viewBox="0 0 200 110" fill="none" aria-hidden="true"><path d="M10 90 Q60 70 110 70 T 190 50" stroke="currentColor" stroke-width="1.1" fill="none" stroke-linecap="round"/><ellipse cx="50" cy="76" rx="9" ry="3" fill="currentColor" transform="rotate(-20 50 76)"/><ellipse cx="95" cy="64" rx="9" ry="3" fill="currentColor" transform="rotate(-6 95 64)"/><circle cx="170" cy="48" r="2.4" fill="currentColor"/></svg>
         <svg class="branch tr" width="120" height="66" viewBox="0 0 200 110" fill="none" aria-hidden="true"><path d="M10 90 Q60 70 110 70 T 190 50" stroke="currentColor" stroke-width="1.1" fill="none" stroke-linecap="round"/><ellipse cx="50" cy="76" rx="9" ry="3" fill="currentColor" transform="rotate(-20 50 76)"/><ellipse cx="95" cy="64" rx="9" ry="3" fill="currentColor" transform="rotate(-6 95 64)"/><circle cx="170" cy="48" r="2.4" fill="currentColor"/></svg>
 
-        <div class="eyebrow reveal">Con todo el cariño de la familia.</div>
+        <div class="eyebrow reveal">Con todo el cariño de la familia<br><span class="family-name">Robles Medina</span></div>
         <h2 class="reveal" style="margin-top:22px">Te esperamos <em>—</em></h2>
         <div class="stamp reveal">
             <div style="position:relative;z-index:1;text-align:center;line-height:1.4;">
