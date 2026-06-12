@@ -429,7 +429,7 @@
         .verse-family-col .col-name {
             font-family: var(--serif);
             font-style: italic;
-            font-size: clamp(22px, 2.3vw, 27px);
+            font-size: clamp(25px, 2.7vw, 31px);
             color: var(--ink);
             line-height: 1.9;
         }
