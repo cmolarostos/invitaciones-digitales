@@ -407,31 +407,31 @@
             display: flex;
             justify-content: center;
             align-items: flex-start;
-            gap: clamp(40px, 10vw, 120px);
-            margin-top: clamp(48px, 8vw, 80px);
+            gap: clamp(48px, 11vw, 140px);
+            margin-top: clamp(56px, 9vw, 90px);
             flex-wrap: wrap;
         }
         .verse-family-col {
             text-align: center;
-            min-width: 160px;
+            min-width: 180px;
         }
         .verse-family-col .col-label {
             font-family: var(--sans);
-            font-size: 10px;
+            font-size: 12px;
             letter-spacing: 0.45em;
             text-transform: uppercase;
             color: var(--terra-deep);
-            margin-bottom: 14px;
-            padding-bottom: 10px;
+            margin-bottom: 16px;
+            padding-bottom: 12px;
             border-bottom: 1px solid var(--terra-deep);
             opacity: 0.7;
         }
         .verse-family-col .col-name {
             font-family: var(--serif);
             font-style: italic;
-            font-size: clamp(20px, 1.9vw, 22px);
+            font-size: clamp(22px, 2.3vw, 27px);
             color: var(--ink);
-            line-height: 1.8;
+            line-height: 1.9;
         }
 
         /* ── Countdown ── */
