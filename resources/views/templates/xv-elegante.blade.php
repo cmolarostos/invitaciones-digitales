@@ -319,6 +319,17 @@
                 <h3 id="thanks-title" class="font-display text-xl text-stone-700 mt-2"></h3>
                 <p id="thanks-body" class="text-sm text-stone-500 mt-2"></p>
             </div>
+            @if($event->rsvp_whatsapp)
+            <div style="margin-top:14px;padding-top:14px;border-top:1px solid #fce7f3;">
+                <p class="text-xs text-stone-500" style="margin-bottom:10px;">Confirma tu asistencia al siguiente WhatsApp</p>
+                <a href="https://wa.me/{{ $event->rsvp_whatsapp }}?text={{ rawurlencode('¡Hola! Quiero confirmar mi asistencia a '.$event->name) }}"
+                   target="_blank" rel="noopener"
+                   style="display:inline-flex;align-items:center;gap:8px;padding:10px 22px;background:#25D366;color:#fff;border-radius:16px;font-size:0.85rem;text-decoration:none;font-family:inherit;">
+                    <svg viewBox="0 0 24 24" style="width:16px;height:16px;fill:currentColor;flex-shrink:0;"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.149-.15.347-.39.52-.585.173-.198.232-.347.347-.578.116-.232.058-.43-.04-.578-.099-.149-.669-1.612-.916-2.207-.242-.58-.487-.501-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.05 3.131 4.966 4.266 2.917 1.135 2.917.756 3.444.71.528-.05 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.553 4.116 1.524 5.84L0 24l6.304-1.484A11.94 11.94 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.78 9.78 0 01-5.07-1.407l-.364-.218-3.74.88.89-3.642-.238-.374A9.76 9.76 0 012.182 12C2.182 6.586 6.586 2.182 12 2.182S21.818 6.586 21.818 12 17.414 21.818 12 21.818z"/></svg>
+                    Confirmar por WhatsApp
+                </a>
+            </div>
+            @endif
         </div>
     </section>
     @endif
