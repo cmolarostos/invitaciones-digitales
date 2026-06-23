@@ -839,122 +839,22 @@
         .rsvp { background: var(--cream); text-align: center; padding-block: clamp(100px, 14vw, 160px); }
         .rsvp h2 { font-family: var(--display); font-size: clamp(44px, 7vw, 80px); color: var(--terra-deep); font-weight: 400; line-height: 1; }
         .rsvp h2 em { font-family: var(--serif); font-style: italic; color: var(--terra); }
-        .rsvp .deadline { margin-top: 18px; font-family: var(--serif); font-style: italic; font-size: clamp(17px, 2vw, 20px); color: var(--ink-soft); }
-        .rsvp form { margin: 60px auto 0; max-width: 480px; display: flex; flex-direction: column; gap: 22px; text-align: left; }
-        .field { display: flex; flex-direction: column; gap: 8px; }
-        .field label { font-family: var(--sans); font-size: 10px; letter-spacing: 0.4em; text-transform: uppercase; color: var(--terra-deep); font-weight: 500; }
-        .field input, .field textarea {
-            background: transparent;
-            border: 0;
-            border-bottom: 1px solid var(--hair);
-            padding: 10px 0;
-            font-family: var(--serif);
-            font-size: 17px;
-            color: var(--ink);
-            outline: none;
-            transition: border-color 0.25s ease;
-        }
-        .field input:focus, .field textarea:focus { border-color: var(--terra); }
-        .field textarea { resize: none; min-height: 80px; font-style: italic; }
-        .rsvp-options { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 4px; }
-        .rsvp-opt {
-            appearance: none;
-            background: transparent;
-            border: 1px solid var(--hair);
-            padding: 16px 12px;
-            font-family: var(--sans);
-            font-size: 11px;
-            letter-spacing: 0.4em;
-            text-transform: uppercase;
-            color: var(--ink);
-            cursor: pointer;
-            border-radius: 4px;
-            transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease;
-        }
-        .rsvp-opt:hover { border-color: var(--terra); }
-        .rsvp-opt.selected { background: var(--terra); border-color: var(--terra); color: var(--cream); }
-        .guests-row { display: flex; align-items: center; gap: 16px; }
-        .guests-row button {
-            width: 36px; height: 36px;
-            border-radius: 50%;
-            border: 1px solid var(--hair);
-            background: transparent;
-            font-family: var(--display);
-            font-size: 22px;
-            color: var(--terra);
-            cursor: pointer;
-            transition: background 0.2s ease;
-            line-height: 1;
-        }
-        .guests-row button:hover { background: var(--paper); }
-        .guests-row button:disabled { opacity: 0.3; cursor: not-allowed; }
-        .guests-row .count { font-family: var(--display); font-size: 32px; color: var(--terra-deep); min-width: 40px; text-align: center; line-height: 1; }
-        .guests-field { display: none; }
-        .rsvp-submit {
-            margin-top: 16px;
-            appearance: none;
-            background: var(--terra-deep);
-            color: var(--cream);
-            border: 0;
-            padding: 18px 28px;
-            font-family: var(--sans);
-            font-size: 11px;
-            letter-spacing: 0.5em;
-            text-transform: uppercase;
-            cursor: pointer;
-            border-radius: 3px;
-            transition: background 0.25s ease;
-        }
-        .rsvp-submit:hover { background: var(--terra); }
-        .rsvp-submit:disabled { opacity: 0.4; cursor: not-allowed; }
-        .rsvp-thanks {
-            display: none;
-            margin: 60px auto 0;
-            max-width: 540px;
-            text-align: center;
-            padding: 56px 36px;
-            background: var(--paper);
-            border: 1px solid var(--hair);
-            border-radius: 6px;
-        }
-        .rsvp-thanks .icon {
-            width: 44px; height: 44px;
-            margin: 0 auto 24px;
-            border-radius: 50%;
-            background: var(--terra);
-            color: var(--cream);
-            display: grid;
-            place-items: center;
-            font-family: var(--display);
-            font-size: 22px;
-        }
-        .rsvp-thanks h3 { font-family: var(--display); font-size: clamp(28px,4vw,40px); color: var(--terra-deep); font-weight: 400; }
-        .rsvp-thanks p { margin-top: 14px; font-family: var(--serif); font-style: italic; font-size: clamp(15px,1.8vw,17px); color: var(--ink-soft); line-height: 1.5; }
 
-        .rsvp-whatsapp { margin: 48px auto 0; max-width: 480px; text-align: center; }
-        .rsvp-whatsapp p {
-            font-family: var(--serif);
-            font-style: italic;
-            font-size: clamp(15px, 1.8vw, 17px);
-            color: var(--ink-soft);
-            margin-bottom: 18px;
-        }
+        .rsvp-whatsapp { margin: 48px auto 0; }
         .rsvp-whatsapp-btn {
             display: inline-flex;
             align-items: center;
-            gap: 10px;
-            padding: 16px 34px;
+            justify-content: center;
+            width: 76px;
+            height: 76px;
+            border-radius: 50%;
             background: #25D366;
             color: #fff;
-            font-family: var(--serif);
-            font-size: 15px;
-            letter-spacing: 0.04em;
             text-decoration: none;
-            border-radius: 3px;
-            transition: background 0.25s ease;
+            transition: background 0.25s ease, transform 0.25s ease;
         }
-        .rsvp-whatsapp-btn:hover { background: #1ebe5a; }
-        .rsvp-whatsapp-btn svg { width: 20px; height: 20px; flex-shrink: 0; fill: currentColor; }
+        .rsvp-whatsapp-btn:hover { background: #1ebe5a; transform: scale(1.06); }
+        .rsvp-whatsapp-btn svg { width: 34px; height: 34px; flex-shrink: 0; fill: currentColor; }
 
         /* ── Closing ── */
         .closing { background: var(--cream); text-align: center; padding-block: clamp(100px, 14vw, 160px); }
@@ -1408,59 +1308,21 @@
     @endif
 
     {{-- ── RSVP ── --}}
-    @if($event->requires_rsvp)
+    @if($event->requires_rsvp && $event->rsvp_whatsapp)
     <section class="rsvp">
         <div class="eyebrow reveal">Confirma tu asistencia</div>
-        <h2 class="reveal" style="margin-top:18px">Confírmanos <em>antes del 15 de julio</em></h2>
-        <p class="deadline reveal">Para reservar tu lugar en la mesa.</p>
+        <h2 class="reveal" style="margin-top:18px">Confírmanos <em>al siguiente WhatsApp</em></h2>
         <div class="divider reveal" aria-hidden="true">
             <svg width="14" height="14" viewBox="0 0 14 14"><circle cx="7" cy="7" r="2" fill="currentColor"/></svg>
         </div>
 
-        <form id="rsvp-form" class="reveal" novalidate>
-            <div class="field">
-                <label for="rsvp-name">Tu nombre</label>
-                <input id="rsvp-name" type="text" placeholder="Nombre completo" autocomplete="name">
-            </div>
-            <div class="field">
-                <label>¿Podrás asistir?</label>
-                <div class="rsvp-options">
-                    <button type="button" class="rsvp-opt" data-val="yes">Sí, ahí estaré</button>
-                    <button type="button" class="rsvp-opt" data-val="no">No podré</button>
-                </div>
-            </div>
-            <div class="field guests-field" id="guests-field">
-                <label>Número de invitados</label>
-                <div class="guests-row">
-                    <button type="button" id="g-minus" disabled aria-label="Menos">−</button>
-                    <div class="count" id="g-count">1</div>
-                    <button type="button" id="g-plus" aria-label="Más">+</button>
-                </div>
-            </div>
-            <div class="field">
-                <label for="rsvp-msg">Un mensaje para {{ $event->name }} (opcional)</label>
-                <textarea id="rsvp-msg" placeholder="Tus mejores deseos…"></textarea>
-            </div>
-            <button type="submit" class="rsvp-submit" id="rsvp-btn" disabled>Enviar confirmación</button>
-        </form>
-
-        <div class="rsvp-thanks" id="rsvp-thanks">
-            <div class="icon">✓</div>
-            <h3 id="thanks-title">¡Gracias!</h3>
-            <p id="thanks-body">Tu respuesta fue registrada. Te esperamos el {{ $event->event_date->translatedFormat('d \d\e F') }}.</p>
-        </div>
-
-        @if($event->rsvp_whatsapp)
         <div class="rsvp-whatsapp reveal">
-            <p>Confirma tu asistencia al siguiente WhatsApp</p>
             <a class="rsvp-whatsapp-btn"
                href="https://wa.me/{{ $event->rsvp_whatsapp }}?text={{ rawurlencode('¡Hola! Quiero confirmar mi asistencia a '.$event->name) }}"
-               target="_blank" rel="noopener">
+               target="_blank" rel="noopener" aria-label="Confirmar por WhatsApp">
                 <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.149-.15.347-.39.52-.585.173-.198.232-.347.347-.578.116-.232.058-.43-.04-.578-.099-.149-.669-1.612-.916-2.207-.242-.58-.487-.501-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.05 3.131 4.966 4.266 2.917 1.135 2.917.756 3.444.71.528-.05 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.553 4.116 1.524 5.84L0 24l6.304-1.484A11.94 11.94 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.78 9.78 0 01-5.07-1.407l-.364-.218-3.74.88.89-3.642-.238-.374A9.76 9.76 0 012.182 12C2.182 6.586 6.586 2.182 12 2.182S21.818 6.586 21.818 12 17.414 21.818 12 21.818z"/></svg>
-                Confirmar por WhatsApp
             </a>
         </div>
-        @endif
     </section>
     @endif
 
@@ -1567,65 +1429,6 @@ function fxSpawnPetals(container, count) {
     setInterval(tick, 1000);
 })();
 
-// ── RSVP ──
-(function () {
-    const form = document.getElementById('rsvp-form');
-    if (!form) return; // sección oculta cuando requires_rsvp = false
-
-    let attending = null;
-    let guests = 1;
-
-    const btn       = document.getElementById('rsvp-btn');
-    const thanks    = document.getElementById('rsvp-thanks');
-    const gField    = document.getElementById('guests-field');
-    const gMinus    = document.getElementById('g-minus');
-    const gPlus     = document.getElementById('g-plus');
-    const gCount    = document.getElementById('g-count');
-    const nameInput = document.getElementById('rsvp-name');
-
-    document.querySelectorAll('.rsvp-opt').forEach(opt => {
-        opt.addEventListener('click', () => {
-            attending = opt.dataset.val;
-            document.querySelectorAll('.rsvp-opt').forEach(o => o.classList.remove('selected'));
-            opt.classList.add('selected');
-            gField.style.display = attending === 'yes' ? 'flex' : 'none';
-            updateBtn();
-        });
-    });
-
-    nameInput.addEventListener('input', updateBtn);
-
-    function updateBtn() {
-        btn.disabled = !(nameInput.value.trim().length > 1 && attending !== null);
-    }
-
-    gMinus.addEventListener('click', () => {
-        guests = Math.max(1, guests - 1);
-        gCount.textContent = guests;
-        gMinus.disabled = guests <= 1;
-        gPlus.disabled  = guests >= 8;
-    });
-    gPlus.addEventListener('click', () => {
-        guests = Math.min(8, guests + 1);
-        gCount.textContent = guests;
-        gMinus.disabled = guests <= 1;
-        gPlus.disabled  = guests >= 8;
-    });
-
-    form.addEventListener('submit', e => {
-        e.preventDefault();
-        if (btn.disabled) return;
-        const name = nameInput.value.trim();
-        form.style.display = 'none';
-        thanks.style.display = 'block';
-        document.getElementById('thanks-title').textContent =
-            attending === 'yes' ? `¡Gracias, ${name}!` : `Hasta pronto, ${name}`;
-        document.getElementById('thanks-body').textContent =
-            attending === 'yes'
-                ? `Te esperamos junto a ${guests > 1 ? `tus ${guests - 1} acompañante${guests - 1 > 1 ? 's' : ''}` : 'nosotros'} el {{ $event->event_date->translatedFormat('d \d\e F') }}. ¡Nos vemos pronto!`
-                : 'Lamentamos no poder contar contigo en esta ocasión. Gracias por avisarnos.';
-    });
-})();
 </script>
 
 {{-- ── MÚSICA DE FONDO ── --}}
