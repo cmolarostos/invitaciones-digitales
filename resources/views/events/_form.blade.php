@@ -397,6 +397,14 @@
                 </p>
             </div>
         </label>
+        <div class="mt-3 pl-7">
+            <label class="block text-sm font-medium mb-1">Número de WhatsApp para confirmaciones</label>
+            <input type="text" name="rsvp_whatsapp" value="{{ old('rsvp_whatsapp', $event->rsvp_whatsapp ?? '') }}"
+                   placeholder="Ej. 521234567890"
+                   class="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400">
+            <p class="text-xs text-gray-400 mt-1">Incluye código de país, sin espacios ni símbolos (ej. 521234567890). Se mostrará un botón de WhatsApp al final de la sección de confirmación.</p>
+            @error('rsvp_whatsapp') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
+        </div>
     </div>
 
 </div>

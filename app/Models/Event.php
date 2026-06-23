@@ -35,6 +35,7 @@ class Event extends Model
         'godmother_name',
         'itinerary',
         'requires_rsvp',
+        'rsvp_whatsapp',
         'youtube_url',
         'gifts_title',
         'gifts_subtitle',
